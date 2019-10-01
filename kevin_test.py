@@ -41,18 +41,18 @@ AccessError when:
 '''
 # Provide a list of all channels (and their associated details) that the authorised user is part of
 channels_list(token)
-return {channels}
+return {channels} # list of dictionary with {id: ' ', name: ' '}
 
 
 # Provide a list of all channels (and their associated details)
 channels_listall(token)
-return {channels}
+return {channels}  # list of dictionary with {id: ' ', name: ' '}
 
 
 
 # Creates a new channel with that name that is either a public or private channel
 channels_create(token, name, is_public)
-return {channel_id}
+return {channel_id} # integer 
 '''
 ValueError when:
     Name is more than 20 characters long

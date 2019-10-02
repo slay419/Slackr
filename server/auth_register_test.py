@@ -6,10 +6,10 @@ def auth_register(email, password, name_first, name_last):
     pass
 
 def test_auth_register_1():
-    assert(auth_register('unusedValidemail@gmail.com', 'validpass', 'Yasin', 'Khan'))
+    auth_register('unusedValidemail@gmail.com', 'validpass', 'Yasin', 'Khan')
 
 def test_auth_register_2():
-    assert(auth_register('unusedValidemail@gmail.com', 'validpass', 'Yasin Kevin', 'Peter Steven'))
+    auth_register('unusedValidemail@gmail.com', 'validpass', 'Yasin Kevin', 'Peter Steven')
 
 def test_auth_register_3():
     with pytest.raises(ValueError):

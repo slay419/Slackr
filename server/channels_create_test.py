@@ -34,22 +34,22 @@ differentToken = userDict2['token']
 '''
 
 # Testing channel name that is exactly 21 characters long and is public
-def test_channels_create_1(token):
+def test_channels_create_1():
     with pytest.raises(ValueError):
         channels_create(token, "nameOfChannelIs21Long", True)
 
 # Testing channel name that is exactly 21 characters long and isprivate
-def test_channels_create_2(token):
+def test_channels_create_2():
     with pytest.raises(ValueError):
         channels_create(token, "nameOfChannelIs21Long", False)
 
 # Testing channel name that is significantly longer than 20 and public
-def test_channels_create_3(token):
+def test_channels_create_3():
     with pytest.raises(ValueError):
         channels_create(token, "nameOfChannelThatIsDefinitelyTooLong", True)
 
 # Testing channel name that is significantly longer than 20 and private
-def test_channels_create_4(token):
+def test_channels_create_4():
     with pytest.raises(ValueError):
         channels_create(token, "nameOfChannelThatIsDefinitelyTooLong", False)
 
@@ -59,55 +59,55 @@ NEED TO DOUBLE CHECK THIS PART BECAUSE THEY DO NOT RAISE ANY ERRORS
 ###################################################################
 '''
 # Testing channel name that is exactly 20 characters long and Public
-def test_channels_create_5(token):
+def test_channels_create_5():
     channels_create(token, "nameOfChannelIs20xxx", True)
 
 # Testing channel name that is exactly 20 characters long and Private
-def test_channels_create_6(token):
+def test_channels_create_6():
     channels_create(token, "nameOfChannelIs20xxx", False)
 
 '''
 Testing channel names that are random symbols/numbers - not just characters
 '''
 # Testing numbers count as a character
-def test_channels_create_7(token):
+def test_channels_create_7():
     channels_create(token, "123456789", True)
 
 # Testing too many numbers will raise an error
-def test_channels_create_8(token):
+def test_channels_create_8():
     with pytest.raises(ValueError):
         channels_create(token, "1234567890123456789012345", True)
 
 #T Testing symbols will count as a character
-def test_channels_create_9(token):
+def test_channels_create_9():
     channels_create(token, "~!@#$%^&*()_-+=", False)
 
-def test_channels_create_10(token):
+def test_channels_create_10():
     channels_create(token, "[]{}\|;:',./<>?", False)
 
 # Testing space bar counts as a character
-def test_channels_create_11(token):
+def test_channels_create_11():
     channels_create(tokenm "        ", True)
 
 # Testing too many symbols will create an error
-def test_channels_create_12(token):
+def test_channels_create_12():
     with pytest.raises(ValueError):
         channels_create(token, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", False)
 
 # Testing a mix of letters and symbols
-def test_channels_create_13(token):
+def test_channels_create_13():
     channels_create(token, "name123!@#", True)
 
 # Testing a long string of letters and symbols
-def test_channels_create_14(token):
+def test_channels_create_14():
     with pytest.raises(ValueError):
         channels_create(token, "VeryLongName123456!@#$%^@!#", True)
 
 # Testing expected previous behaviour with a different token
-def test_channels_create_15(differentToken):
+def test_channels_create_15():
     channels_create(differentToken, "Name123!@#", False)
 
 # Testing long name with a different token
-def test_channels_create_16(differentToken):
+def test_channels_create_16():
     with pytest.raises(ValueError):
         channels_create(differentToken, "VeryLongName123456!@#$^$", False)

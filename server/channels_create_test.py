@@ -1,8 +1,10 @@
 import pytest
 
 '''
------------------ASSUMPTIONS--------------------
+####################### ASSUMPTIONS #####################
 The name of a channel should be at least one character long - you can't name a channel nothing?
+The channel ID will increase in number if created late
+e.g. channel_id1 created first will be lower than the channel_id2 created last
 '''
 
 

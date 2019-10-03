@@ -32,13 +32,11 @@ def test_channels_listall_3():
     channel_id3 = channels_create(token, "Name3", True)
     assert(channels_listall(token) == [{'id': channel_id1, 'name': "Name1"},
                                        {'id': channel_id2, 'name': "Name2"},
-                                       {'id': channel_id3, 'name': "Name3"}
-                                      ])
+                                       {'id': channel_id3, 'name': "Name3"}])
 
 # List of dictionaries with 2 channels, ensuring ascending order of channel_id
 def test_channels_listall_4():
     bigger_id = channels_create(token, "Name1", True)
     smaller_id = channels_create(token "Name2", True)
     assert(channels_listall(token) == [{'id': smaller_id, 'name': "Name2"},
-                                       {'id': bigger_id, 'name': "Name1"}
-                                       ])
+                                       {'id': bigger_id, 'name': "Name1"}])

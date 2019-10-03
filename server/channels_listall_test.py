@@ -5,8 +5,6 @@ import pytest
 Assume the order of the list of dictionaries is in ascending order of channel_id
 '''
 
-channels_create(token, name, is_public)
-
 # Provide a list of all channels (and their associated details)
 def channels_listall(token):
     pass # return {channels}  # list of dictionary with {id: ' ', name: ' '}

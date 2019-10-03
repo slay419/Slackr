@@ -4,13 +4,14 @@ import pytest
 '''
 ####################### ASSUMPTIONS ######################
 Assume you need to have joined the channel first before leaving
-Assume "Channel does not exist" means channels you have not joined yet
+Assume "Channel does not exist" means channels you have not joined yet OR
+channel_id hasn't been created yet
 '''
 
 def channel_leave(token, channel_id):
     if is_valid_channel(channel_id):
         pass
-    elif:
+    else:
         raise ValueError("Channel ID does NOT Exist")
     pass
 

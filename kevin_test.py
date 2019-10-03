@@ -1,7 +1,7 @@
 import pytest
 
 # Given a channel ID, the user removed as a member of this channel
-channel_leave(token, channel_id)
+channel_leave(token, channel_id)                    ################## DONE
 return NULL
 '''
 ValueError when:
@@ -40,7 +40,7 @@ AccessError when:
     the authorised user is not an owner of the slackr, or an owner of this channel
 '''
 # Provide a list of all channels (and their associated details) that the authorised user is part of
-channels_list(token)
+channels_list(token)                                                                                                 
 return {channels} # list of dictionary with {id: ' ', name: ' '}
 
 

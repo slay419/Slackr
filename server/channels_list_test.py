@@ -1,6 +1,12 @@
 
 import pytest
 
+'''
+####################### ASSUMPTIONS #####################
+Assume the order of the list of dictionaries is in ascending order of channel_id
+NOT the order joined
+'''
+
 # Provide a list of all channels (and their associated details) that the authorised user is part of
 def channels_list(token):
     pass # return {channels} # list of dictionary with {id: ' ', name: ' '}
@@ -61,6 +67,20 @@ def test_channel_list_7():
     channel_join(token, channel_id1)
     channel_join(token, channel_id2)
     channel_join(token, channel_id3)
+    assert(channels_list(token) == [{'id': channel_id1, 'name': "Name1"},
+                                     'id': channel_id2, 'name': "Name2"},
+                                     'id': channel_id3, 'name': "Name3"}])
+
+
+# Expecting the list of channels to be in order of channel_id, ignoring the order
+# it was joined in
+def test_channel_list_8():
+    channel_id1 = channels_create(token, "Name1", True)
+    channel_id2 = channels_create(token, "Name2", True)
+    channel_id3 = channels_create(token, "Name3", True)
+    channel_join(token, channel_id3)
+    channel_join(token, channel_id1)
+    channel_join(token, channel_id2)
     assert(channels_list(token) == [{'id': channel_id1, 'name': "Name1"},
                                      'id': channel_id2, 'name': "Name2"},
                                      'id': channel_id3, 'name': "Name3"}])

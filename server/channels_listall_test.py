@@ -3,6 +3,7 @@ import pytest
 '''
 ####################### ASSUMPTIONS #####################
 Assume the order of the list of dictionaries is in ascending order of channel_id
+i.e. order of channel_id created
 '''
 
 # Provide a list of all channels (and their associated details)
@@ -25,6 +26,13 @@ def test_channels_listall_2():
     channel_id1 = channels_create(token, "Name", True)
     assert(channels_listall(token) == [{'id': channel_id1, 'name': "Name"}])
 
+# List of dictionaries with 2 channels created assuming order of channel_id
+def test_channels_listall_2():
+    channel_id1 = channels_create(token, "Name1", True)
+    channel_id2 = channels_create(token, "Name2", True)
+    assert(channels_listall(token) == [{'id': channel_id1, 'name': "Name1"},
+                                       {'id': channel_id2, 'name': "Name2"}])
+
 # List of dictionaries with 3 channels created assuming order of channel_id
 def test_channels_listall_3():
     channel_id1 = channels_create(token, "Name1", True)
@@ -33,10 +41,3 @@ def test_channels_listall_3():
     assert(channels_listall(token) == [{'id': channel_id1, 'name': "Name1"},
                                        {'id': channel_id2, 'name': "Name2"},
                                        {'id': channel_id3, 'name': "Name3"}])
-
-# List of dictionaries with 2 channels, ensuring ascending order of channel_id
-def test_channels_listall_4():
-    bigger_id = channels_create(token, "Name1", True)
-    smaller_id = channels_create(token "Name2", True)
-    assert(channels_listall(token) == [{'id': smaller_id, 'name': "Name2"},
-                                       {'id': bigger_id, 'name': "Name1"}])

@@ -133,6 +133,7 @@ def test_channel_join_12():
         channel_join(u_token, channel_id)
 
 # Testing joining a few different channels as an admin
+def test_channel_join_13():
     channel_id1 = channels_create(owner_token, "Channel Name", True)
     channel_id2 = channels_create(owner_token, "Second Channel", True)
     channel_id3 = channels_create(owner_token, "Third Channel", True)

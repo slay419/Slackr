@@ -106,16 +106,3 @@ def test_channel_addowner_7():
     memberDict = auth_register("person2@gmail.com", "password", "person", "two")
     member_id = userDict1['id']
     assert(is_owner(member_id) == 0)
-
-
-
-
-
-
-
-
-
-
-
-
-#

@@ -16,25 +16,22 @@ Owner privileges cover ONLY their channel created
 '''
 
 def channel_removeowner(token, channel_id, u_id):
-    if is_valid_channel(channel_id):
-        pass
-    else:
+    if is_invalid_channel(channel_id):
+        # Cannot demote a user in a channel they have not joined or does not exist
         raise ValueError("Channel ID does NOT exist.")
-    if is_owner(u_id):
-        pass
-    else:
+    if is_owner(u_id) == 0:
+        # Cannot demote a user that is already an owner
         raise ValueError("User is NOT an owner")
-    if is_authorised(token):
-        pass
-    else:
+    if is_authorised(token) == 0:
+        # Cannot demote a user if the person conducting the action does not have the authority
         raise AccessError("User with token does not have the permission to perform this action.")
     pass
 
 '''
-Returns 1 if the channel id exists and is valid
-Returns 0 if the channel id does not exist and is invalid
+Returns 1 if the channel id does not exist and is invalid
+Returns 0 if the channel id otherwise
 '''
-def is_valid_channel(channel_id):
+def is_invalid_channel(channel_id):
     pass
 
 '''

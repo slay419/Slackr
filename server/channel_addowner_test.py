@@ -16,28 +16,22 @@ Owner privileges cover ONLY their channel created
 '''
 
 def channel_addowner(token, channel_id, u_id):
-    if is_valid_channel(channel_id):
-        pass
-    else:
-        # Cannot add an owner to a channel which does not exist
+    if is_invalid_channel(channel_id):
+        # Cannot promote a user in a channel they have not joined or does not exist 
         raise ValueError("Channel ID does NOT exist.")
-
     if is_owner(u_id):
         # Cannot promote a user that is already an owner
         raise ValueError("User is already an owner.")
-
-    if is_authorised(token):
-        pass
-    else:
+    if is_authorised(token) == 0:
         # Cannot promote a user if the person conducting the action does not have the authority
         raise AccessError("User with token does not have the permission to perform this action.")
     pass
 
 '''
-Returns 1 if the channel id exists and is valid
-Returns 0 if the channel id does not exist and is invalid
+Returns 1 if the channel id does not exist and is invalid
+Returns 0 if the channel id otherwise
 '''
-def is_valid_channel(channel_id):
+def is_invalid_channel(channel_id):
     pass
 
 '''

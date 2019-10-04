@@ -34,6 +34,8 @@ photo fits the screen or not, as well as if the dimensions are possible
 In this function, we assume
 -Assume channel_id is greater than 0 because at the current stage there is no 
 way to determine if the channel_id is valid
+-As the time_finish type is not specified, it was assumed to be of the "time"
+data type
 -We also assume the function returns a valid time of 15 minutes consistently
 
 30. standup_send:

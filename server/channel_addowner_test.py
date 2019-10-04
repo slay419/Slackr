@@ -82,9 +82,30 @@ def test_channel_addowner_4():
         channel_addowner(owner_token, channel_id, u_id)
 
 # Testing promoting a member if the person conducting the action does not have authority
+# e.g. promoting themself
 def test_channel_addowner_5():
     channel_id = channels_create(owner_token, "Channel Name", True)
-    
+    with pytest.raises(AccessError):
+        channel_addowner(u_token, channel_id, u_id)
+
+# Testing promoting a member if the person conducting the action does not have authority
+# e.g. member promoting another member
+def test_channel_addowner_6():
+    channel_id = channels_create(owner_token, "Channel Name", True)
+    newUserDict = auth_register("person2@gmail.com", "password", "person", "two")
+    u2_id = userDict1['id']
+    with pytest.raises(AccessError):
+        channel_addowner(u_token, channel_id, u2_id)
+
+# Testing promoting a member to owner under correct conditions
+def test_channel_addowner_7():
+    channel_id = channels_create(owner_token, "Channel Name", True)
+    channel_join(u_token, channel_id)
+    channel_addowner(owner_token, channel_id, u_id)
+    assert(is_owner(u_id))
+    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
+    member_id = userDict1['id']
+    assert(is_owner(member_id) == 0)
 
 
 

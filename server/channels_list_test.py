@@ -64,7 +64,7 @@ def test_channel_list_6():
     channel_join(u_token, channel_id1)
     channel_join(u_token, channel_id2)
     assert(channels_list(u_token) == [{'id': channel_id1, 'name': "Name1"},
-                                     'id': channel_id2, 'name': "Name2"}])
+                                      {'id': channel_id2, 'name': "Name2"}])
 
 # Expecting all channels to be returned if all have been created and joined
 def test_channel_list_7():
@@ -75,8 +75,8 @@ def test_channel_list_7():
     channel_join(u_token, channel_id2)
     channel_join(u_token, channel_id3)
     assert(channels_list(u_token) == [{'id': channel_id1, 'name': "Name1"},
-                                     'id': channel_id2, 'name': "Name2"},
-                                     'id': channel_id3, 'name': "Name3"}])
+                                      {'id': channel_id2, 'name': "Name2"},
+                                      {'id': channel_id3, 'name': "Name3"}])
 
 
 # Expecting the list of channels to be in order of channel_id, ignoring the order
@@ -89,5 +89,5 @@ def test_channel_list_8():
     channel_join(u_token, channel_id1)
     channel_join(u_token, channel_id2)
     assert(channels_list(u_token) == [{'id': channel_id1, 'name': "Name1"},
-                                     'id': channel_id2, 'name': "Name2"},
-                                     'id': channel_id3, 'name': "Name3"}])
+                                      {'id': channel_id2, 'name': "Name2"},
+                                      {'id': channel_id3, 'name': "Name3"}])

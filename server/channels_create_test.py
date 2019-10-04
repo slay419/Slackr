@@ -88,7 +88,7 @@ def test_channels_create_10():
 
 # Testing space bar counts as a character
 def test_channels_create_11():
-    channels_create(tokenm "        ", True)
+    channels_create(token, "        ", True)
 
 # Testing too many symbols will create an error
 def test_channels_create_12():

@@ -18,7 +18,7 @@ def channel_leave(token, channel_id):
 # Returns 1 if the channel id exists and is valid
 # Returns 0 if the channel id does not exist and is invalid
 def is_valid_channel(channel_id):
-    pass:
+    pass
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
@@ -104,5 +104,5 @@ def test_channel_leave_8():
     channel_join(u_token, channel_id4)
     channel_leave(u_token, channel_id3)
     assert(channels_list(u_token) == [{'id': channel_id1, 'name': "Channel Name"},
-                                     'id': channel_id2, 'name': "Second Channel"},
-                                     'id': channel_id4, 'name': "Fourth Channel"}])
+                                      {'id': channel_id2, 'name': "Second Channel"},
+                                      {'id': channel_id4, 'name': "Fourth Channel"}])

@@ -42,14 +42,14 @@ def test_channel_join_1():
 
 # Testing joining a channel with a different id to one that has been created
 def test_channel_join_2():
-    channel_id = channels_create(owner_token, "Name" True)
+    channel_id = channels_create(owner_token, "Name", True)
     invalid_channel_id = channel_id + 1
     with pytest.raises(ValueError):
         channel_join(u_token, invalid_channel_id)
 
 # Testing joining a channel you have already joined
 def test_channel_join_3():
-    channel_id = channels_create(owner_token, "Name" True)
+    channel_id = channels_create(owner_token, "Name", True)
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
         channel_join(u_token, channel_id)
@@ -61,7 +61,7 @@ def test_channel_join_4():
     channel_id3 = channels_create(owner_token, "Third Channel", True)
     invalid_channel_id = channel_id1 + channel_id2 + channel_id3
     with pytest.raises(ValueError):
-        channel_join(channels_create(u_token, invalid_channel_id)
+        channel_join(channels_create(u_token, invalid_channel_id))
 
 # Testing joining a channel already joined in a list of channels
 def test_channel_join_5():
@@ -76,7 +76,7 @@ def test_channel_join_5():
 
 # Testing joining a single channel already created
 def test_channel_join_6():
-    channel_id1 = channels_create(owner_token, "Name" True)
+    channel_id1 = channels_create(owner_token, "Name", True)
     channel_join(u_token, channel_id)
     assert(channels_list(u_token) == [{'id': channel_id1, 'name': "Name"}])
 

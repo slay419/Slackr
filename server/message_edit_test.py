@@ -17,7 +17,7 @@ def message_edit(token, message_id, message):
 #All test assume that user1 is a normal user and admin1 and admin2 are admins and owner1 is an owner of the channel	
 
 def test_message_edit_1():
-	adminDict1 = auth_register('adminsteven@gmail.com','adminhello123','adminSteven','Lay')
+    adminDict1 = auth_register('adminsteven@gmail.com','adminhello123','adminSteven','Lay')
 	channelDict1 = channels_create(user1, 'chat1',True)
 	admin1 = adminDict1['token']
 	channel1 = channelDict1['channel_id']

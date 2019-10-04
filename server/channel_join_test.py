@@ -22,7 +22,12 @@ def channel_join(token, channel_id):
         raise ValueError("Channel ID does NOT Exist")
     pass
 
-
+'''
+Returns 1 if the channel id exists and is valid
+Returns 0 if the channel id does not exist and is invalid
+'''
+def is_valid_channel(channel_id):
+    pass
 ######################## GLOBAL VARIABLES SETUP ######################
 
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")

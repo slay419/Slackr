@@ -10,8 +10,8 @@ the total number of messages in a channel.
 
 3. AttributeError is used as a temporary placeholder for AcessError.
 
-4. In tests where an some 'id' is required for input. In order to generate an 
-invalid 'id' special numbers such as 12345 have been used and assume to indicate
+4. In tests where an  'id' is required for input. In order to generate an 
+invalid 'id' special numbers such as 12345 have been used and assumed to indicate
 a channel or user id that does not exist.
 
 5. For the reset_password function 'invalidresetcode' is assumed to be an 

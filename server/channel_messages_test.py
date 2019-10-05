@@ -4,7 +4,6 @@ from channels_create_test import channels_create
 
 #Assuming there are 80 messages in the chat, since there is no function that
 #returns the number of messages in the chat
-#12345 is a channel id that does not exist
 #start must be atleast 0
 #AttributError is a placeholder for AccessError
 
@@ -25,33 +24,44 @@ channel_id = dict3['channel_id']
 def channel_messages(token, channel_id, start):
     pass
 
+#different cases where the user should be able to view the message
+
+#edge case, view from most recent message
 def test_channel_messages_1():
     channel_messages(token1, channel_id, 0)
 
+#view from  middle messages
 def test_channel_messages_2():
     channel_messages(token1, channel_id, 25)
 
 def test_channel_messages_3():
     channel_messages(token1, channel_id, 50)
 
+#view from very last message
 def test_channel_messages_4():
     channel_messages(token1, channel_id, 80)
 
+#start is greater than number of messages in channel
 def test_channel_messages_5():
     with pytest.raises(ValueError):
         channel_messages(token1, channel_id, 81)
 
+#channel_id does not exist, valid start index (edge case: 80)
 def test_channel_messages_6():
     with pytest.raises(ValueError):
-        channel_messages(token1, 12345, 80)
+        channel_messages(token1, channel_id + 1, 80)
 
+#both channel_d does not exist and invalid start index
 def test_channel_messages_7():
     with pytest.raises(ValueError):
-        channel_messages(token1, 12345, 81)
+        channel_messages(token1, channel_id + 1, 81)
 
+#channel_id does not exist valid start index (edge case: 0)
 def test_channel_messages_8():
     with pytest.raises(ValueError):
-        channel_messages(token2, 12345, 0)
+        channel_messages(token2, channel_id + 1, 0)
+
+#user is not a member of channel
 
 def test_channel_messages_9():
     with pytest.raises(AttributeError):

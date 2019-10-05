@@ -30,7 +30,17 @@ this time we will:
 4. Peer reveiew the code and conduct a second phase of testing.
 5. Move up to higher level functions and repeat steps 1 to 4
 
-Ofcourse it is important to consider that this is just a plan and we will 
+The Gantt Chart below captures the general timeline our team will aim to follow.
+![Gantt Chart](/gantt_chart.png)
+
+All members will be using an online version control platform - GitLab which
+wil ensure that work is reguarly stored in mutliple sources, both in the local
+and remote repositories. When writing the algortithms themeselves, members will script
+on their most coomforatble code editiors which may vary from vscode, notepadd++ 
+and sublime. Scheduled peer review meetings however, will ensure that the 
+overall formatting and structure of the code is consistent throughout the project.
+
+Ofcourse it is important to consider that this is a plan and we will 
 receive more information when iteration 2 is released, our weekly meetings wil 
 ensure that the team receptive to the new requirements and account for them in 
 our development approach.

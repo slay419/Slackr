@@ -24,25 +24,25 @@ the program. As such, we talked and communicated through the group chat to
 uniformly decide not only on the format and structure, but getting to terms with
 pytest and exceptions. 
 
-We also had difficulty syncronising our work and code across the unfamilar
+We also had difficulty syncronising our work and code across the unfamiliar
 platform of gitlab. We avoided this by using the web-interface and avoiding the
 terminal as necessary.
 
 Although the task was due on Sunday at 8pm, we collectivly agreed to move our
-due date forward to friday, in orded to create time and prevent procrastination.
-**This was the key to our organisation and effeciency** in completing our set work
+due date forward to Friday, in order to create time and prevent procrastination.
+**This was the key to our organisation and effeciently** in completing our set work
 
 From Wednesday to Friday, we spent writing tests for our 8 functions. In our 
 group call, we spent 3 hours peer reviewing and sorting through each other's 
-code in order to providede suggestions and improvements for our functions. After 
-our night meeting onf Friday, we realised the work had been split unevenly as 
+code in order to provide suggestions and improvements for our functions. After 
+our night meeting on Friday, we realised the work had been split unevenly as 
 the functions tasked to some of our members, required more work than others. We 
 also faced difficulties regarding the interpretation and clarity of the 
 specification provided, thus resorting to piazza to remedy questions.
 
 Thankfully, due to our premature due date, we could spend Saturday and Sunday,
 cleaning up and improving our code based on our peer feedback. We also had 
-difficulty syncronising our work and code across the unfamilar platform of 
+difficulty syncronising our work and code across the unfamiliar platform of 
 gitlab. We avoided this by using the web-interface and avoiding the terminal as 
 necessary.
 
@@ -59,16 +59,16 @@ approach was the biggest problem we faced as a group. Although we moved the due
 date forward, many of us expected to finish a lot earlier than our due date.
 However, our unfamiliarity with python and pytest, as well as a project on this
 size with a brand new approach, corroborated with time wasted and spent finding
-solutions and answers to unforseen questions.
+solutions and answers to unforeseen questions.
 
 ### Improvements
 Overall, in order to tackle the next iteration, **we unitedly concur to retain our focus on organisation** 
-as the most effective solution to unforseen challenges. From iteration 1,
+as the most effective solution to unforeseen challenges. From iteration 1,
 we comprehend the importance of underestimation, and its catastrophic effects on
 time management and expectation. As such, with our focus on organisation, we plan to familiarise ourselves with
 the functions that we need to produce. By organising and using a top-down 
 approach, we can split the functions down to understandable pieces, thus revealing
-any possible problems and appoint the reccomended ammount of time to solve.
+any possible problems and appoint the recommended amount of time to solve.
 
 
 

@@ -1,4 +1,4 @@
-#####As a user, I want access to account operations so I can manage my personalised profile#####
+**As a user, I want access to account operations so I can manage my personalised profile**
 
 As a user I want to be able to register an account to create my own personalised profile that others may recognise.
 (Assume I can create my own handle/nickname)
@@ -25,7 +25,7 @@ As a user, I want the ability to view others' profile, so that I can get to know
 
 As a admin, I want permission controls , so that I can set different users with different privileges and permissions 
 
-#####As a user, I want to access to channel operations so I can manage different social groups#####
+**As a user, I want to access to channel operations so I can manage different social groups**
 
 As a user I want the ability to create private channels, so that I can maintain confidentiality
 
@@ -44,7 +44,7 @@ As a user, I would like to view all the members in a channel so I can see who is
 
 As a user, I would like to view details of a channel so I can know what kind of topic the channel is about
 
-#####As a user, I want access to communication capabilities so I can express myself online#####
+**As a user, I want access to communication capabilities so I can express myself online**
 
 As a user, I want to send messages, so that I can communicate with other people on the platform
 

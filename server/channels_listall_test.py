@@ -23,7 +23,7 @@ owner_token2 = ownderDict['token']
 owner_id2 = ownerDict['u_id']
 
 userDict = auth_register("person1@gmail.com", "password", "person", "one")
-auth_login("person1@gmail.com", "password")
+userLogin = auth_login("person1@gmail.com", "password")
 u_token = userDict1['token']
 u_id = userDict1['u_id']
 

@@ -62,7 +62,7 @@ size with a brand new approach, corroborated with time wasted and spent finding
 solutions and answers to unforseen questions.
 
 ### Improvements
-Overall, in order to tackle the next iteration, **we unitedly concor to retain our focus on organisation** 
+Overall, in order to tackle the next iteration, **we unitedly concur to retain our focus on organisation** 
 as the most effective solution to unforseen challenges. From iteration 1,
 we comprehend the importance of underestimation, and its catastrophic effects on
 time management and expectation. As such, with our focus on organisation, we plan to familiarise ourselves with

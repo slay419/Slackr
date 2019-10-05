@@ -41,12 +41,12 @@ def is_invalid_channel(channel_id):
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
 ownerLogin = auth_login("owner@gmail.com", "password")
 owner_token = ownderDict['token']
-owner_id = ownerDict['id']
+owner_id = ownerDict['u_id']
 
 userDict = auth_register("person1@gmail.com", "password", "person", "one")
 userLogin = auth_login("person1@gmail.com", "password")
 u_token = userDict1['token']
-u_id = userDict1['id']
+u_id = userDict1['u_id']
 
 # Assume no channels have been created yet
 

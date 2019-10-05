@@ -20,7 +20,7 @@ Assume NONE is returned in handle_str field if no handle has been set
 
 
 
-#########################  ASSUMPTIONS FOR CHANNELS   ########################\
+#########################  ASSUMPTIONS FOR CHANNELS   ########################  
 1) The name of channels using `channels_create()` should be at least one character long.
 2) The channel ID number generated when using `channels_create()` will produce ID numbers in ascending order.
     - i.e. channel_id1 created first will have a lower number than channeld_id2 created later.

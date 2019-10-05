@@ -18,7 +18,7 @@ plan.
 
 ## Execution
 After the designation of work, many of us started on our activities on the 
-following day. The writing of test functions proved to be *our hardest challenge*
+following day. The writing of test functions proved to be **our hardest challenge**
 to overcome as it was the first time any of use had written tests before writing
 the program. As such, we talked and communicated through the group chat to 
 uniformly decide not only on the format and structure, but getting to terms with
@@ -30,7 +30,7 @@ terminal as necessary.
 
 Although the task was due on Sunday at 8pm, we collectivly agreed to move our
 due date forward to friday, in orded to create time and prevent procrastination.
-*This was the key to our organisation and effeciency* in completing our set work
+**This was the key to our organisation and effeciency** in completing our set work
 
 From Wednesday to Friday, we spent writing tests for our 8 functions. In our 
 group call, we spent 3 hours peer reviewing and sorting through each other's 
@@ -62,7 +62,7 @@ size with a brand new approach, corroborated with time wasted and spent finding
 solutions and answers to unforseen questions.
 
 ### Improvements
-Overall, in order to tackle the next iteration, *we unitedly concor to retain our focus on organisation* 
+Overall, in order to tackle the next iteration, **we unitedly concor to retain our focus on organisation** 
 as the most effective solution to unforseen challenges. From iteration 1,
 we comprehend the importance of underestimation, and its catastrophic effects on
 time management and expectation. As such, with our focus on organisation, we plan to familiarise ourselves with

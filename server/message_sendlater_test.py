@@ -1,9 +1,9 @@
-import datetime
 from auth_register_test         import auth_register
 from channels_create_test       import channels_create
 from channel_join_test          import channel_join
 from channel_addowner_test      import channel_addowner
 from error                      import AccessError
+import datetime
 import pytest
 
 

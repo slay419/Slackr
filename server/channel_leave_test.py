@@ -1,5 +1,4 @@
 from auth_register_test         import auth_register
-from auth_login_test            import auth_login
 from channels_create_test       import channels_create
 from channels_join_test         import channels_join
 from channels_list_test         import channels_list
@@ -31,12 +30,10 @@ def is_valid_channel(channel_id):
 ######################## GLOBAL VARIABLES SETUP ######################
 
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-ownerLogin = auth_login("owner@gmail.com", "password")
 owner_token = ownderDict['token']
 owner_id = ownerDict['u_id']
 
 userDict = auth_register("person1@gmail.com", "password", "person", "one")
-userLogin = auth_login("person1@gmail.com", "password")
 u_token = userDict1['token']
 u_id = userDict1['u_id']
 

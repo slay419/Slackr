@@ -1,5 +1,4 @@
 from auth_register_test         import auth_register
-from auth_login_test            import auth_login
 from channels_create_test       import channels_create
 from channels_join_test         import channels_join
 
@@ -18,17 +17,14 @@ def channels_listall(token):
 ######################## GLOBAL VARIABLES SETUP ######################
 
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-ownerLogin = auth_login("owner@gmail.com", "password")
 owner_token = ownderDict['token']
 owner_id = ownerDict['u_id']
 
 ownerDict2 = auth_register("owner2@gmail.com", "password", "owner2", "privileges")
-ownerLogin2 = auth_login("owner2@gmail.com", "password")
 owner_token2 = ownderDict['token']
 owner_id2 = ownerDict['u_id']
 
 userDict = auth_register("person1@gmail.com", "password", "person", "one")
-userLogin = auth_login("person1@gmail.com", "password")
 u_token = userDict1['token']
 u_id = userDict1['u_id']
 

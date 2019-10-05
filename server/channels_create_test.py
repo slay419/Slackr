@@ -1,5 +1,4 @@
 from auth_register_test     import auth_register
-from auth_login_test        import auth_login
 
 import pytest
 
@@ -19,7 +18,6 @@ def channels_create(token, name, is_public):
 ######################## GLOBAL VARIABLES SETUP ######################
 
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-ownerLogin = auth_login("owner@gmail.com", "password")
 owner_token = ownderDict['token']
 owner_id = ownerDict['u_id']
 
@@ -98,14 +96,12 @@ def test_channels_create_15():
 # Testing expected previous behaviour with a different token
 def test_channels_create_16():
     userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    userLogin = auth_login("person1@gmail.com", "password")
     different_token = userDict1['token']
     channel_id = channels_create(different_token, "Name123!@#", False)
 
 # Testing long name with a different token
 def test_channels_create_17():
     userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    userLogin = auth_login("person1@gmail.com", "password")
     different_token = userDict1['token']
     with pytest.raises(ValueError):
         channel_id = channels_create(different_token, "VeryLongName123456!@#$^$", False)

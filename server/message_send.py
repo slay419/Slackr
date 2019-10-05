@@ -1,7 +1,5 @@
-
 import pytest
 from auth_register_test import auth_register
-from auth_login_test import auth_login
 from channels_create_test import channels_create
 from channel_join_test import channel_join
 
@@ -21,8 +19,6 @@ userDict1 = auth_register('steven@gmail.com','hello123','Steven','Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
 
-auth_login('steven@gmail.com','hello123')
-
 channelDict1 = channels_create(user1,'chat1',True)
 channel1 = channelDict1['channel_id']
 
@@ -33,13 +29,6 @@ channel_join(user1,channel1)
 
 ##########################    END SETUP   ########################
 
-
-#possible errors:
-#Value error when:message to large
-#To test message_send, we need user token from auth register
-#auth_register(email,password,name_first,name_last) returns dict containing u_id, token
-#and a channel_id from channels_create
-#channels_create(token,name,is_public) returns dict containing id,name
 
 #Testing string 'hello'
 def test_message_send_1():

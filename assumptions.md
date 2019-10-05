@@ -1,15 +1,3 @@
-Add assumptions below:
-'''
-####################### STEVENS' ASSUMPTIONS #####################
-All test assume that nothing (users/channels/reacts/messages) exist prior to testing
-All test assume that user1 and user2 are normal users and admin1 and admin2 are admins
-It is assumed that messages sent must be at least one character long
-It is assumed that the admin is logged in and any other messages are coming from
-other users from different locations
-Assume reacts_id's exist from 0 -> 50
-Assume NONE is returned in handle_str field if no handle has been set
-'''
-
 
 #####################   **ASSUMPTIONS FOR ADMINS/OWNERS/USERS**   #################  
 1. Admins are the very FIRST person to ever sign up to Slackr.  
@@ -23,7 +11,7 @@ Assume NONE is returned in handle_str field if no handle has been set
 #########################  **ASSUMPTIONS FOR CHANNELS**   ########################  
 1. The name of channels using `channels_create()` should be at least one character long.  
 2. The channel ID number generated when using `channels_create()` will produce ID numbers in ascending order.  
-    - i.e. channel_id1 created first will have a lower number than channeld_id2 created later.   
+    - i.e. channel_id1 created first will have a lower number than channeld_id2 created later.
 3. The user who created the channel using `channels_create()` will have *Owner* privileges for that channel, and is automatically joined.  
 4. Channels must be created first before joining using `channel_join()`, and you cannot join a channel you are already in.  
     - i.e. "ValueError: Channel does not exist" means the channel has not been created yet, OR has already been joined by the user.  
@@ -33,4 +21,42 @@ Assume NONE is returned in handle_str field if no handle has been set
 7. Members can only be promoted by Owners or Admins using `channel_addowner()`.  
 8. An owner of a channel cannot be removed with `channel_removeowner()` if they are the only *Owner* left in the channel.  
 9. Assume the order of the lists returned by `channel_list()` and `channel_listall()` is determined by ascending order of channel ID.  
-    - i.e. The order of the lists are in order of when the channels were created, NOT joined by a user.  
+    - i.e. The order of the lists are in order of when the channels were created, NOT joined by a user.
+
+
+
+####################### ASSUMPTIONS FOR MESSAGES #####################
+1. It is assumed that messages sent must be at least one character long.  
+2. It is assumed that the admin is logged in and any other messages are coming from other users from different locations.  
+3. Assume react ID's exist from 0 to 50.  
+4. Assume `NONE` is returned in `handle_str` field if no handle has been set.  
+
+#########################  **ASSUMPTIONS FOR TESTS**   ########################  
+1. All tests assume that nothing (users/channels/reacts/messages) exist prior to testing
+2. All test assume that user1 and user2 are normal users and admin1 and admin2 are admins
+3. Some input names are taken literally. e.g. *validemail@gmail.com* is a valid
+and unique email address. This assumption was made because at the current stage
+we have no way of determining whether an email is already used or not.  
+4. AttributeError is used as a temporary placeholder for AcessError.  
+
+
+
+
+
+2. In channel_messages_test.py, the number of messages in a channel is assume
+to be 80. Again for testing purposes there currently is no way of determining
+the total number of messages in a channel.
+
+
+4. In tests where an  'id' is required for input. In order to generate an
+invalid 'id' special numbers such as 12345 have been used and assumed to indicate
+a channel or user id that does not exist.
+
+5. For the reset_password function 'invalidresetcode' is assumed to be an
+invalid reset code
+
+6. In general, it is assumed all inputs follow the format and data, type as
+as described.
+
+7. For 'channel_messages_test.py' it is assumed that the 'start' paramater is a
+positive integer.

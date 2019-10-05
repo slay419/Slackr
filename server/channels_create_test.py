@@ -1,3 +1,6 @@
+from auth_register_test     import auth_register
+from auth_login_test        import auth_login
+
 import pytest
 
 '''

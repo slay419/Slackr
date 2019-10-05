@@ -1,3 +1,8 @@
+from auth_register_test         import auth_register
+from auth_login_test            import auth_login
+from channels_create_test       import channels_create
+from channels_join_test         import channels_join
+
 import pytest
 
 '''
@@ -86,7 +91,7 @@ def test_channels_listall5():
     assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name1"},
                                          {'id': channel_id2, 'name': "Name2"},
                                          {'id': channel_id3, 'name': "Name3"}])
-                                         
+
 # Testing function lists all the channels created by different owners and are
 # the same for different users
 def test_channels_listall_6():

@@ -1,7 +1,5 @@
-
 import pytest
 from auth_register_test import auth_register
-from auth_login_test import auth_login
 from channels_create_test import channels_create
 from channel_join_test import channel_join
 
@@ -32,10 +30,6 @@ admin_id1 = adminDict1['u_id']
 adminDict2 = auth_register('admin2steven@gmail.com','adminhello123','adminSteven','Lay')
 admin2 = adminDict2['token']
 admin_id2 = adminDict2['u_id']
-
-auth_login('steven@gmail.com', 'hello123')
-auth_login('adminsteven@gmail.com', 'adminhello123')
-auth_login('admin2steven@gmail.com', 'adminhello123')
 
 channelDict1 = channels_create(user1, 'chat1', True)
 channel1 = channelDict1['channel_id']

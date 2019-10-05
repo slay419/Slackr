@@ -73,10 +73,23 @@ def test_channels_listall_4():
                                              {'id': channel_id2, 'name': "Name2"},
                                              {'id': channel_id3, 'name': "Name3"}])
 
-
+# Testing list should still be the same after joining a few
+def test_channels_listall5():
+    channel1 = channels_create(owner_token, "Name1", True)
+    channel2 = channels_create(owner_token, "Name2", True)
+    channel3 = channels_create(owner_token, "Name3", True)
+    channel_id1 = channel1['channel_id']
+    channel_id2 = channel2['channel_id']
+    channel_id3 = channel3['channel_id']
+    channel_join(u_token, channel_id1)
+    channel_join(u_token, channel_id2)
+    assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name1"},
+                                         {'id': channel_id2, 'name': "Name2"},
+                                         {'id': channel_id3, 'name': "Name3"}])
+                                         
 # Testing function lists all the channels created by different owners and are
 # the same for different users
-def test_channels_listall_5():
+def test_channels_listall_6():
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token2, "Name3", True)

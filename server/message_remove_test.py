@@ -49,10 +49,6 @@ channel_join(admin2,channel1)
 
 ##########################    END SETUP   ########################
 
-
-
-#All test assume that nothing (users/channels/reacts/messages) exist prior to testing
-
 	
 #Testing removing a message sent by an admin in a joined channel
 def test_message_remove_1():

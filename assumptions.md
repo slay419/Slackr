@@ -23,7 +23,7 @@ Assume NONE is returned in handle_str field if no handle has been set
 #########################  ASSUMPTIONS FOR CHANNELS   ########################  
 1) The name of channels using `channels_create()` should be at least one character long.  
 2) The channel ID number generated when using `channels_create()` will produce ID numbers in ascending order.  
-    - i.e. channel_id1 created first will have a lower number than channeld_id2 created later.  
+    - i.e. channel_id1 created first will have a lower number than channeld_id2 created later.   
 3) The user who created the channel using `channels_create()` will have *Owner* privileges for that channel, and is automatically joined.  
 4) Channels must be created first before joining using `channel_join()`, and you cannot join a channel you are already in.  
     - i.e. "ValueError: Channel does not exist" means the channel has not been created yet, OR has already been joined by the user.  

@@ -1,11 +1,11 @@
-#Reflection
+# Reflection
 
 Iteration 1 has been a resounding success for our team. We have successfully 
 completed the writing of test functions and assumptions as required for the
 specifications. Our organisational abilities have demonstrated we could complete
 this tasking efficiently in the time given.
 
-##Planning
+## Planning
 We began, as a group two days, after the specification was released, when all 
 four of use met up at the tutorial. As all of us knew each other previously, we
 could quickly the strength and weaknesses for our group and each other. We 
@@ -16,7 +16,7 @@ task. An example of this is Yasin, who took it upon himself to take initiative
 and lead the group in planning, thus being the perfect candidate for writing the
 plan.
 
-##Execution
+## Execution
 After the designation of work, many of us started on our activities on the 
 following day. The writing of test functions proved to be *our hardest challenge*
 to overcome as it was the first time any of use had written tests before writing
@@ -46,14 +46,14 @@ difficulty syncronising our work and code across the unfamilar platform of
 gitlab. We avoided this by using the web-interface and avoiding the terminal as 
 necessary.
 
-##Summary
-*What we did well*
+## Summary
+### What we did well
 All of us can agree that our choice to move the due date forward as well as our
 constant communication, was our saving grace regarding the completion of our
 tasks. It ensured we could stay as efficient and synchronised as possible,
 resulting in our consistently best result.
 
-*What we did poorly*
+### What we did poorly
 Our underestimation of the work ahead and unfamiliarity with the test-first
 approach was the biggest problem we faced as a group. Although we moved the due
 date forward, many of us expected to finish a lot earlier than our due date.
@@ -61,12 +61,11 @@ However, our unfamiliarity with python and pytest, as well as a project on this
 size with a brand new approach, corroborated with time wasted and spent finding
 solutions and answers to unforseen questions.
 
-*Improvements*
+### Improvements
 Overall, in order to tackle the next iteration, *we unitedly concor to retain our focus on organisation* 
 as the most effective solution to unforseen challenges. From iteration 1,
 we comprehend the importance of underestimation, and its catastrophic effects on
-time management and expectation.
-As such, with our focus on organisation, we plan to familiarise ourselves with
+time management and expectation. As such, with our focus on organisation, we plan to familiarise ourselves with
 the functions that we need to produce. By organising and using a top-down 
 approach, we can split the functions down to understandable pieces, thus revealing
 any possible problems and appoint the reccomended ammount of time to solve.

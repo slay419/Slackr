@@ -137,7 +137,7 @@ def test_channel_addowner_8():
     # Creating a new member
     memberDict = auth_register("person2@gmail.com", "password", "person", "two")
     newUserLogin = auth_login("person2@gmail.com", "password")
-    member_id = memberDict['id']
+    member_id = memberDict['u_id']
     member_token = memberDict['token']
     # End member setup
     channel_join(member_token, channel_id)
@@ -159,3 +159,15 @@ def test_channel_addowner_9():
     channel_join(member_token, channel_id)
     channel_addowner(u_token, channel_id, member_id)
     assert(is_owner(member_id))
+
+# Testing a user can be promoted to owner again after being demoted
+def test_channel_addowner_10():
+    channel = channels_create(owner_token, "Channel Name", True)
+    channel_id = channel['channel_id']
+    channel_join(u_token, channel_id)
+    channel_addowner(owner_token, channel_id, u_id)
+    assert(is_owner(u_id))
+    channel_removeowner(owner_token, channel_id, u_id)
+    assert(is_owner(u_id) == 0)
+    channel_addowner(owner_token, channel_id, u_id)
+    assert(is_owner(u_id))

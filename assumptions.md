@@ -12,11 +12,11 @@ Assume NONE is returned in handle_str field if no handle has been set
 
 
 #####################   ASSUMPTIONS FOR ADMINS/OWNERS/USERS   #################  
-1) Admins are the very FIRST person to ever sign up to Slackr  
-2) Owners are the very FIRST person to create a channel using `channels_create()`  
-3) Members are other users who can join channels  
-4) Owner privileges exist ONLY within the channel created  
-5) Admin privileges exist THROUGHOUT Slackr, i.e. every channel  
+1) Admins are the very FIRST person to ever sign up to Slackr.  
+2) Owners are the very FIRST person to create a channel using `channels_create()`.  
+3) Members are other users who can join channels.  
+4) Owner privileges exist ONLY within the channel created.  
+5) Admin privileges exist THROUGHOUT Slackr, i.e. every channel.  
 
 
 

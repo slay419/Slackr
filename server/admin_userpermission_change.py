@@ -55,7 +55,7 @@ invalid_u_id = 123
 # Test if the user id is not valid
 def admin_userpermission_change_1()
 	with pytest.raises(ValueError):
-		admin_userpermission_change(u_token,invalid_u_id, 1)
+		admin_userpermission_change(u_token, invalid_u_id, 1)
 
 # Test if the permission is not valid
 def admin_userpermission_change_2()

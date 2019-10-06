@@ -2,7 +2,7 @@
 
 When implementing the tests for the required functions, our team discovered 
 there existed inherent dependencies, where some functions would need to call
-others. For instance, tokens generated from the "auth_login" function were
+others. For instance, tokens generated from the `auth_login()` function were
 regularly used in the input for functions that interacted with channels and 
 messages. 
 
@@ -24,9 +24,9 @@ Overall, we anticipate the development stage will take around two weeks. During
 this time we plan to:
 
 1. Indivdually complete assigned base-level functions
-2. Conduct tests indivdually with the established testing functions from iter1
-3. Have a group meeting to discuss any issues/challenges and rectify them.
-4. Peer reveiew the code and conduct a second phase of testing.
+2. Conduct tests indivdually with the established testing functions from iteration 1
+3. Have a group meeting to discuss any issues/challenges and rectify them
+4. Peer reveiew the code and conduct a second phase of testing
 5. Move up to higher level functions and repeat steps 1 to 4
 
 The Gantt Chart below captures the general timeline our team will aim to follow.
@@ -40,6 +40,6 @@ and sublime. Scheduled peer review meetings however, will ensure that the
 overall formatting and structure of the code is consistent throughout the project.
 
 Ofcourse it is important to consider that this is a plan and we will 
-receive more information when iteration 2 is released, our weekly meetings wil 
-ensure that the team receptive to the new requirements and account for them in 
+receive more information when iteration 2 is released, our weekly meetings will 
+ensure that the team is receptive to the new requirements and account for them in 
 our development approach.

@@ -7,8 +7,8 @@ this tasking efficiently in the time given.
 
 ## Planning
 We began, as a group two days, after the specification was released, when all 
-four of use met up at the tutorial. As all of us knew each other previously, we
-could quickly the strength and weaknesses for our group and each other. We 
+four of us met up at the tutorial. As all of us knew each other previously, we
+could quickly gauge the strength and weaknesses for our group and each other. We 
 decided unanimously to start planning later that night, starting with a group
 call. From here, we split up the tasks evenly, as well as tasking additional
 specifications to group members which had more time and knew more about the 
@@ -19,7 +19,7 @@ plan.
 ## Execution
 After the designation of work, many of us started on our activities on the 
 following day. The writing of test functions proved to be **our hardest challenge**
-to overcome as it was the first time any of use had written tests before writing
+to overcome as it was the first time any of us had written tests before writing
 the program. As such, we talked and communicated through the group chat to 
 uniformly decide not only on the format and structure, but getting to terms with
 pytest and exceptions. 
@@ -30,7 +30,7 @@ that merges from our branches occured smoothly.
 
 Although the task was due on Sunday at 8pm, we collectivly agreed to move our
 due date forward to Friday, in order to create time and prevent procrastination.
-**This was the key to our organisation and effeciently** in completing our set work
+**This was the key to our organisation and effeciently** in completing our set work.
 
 From Wednesday to Friday, we spent writing tests for our 8 functions. In our 
 group call, we spent 3 hours peer reviewing and sorting through each other's 
@@ -38,11 +38,11 @@ code in order to provide suggestions and improvements for our functions. After
 our night meeting on Friday, we realised the work had been split unevenly as 
 the functions tasked to some of our members, required more work than others. We 
 also faced difficulties regarding the interpretation and clarity of the 
-specification provided, thus resorting to piazza to remedy questions.
+specification provided, thus resorting to Piazza to remedy questions.
 
-Thankfully, due to our premature due date, we could spend Saturday and Sunday,
+Thankfully, due to our premature due date, we could spend Saturday and Sunday
 cleaning up and improving our code based on our peer feedback. We also had 
-difficulty syncronising our work and code across the unfamiliar platform of 
+difficulty synchronising our work and code across the unfamiliar platform of 
 gitlab. We avoided this by using the web-interface and avoiding the terminal as 
 necessary.
 

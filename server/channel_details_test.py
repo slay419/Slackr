@@ -2,8 +2,7 @@ import pytest
 from auth_register_test import auth_register
 from channels_create_test import channels_create
 from channel_invite_test import channel_invite
-
-#Attribute error is used as a placeholder for AccessError
+from error import AccessError
 
 def channel_details(token, channel_id):
     pass
@@ -45,12 +44,12 @@ def test_channel_details_4():
 
 #user2 tries to view details of channel he is not part of
 def test_channel_details_5():
-    with pytest.raises(AttributeError):
+    with pytest.raises(AccessError):
         channel_details(token2, channel_id1)
 
 #user1 tries to view details of a channel he is not part of
 def test_channel_details_6():
-    with pytest.raises(AttributeError):
+    with pytest.raises(AccessError):
         channel_details(token1, channel_id2)
 
 #invite user2 to join channel and then view it.   

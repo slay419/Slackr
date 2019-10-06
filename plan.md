@@ -10,9 +10,8 @@ With this insight, for iteration 2 we plan to implement the functions that
 interact with the *registration* and *login* of the user first. Following that the 
 intention is to then implement the *user_profile* based functions which depend on
 the output of the initial functions. Next we plan to complete the *channel* and
-*message* based functions in the respective order. Finally we will finish the 
-remaining functions which will most likely be ones that are based on 
-transfering *permission* and *searching*.
+*message* based functions in the respective order. Finally we will conclude with the 
+remaining functions that are based on *permission* changing and *searching*.
 
 Our general planned structure is a bottom up methodology, such that we can test 
 the base level functions before moving up to test functions that call upon 
@@ -22,9 +21,9 @@ moving up to higher level functions. This will ensure there is no ambiguity in
 which function might have problems assosciated with it when debugging. 
 
 Overall, we anticipate the development stage will take around two weeks. During 
-this time we will:
+this time we plan to:
 
-1. Indivdually complete assgined base-level functions
+1. Indivdually complete assigned base-level functions
 2. Conduct tests indivdually with the established testing functions from iter1
 3. Have a group meeting to discuss any issues/challenges and rectify them.
 4. Peer reveiew the code and conduct a second phase of testing.
@@ -34,9 +33,9 @@ The Gantt Chart below captures the general timeline our team will aim to follow.
 ![Gantt Chart](/gantt_chart.png)
 
 All members will be using an online version control platform - GitLab which
-wil ensure that work is reguarly stored in mutliple sources, both in the local
-and remote repositories. When writing the algortithms themeselves, members will script
-on their most coomforatble code editiors which may vary from vscode, notepadd++ 
+will ensure that work is reguarly stored on mutliple sources, both in local
+and remote repositories. When writing the algorithms themeselves, members will script
+on their most comfortable code editiors which may vary from vscode, notepadd++ 
 and sublime. Scheduled peer review meetings however, will ensure that the 
 overall formatting and structure of the code is consistent throughout the project.
 

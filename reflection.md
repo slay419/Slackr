@@ -24,9 +24,9 @@ the program. As such, we talked and communicated through the group chat to
 uniformly decide not only on the format and structure, but getting to terms with
 pytest and exceptions. 
 
-We also had difficulty syncronising our work and code across the unfamiliar
-platform of gitlab. We avoided this by using the web-interface and avoiding the
-terminal as necessary.
+At times, we had difficulty synchronising our work and code across the unfamiliar
+platform of gitlab. This was resolved by using the web-interface to verify 
+that merges from our branches occured smoothly.
 
 Although the task was due on Sunday at 8pm, we collectivly agreed to move our
 due date forward to Friday, in order to create time and prevent procrastination.
@@ -66,7 +66,7 @@ Overall, in order to tackle the next iteration, **we unitedly concur to retain o
 as the most effective solution to unforeseen challenges. From iteration 1,
 we comprehend the importance of underestimation, and its catastrophic effects on
 time management and expectation. As such, with our focus on organisation, we plan to familiarise ourselves with
-the functions that we need to produce. By organising and using a top-down 
+the functions that we need to produce. By organising and using a bottom-up 
 approach, we can split the functions down to understandable pieces, thus revealing
 any possible problems and appoint the recommended amount of time to solve.
 

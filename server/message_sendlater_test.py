@@ -50,7 +50,7 @@ u_id = userDict1['u_id']
 def test_message_sendlater_1():
     future_time = datetime.datetime(3000, 1, 1)
     with pytest.raises(ValueError):
-        message_sendlater(u_token, 1234, "message" future_time)
+        message_sendlater(u_token, 1234, "message", future_time)
 
 # Testing sending a message to an incorrect channel id
 def test_message_sendlater_2():
@@ -68,7 +68,7 @@ def test_message_sendlater_3():
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
-        message_sendlater(u_token, channel_id, "message" future_time)
+        message_sendlater(u_token, channel_id, "message", future_time)
 
 # Testing sending a message that is more than 1000 characters long
 def test_message_sendlater_4():

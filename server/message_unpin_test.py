@@ -45,42 +45,42 @@ channel_join(admin1, channel1)
 def test_message_unpin_1():
 	message_send(admin1, channel1, 'testing 123')	
 	message_pin(admin1, 1)
-	mesage_unpin(admin1,1)
+	mesage_unpin(admin1, 1)
 
 #Testing admin pinning and unpinning message for a user
 def test_message_unpin_2():
 	message_send(user1, channel1, 'could an admin pin and unpin this message, it is very important')	
 	message_pin(admin1, 1)
-	message_unpin(admin1,1)
+	message_unpin(admin1, 1)
 
 #Testing admin2 unpinning a message that admin1 pinned
 def test_message_unpin_3():
 	message_send(admin1, channel1, 'apparently we can unpin each others messages')	
 	message_send(admin2, channel1, 'let me try that')	
 	message_pin(admin1, 1)
-	message_unpin(admin2,1)
+	message_unpin(admin2, 1)
 
 #Testing user unpinning a pinned message
 def test_message_unpin_4():
 	message_send(admin1, channel1, 'could a user try unpinning this message for test purposes')
-	message_pin(admin1,1)
-	with raises.pytest(ValueError)
+	message_pin(admin1, 1)
+	with raises.pytest(ValueError):
 		message_unpin(user1, 1)
 
 #Testing admin unpinning an unpinned message (unpinning twice)
 def test_message_unpin_5():
 	message_send(admin1, channel1, 'I wonder what happens if I unpin my own message twice')
 	message_pin(admin1, 1)
-	message_unpin(admin1,1)
-	with raises.pytest(ValueError)
+	message_unpin(admin1, 1)
+	with raises.pytest(ValueError):
 		message_unpin(admin1, 1)
 
 #Testing admin pinning an unpinned message
 def test_message_unpin_6():
     message_send(admin1, channel1, 'I wonder what happens if I unpin my own message twice')
-	message_pin(admin1, 1)
-	message_unpin(admin1,1)
-	message_pin(admin1, 1)
+    message_pin(admin1, 1)
+    message_unpin(admin1, 1)
+    message_pin(admin1, 1)
 
 #Testing unpinning message that doesn't exist
 def test_message_unpin_7():
@@ -88,5 +88,5 @@ def test_message_unpin_7():
 	channelDict1 = channels_create(user1, 'chat1',True)
 	admin1 = adminDict1['token']
 	channel1 = channelDict1['channel_id']
-	with raises.pytest(ValueError)
+	with raises.pytest(ValueError):
 		message_unpin(admin1, 1)

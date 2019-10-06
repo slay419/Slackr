@@ -101,7 +101,7 @@ def test_channels_listall_6():
     channel_id4 = channel4['channel_id']
     assert(channels_listall(owner_token) == [{'id': channel_id1, 'name': "Name1"},
                                              {'id': channel_id2, 'name': "Name2"},
-                                             {'id': channel_id3, 'name': "Name3"}
+                                             {'id': channel_id3, 'name': "Name3"},
                                              {'id': channel_id4, 'name': "Name4"}])
     assert(channels_listall(owner_token) == channels_listall(owner_token2))
     assert(channels_listall(owner_token) == channels_listall(u_token))

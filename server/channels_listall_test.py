@@ -2,7 +2,7 @@ from auth_register_test         import auth_register
 from channels_create            import channels_create
 #from channels_join_test         import channels_join
 from channels_listall           import channels_listall
-import config
+import data
 
 import pytest
 
@@ -38,19 +38,19 @@ u_id = 6
 
 # Empty list of channels if none have been created yet
 def test_channels_listall_1():
-    config.reset_channel()
+    data.reset_channel()
     assert(channels_listall(u_token) == [])
 
 # List with one dictionary only if only one channel has been created
 def test_channels_listall_2():
-    config.reset_channel()
+    data.reset_channel()
     channel1 = channels_create(owner_token, "Name", True)
     channel_id1 = channel1['id']
     assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name"}])
 
 # List of dictionaries with 2 channels created assuming order of channel id
 def test_channels_listall_3():
-    config.reset_channel()
+    data.reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel_id1 = channel1['id']
@@ -60,7 +60,7 @@ def test_channels_listall_3():
 
 # List of dictionaries with 3 channels created assuming order of channel id
 def test_channels_listall_4():
-    config.reset_channel()
+    data.reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
@@ -74,7 +74,7 @@ def test_channels_listall_4():
 # Testing the owner of the channel should also have the same list_all output as
 # a member
 def test_channels_listall_5():
-    config.reset_channel()
+    data.reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
@@ -87,7 +87,7 @@ def test_channels_listall_5():
 
 # Testing list should still be the same after joining a few
 def test_channels_listall_6():
-    config.reset_channel()
+    data.reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
@@ -104,7 +104,7 @@ def test_channels_listall_6():
 # Testing function lists all the channels created by different owners and are
 # the same for different users
 def test_channels_listall_7():
-    config.reset_channel()
+    data.reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token2, "Name3", True)

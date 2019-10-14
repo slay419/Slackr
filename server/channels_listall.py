@@ -1,15 +1,20 @@
-import config
+import data
+import copy
 from channels_create import channels_create
 
 # Provide a list of all channels (and their associated details)
 def channels_listall(token):
-    return config.GLOBAL_CHANNELS
+    channels_list = copy.deepcopy(data.CHANNELS_INFO)
+    for dict in channels_list:
+        del dict['is_public']
+
+    return channels_list
 
 
      # return {channels}  # list of dictionary with {id: ' ', name: ' '}
 
-'''
-print(channels_listall(2))
+
+# print(channels_listall(2))
 owner_token = 1
 
 
@@ -22,4 +27,3 @@ channel_id2 = channel2['id']
 channel_id3 = channel3['id']
 
 print(channels_listall(owner_token))
-'''

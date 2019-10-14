@@ -1,4 +1,4 @@
-import config
+import data
 '''
 Very basic start to creating channels
 '''
@@ -10,19 +10,28 @@ def channels_create(token, name, is_public):
         raise ValueError("Name of channel is longer than 20 characters.")
 
     # Give the channel an ID which corresponds to the number created e.g. 1st channel is ID1 ...
-    channel_id = len(config.GLOBAL_CHANNELS) + 1
-    channel_dict = {'id': channel_id}
-    # Create a new dict with name field to append to global variable
-    new_dict = channel_dict
-    new_dict.update({'name': name})
-    # append dictionary to a global variable
-    config.GLOBAL_CHANNELS.append(new_dict)
+    channel_id = len(data.CHANNELS_INFO) + 1
 
-    return channel_dict
+    # Create a new dictionary with the channel information and append to global variabe
+    new_channel_dict = {'id': channel_id, 'name': name, 'is_public': is_public}
+    data.CHANNELS_INFO.append(new_channel_dict)
+
+    # return a dictionary of channel id
+    return {'id': channel_id}
+
 '''
-print(config.GLOBAL_CHANNELS)
-test_dict = channels_create(1, "Testing Name", True)
-print(config.GLOBAL_CHANNELS)
-test_dict = channels_create(1, "Testing Name2", True)
-print(config.GLOBAL_CHANNELS)
+test_dict = channels_create(1, "ONE", True)
+test_dict2 = channels_create(1, "TWO", False)
+test_dict3 = channels_create(1, "THREE", False)
+
+print(data.CHANNELS_INFO)
+
+def is_public(channel_id):
+    for dict in data.CHANNELS_INFO:
+        if dict.get('id') == channel_id:
+            return dict.get('is_public')
+
+    return False
+
+print(is_public(test_dict['id']))
 '''

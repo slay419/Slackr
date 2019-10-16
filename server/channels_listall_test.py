@@ -2,7 +2,7 @@ from auth_register_test         import auth_register
 from channels_create            import channels_create
 #from channels_join_test         import channels_join
 from channels_listall           import channels_listall
-import data
+from data import *
 
 import pytest
 
@@ -38,84 +38,84 @@ u_id = 6
 
 # Empty list of channels if none have been created yet
 def test_channels_listall_1():
-    data.reset_channel()
+    reset_channel()
     assert(channels_listall(u_token) == [])
 
 # List with one dictionary only if only one channel has been created
 def test_channels_listall_2():
-    data.reset_channel()
+    reset_channel()
     channel1 = channels_create(owner_token, "Name", True)
-    channel_id1 = channel1['id']
-    assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name"}])
+    channel_id1 = channel1['channel_id']
+    assert(channels_listall(u_token) == [{'channel_id': channel_id1, 'name': "Name"}])
 
 # List of dictionaries with 2 channels created assuming order of channel id
 def test_channels_listall_3():
-    data.reset_channel()
+    reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
-    channel_id1 = channel1['id']
-    channel_id2 = channel2['id']
-    assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name1"},
-                                         {'id': channel_id2, 'name': "Name2"}])
+    channel_id1 = channel1['channel_id']
+    channel_id2 = channel2['channel_id']
+    assert(channels_listall(u_token) == [{'channel_id': channel_id1, 'name': "Name1"},
+                                         {'channel_id': channel_id2, 'name': "Name2"}])
 
 # List of dictionaries with 3 channels created assuming order of channel id
 def test_channels_listall_4():
-    data.reset_channel()
+    reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
-    channel_id1 = channel1['id']
-    channel_id2 = channel2['id']
-    channel_id3 = channel3['id']
-    assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name1"},
-                                         {'id': channel_id2, 'name': "Name2"},
-                                         {'id': channel_id3, 'name': "Name3"}])
+    channel_id1 = channel1['channel_id']
+    channel_id2 = channel2['channel_id']
+    channel_id3 = channel3['channel_id']
+    assert(channels_listall(u_token) == [{'channel_id': channel_id1, 'name': "Name1"},
+                                         {'channel_id': channel_id2, 'name': "Name2"},
+                                         {'channel_id': channel_id3, 'name': "Name3"}])
 
 # Testing the owner of the channel should also have the same list_all output as
 # a member
 def test_channels_listall_5():
-    data.reset_channel()
+    reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
-    channel_id1 = channel1['id']
-    channel_id2 = channel2['id']
-    channel_id3 = channel3['id']
-    assert(channels_listall(owner_token) == [{'id': channel_id1, 'name': "Name1"},
-                                             {'id': channel_id2, 'name': "Name2"},
-                                             {'id': channel_id3, 'name': "Name3"}])
+    channel_id1 = channel1['channel_id']
+    channel_id2 = channel2['channel_id']
+    channel_id3 = channel3['channel_id']
+    assert(channels_listall(owner_token) == [{'channel_id': channel_id1, 'name': "Name1"},
+                                             {'channel_id': channel_id2, 'name': "Name2"},
+                                             {'channel_id': channel_id3, 'name': "Name3"}])
 
 # Testing list should still be the same after joining a few
 def test_channels_listall_6():
-    data.reset_channel()
+    reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
-    channel_id1 = channel1['id']
-    channel_id2 = channel2['id']
-    channel_id3 = channel3['id']
+    channel_id1 = channel1['channel_id']
+    channel_id2 = channel2['channel_id']
+    channel_id3 = channel3['channel_id']
     channel_join(u_token, channel_id1)
     channel_join(u_token, channel_id2)
-    assert(channels_listall(u_token) == [{'id': channel_id1, 'name': "Name1"},
-                                         {'id': channel_id2, 'name': "Name2"},
-                                         {'id': channel_id3, 'name': "Name3"}])
+    assert(channels_listall(u_token) == [{'channel_id': channel_id1, 'name': "Name1"},
+                                         {'channel_id': channel_id2, 'name': "Name2"},
+                                         {'channel_id': channel_id3, 'name': "Name3"}])
 
 
 # Testing function lists all the channels created by different owners and are
 # the same for different users
 def test_channels_listall_7():
-    data.reset_channel()
+    reset_channel()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token2, "Name3", True)
     channel4 = channels_create(owner_token2, "Name4", True)
-    channel_id1 = channel1['id']
-    channel_id2 = channel2['id']
-    channel_id3 = channel3['id']
-    channel_id4 = channel4['id']
-    assert(channels_listall(owner_token) == [{'id': channel_id1, 'name': "Name1"},
-                                             {'id': channel_id2, 'name': "Name2"},
-                                             {'id': channel_id3, 'name': "Name3"},
-                                             {'id': channel_id4, 'name': "Name4"}])
+    channel_id1 = channel1['channel_id']
+    channel_id2 = channel2['channel_id']
+    channel_id3 = channel3['channel_id']
+    channel_id4 = channel4['channel_id']
+    assert(channels_listall(owner_token) == [{'channel_id': channel_id1, 'name': "Name1"},
+                                             {'channel_id': channel_id2, 'name': "Name2"},
+                                             {'channel_id': channel_id3, 'name': "Name3"},
+                                             {'channel_id': channel_id4, 'name': "Name4"}])
     assert(channels_listall(owner_token) == channels_listall(owner_token2))
     assert(channels_listall(owner_token) == channels_listall(u_token))

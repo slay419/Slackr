@@ -8,10 +8,13 @@ File of global variables to be used by other functions
 USERS_LIST = [
     {'email': 'kevin@gmail.com', 'password': 'passwordkevin',
      'name_first': 'kevin', 'name_last': 'chau', 'u_id': 1, 'token': 'token1'},
+
     {'email': 'steven@gmail.com', 'password': 'passwordsteven',
      'name_first': 'steven', 'name_last': 'lay', 'u_id': 2, 'token': 'token2'},
+
     {'email': 'yasin@gmail.com', 'password': 'passwordyasin',
      'name_first': 'yasin', 'name_last': 'khan', 'u_id': 3, 'token': 'token3'},
+     
     {'email': 'peter@gmail.com', 'password': 'passwordpeter',
      'name_first': 'peter', 'name_last': 'chen', 'u_id': 4, 'token': 'token4'}
 ]

@@ -11,7 +11,7 @@ regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 SECRET = "daenerys"
 data = {
     'users' : [],
-    'channels' : ['''' {'channel_id' : channel_id , 'owners' : [u_id1, u_id2...]members : [u_id, u_id2....], }, {} ...''']
+    'channels' : ['''' {'channel_id' : channel_id , 'owners' : [u_id1, u_id2...]members : [u_id, u_id2....], 'details' : [...] }, {} ...''']
 }
 #GlOBAL VARIABLES
 

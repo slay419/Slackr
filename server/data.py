@@ -21,23 +21,12 @@ def get_users():
     return USERS_LIST
 
 # List of channel info e.g. [id: 1, name: "channelname", is_public: True]
-CHANNELS_INFO = []
-
-# list of dictionaries stored globally
 CHANNELS_LIST = []
 
 def get_channels():
     global CHANNELS_LIST
     return CHANNELS_LIST
 
-# list of user tokens with a dictionary of user id and channels they have joined
-# e.g. [{token: 1, channels: [channel1, channel2]}]
-TOKEN_LIST = []
-
-
-# List of channel ID's and if they are private or not
-# e.g. [{id: 1, public: True}, {id: 2, public: False}]
-IS_PUBLIC_LIST = []
 
 '''
 empties the list of channels for debugging/testing

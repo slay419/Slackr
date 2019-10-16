@@ -1,11 +1,11 @@
 import pytest
 from auth_login_test import auth_login
 from channels_create_test import channels_create
+from error import AcessError
 
 #Assuming there are 80 messages in the chat, since there is no function that
 #returns the number of messages in the chat
 #start must be atleast 0
-#AttributError is a placeholder for AccessError
 
 
 #SETUP BEGIN
@@ -64,13 +64,13 @@ def test_channel_messages_8():
 #user is not a member of channel
 
 def test_channel_messages_9():
-    with pytest.raises(AttributeError):
+    with pytest.raises(AccessError):
         channel_messages(token2, channel_id, 0)
 
 def test_channel_messages_10():
-    with pytest.raises(AttributeError):
+    with pytest.raises(AccessError):
         channel_messages(token2, channel_id, 81)
 
 def test_channel_messages_11():
-    with pytest.raises(AttributeError):
+    with pytest.raises(AccessError):
         channel_messages(token2, channel_id, 50)

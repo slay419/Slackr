@@ -1,4 +1,3 @@
-
 **ASSUMPTIONS FOR ADMINS/OWNERS/USERS**  
 1. Admins are the very FIRST person to ever sign up to Slackr.  
 2. Owners are the very FIRST person to create a channel.
@@ -56,19 +55,13 @@
 **ASSUMPTIONS FOR TESTS**  
 1. All tests assume that nothing (users/channels/reacts/messages) exist prior to testing
 2. All test assume that user1 and user2 are normal users and admin1 and admin2 are admins
-3. Some input names are taken literally. e.g. *validemail@gmail.com* is a valid
-and unique email address. This assumption was made because at the current stage
-we have no way of determining whether an email is already used or not.  
-4. `AttributeError` is used as a temporary placeholder for `AcessError`.  
-5. For tests where an 'id' is required for input: in order to generate an
+3. For tests where an 'id' is required for input: in order to generate an
 invalid 'id', special numbers such as '12345' have been used and assumed to indicate
 a channel or user id that has not been created yet.  
-6. For the `reset_password()` function 'invalidresetcode' is assumed to be an
-invalid reset code.  
-7. In general, it is assumed all inputs follow the format and data, type as
-as described.
-8. In `channel_messages_test()`, the number of messages in a channel is assumed
+4. For the `reset_password()` function 'invalidresetcode' is assumed to be an
+invalid reset code.
+5. In `channel_messages_test()`, the number of messages in a channel is assumed
 to be 80. For testing purposes there currently is no way of determining
 the total number of messages in a channel.
-9. In `admin_userpermission_change()`, the `permission_id` parameter is either 1, 2, or 3 as specified by the data table. This function will also not produce an error if the permission change is the same.  
-10. Assume all time variables are returned as a `datetime` object in `standup_start()` & `standup_send()`.
+6. In `admin_userpermission_change()`, the `permission_id` parameter is either 1, 2, or 3 as specified by the data table. This function will also not produce an error if the permission change is the same.  
+7. Assume all time variables are returned as a `datetime` object in `standup_start()` & `standup_send()`.

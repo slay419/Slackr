@@ -51,17 +51,17 @@ def test_message_pin_2():
 #Testing user pinning another persons message (an admins)
 def test_message_pin_3():
 	message_send(admin1, channel1, 'could a user pin this message for test purposes')	
-	with raises.pytest(ValueError)
+	with raises.pytest(ValueError):
 		message_pin(user1, 1)
 
 #Testing admin pinning an already pinned message
 def test_message_pin_4():
 	message_send(admin1, channel1, 'I wonder what happens if I pin my own message twice')
 	message_pin(admin1, 1)
-	with raises.pytest(ValueError)
+	with raises.pytest(ValueError):
 		message_pin(admin1, 1)
 
 #Testing admin pinning message that doesn't exist
 def test_message_pin_5():
-	with raises.pytest(ValueError)
+	with raises.pytest(ValueError):
 		message_pin(admin1, 1)

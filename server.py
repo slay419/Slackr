@@ -126,6 +126,10 @@ def invite():
 
     inv_u_id = decode_token(token)
 
+    if (u_id == inv_u_id) {
+        return send_error('cannot invite self')
+    }
+
     for channel in data['channels']:
         if channel_id == channel['channel_id']:
             if (inv_u_id not in channel['owners']) {
@@ -133,7 +137,7 @@ def invite():
             }
             for user in channel['members']:
                 if u_id = user:
-                    return send_error('user already exists')
+                    return send_error('user already part of channel')
             channel['members'].append(u_id)
             return send_sucess({})
     return send_error({'channel id does not exist'})

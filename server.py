@@ -241,8 +241,8 @@ def listall():
         channels_list.append(dict)
 
 
-    print channels_list
-    print data
+    print(channels_list)
+    print(data)
     return send_sucess(channels_list)
 
 

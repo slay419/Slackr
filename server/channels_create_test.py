@@ -1,5 +1,5 @@
 from auth_register_test     import auth_register
-
+from channels_create        import channels_create
 import pytest
 
 '''
@@ -8,12 +8,6 @@ The name of a channel should be at least one character long - you can't name a c
 The channel ID will increase in number if created late
 e.g. channel_id1 created first will be lower than the channel_id2 created last
 '''
-
-
-def channels_create(token, name, is_public):
-    if len(name) > 20:
-        raise ValueError("Name of channel is longer than 20 characters.")
-    return {'channel_id': channel_id}
 
 ######################## GLOBAL VARIABLES SETUP ######################
 

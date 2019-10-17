@@ -30,8 +30,8 @@ def get_data():
     return data
 
 #abstraction for returning json string
-def send_sucess(data):
-    return dumps(data)
+def send_sucess(input):
+    return dumps(input)
 
 def send_error(message):
     return dumps({
@@ -73,7 +73,7 @@ def create():
     else:
         return send_error('invalid email')
 
-    if len(password < 6): #rules for length of pasword
+    if len(password) < 6: #rules for length of pasword
         return send_error('password too short')
 
 

@@ -57,35 +57,42 @@ def hash_password(password):
 #REGISTER
 @APP.route('/auth/register', methods = ['POST'])
 def create():
-    data = get_data()
+    
     email = request.form.get('email') #get email
+    password = request.form.get('password') # get password
+    name_first = request.form.get('name_first') #get first name
+    name_last = request.form.get('name_last') #get last name
 
+
+    data = get_data()
     #check if email already exist
     if valid_email(email) == True: 
-        for user in dict['users']:
+        for user in data['users']:
             if email == user['email']:
                 return send_error('already used email')
     else:
         return send_error('invalid email')
 
-    password = request.form.get('password') # get password
-
     if len(password < 6): #rules for length of pasword
         return send_error('password too short')
 
 
-    name_first = request.form.get('name_first') #get first name
-    name_last = request.form.get('name_last') #get last name
-
     if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50: #rules for length of name (first and last)
         return send_error('names too long/short')
-    
 
-
-    handle = 
+    handle = ''.join((name_last, name_last))
+    for user in data['users']:
+        if handle == user['handle']:
+            handle += str(1 + len(data['users']))
 
     hashedPassword = hash_password(password)
-
+    u_id = 101 + len(data['users'])
+    token = generate_token(u_id)
+    
+    if len(data['users']) == 0:
+        permission_id = 1
+    else:
+        permission_id = 3
 
 
     #append all relevant information to users dictionary
@@ -94,32 +101,36 @@ def create():
         'password' : hashedPassword,
         'name_first' : name_first,
         'name_last' : name_last,
-        'u_id': len(101 + len(data['users'])),
-        'permission_id' : 3,
+        'u_id': u_id,
+        'permission_id' : permission_id,
         'handle' : handle,
-        'profile' : None
+        'token'  : token,
+        'profile' : None,
+        'is_logged' : False
     })
     return send_sucess({ #return
-        'u_id': len(101 + len(data['users'])),
-        'token' : generate_token(email)
+        'u_id': u_id,
+        'token' : token
         })
 
 #LOGIN 
 @APP.route('/login', methods = ['PUT'])
 def connect():
-    data = get_data()
+
     email = request.form.get('email') #get email
     password = request.form.get('password') #get password
 
+    data = get_data()
     if valid_email(email) == False: #check valid email
         return send_error('invalid email')
 
     #check if email exists and if so check if password matches
     for user in data['users']:
         if user['email'] == email and hash_password(user['password']) == hash_password(password):
+            user['is_logged'] = True
             return send_sucess({
                 'u_id' : user['u_id'],
-                'token': generate_token('u_id')
+                'token': generate_token(user['u_id'])
             })
 
     return send_error('email does not exist or password is incorrect')
@@ -141,8 +152,6 @@ def invite():
 
     for channel in data['channels']:
         if channel_id == channel['channel_id']:
-            if inv_u_id not in channel['owners']:
-                return send_error('invalid user id (not owner)')
             for user in channel['members']:
                 if u_id == user:
                     return send_error('user already part of channel')
@@ -150,8 +159,27 @@ def invite():
             return send_sucess({})
     return send_error({'channel id does not exist'})
 
+#JOIN
+@APP.route('/channel/join', methods = ['POST'])
+def join():
+    data = get_data()
 
+    token = request.form.get('token') #get token
+    channel_id = request.form.get('channel_id') #get channel_id
 
+    u_id = decode_token(token)
+
+    for channel in data['channels']:
+        if channel_id == channel['channel_id']:
+            for user in data['users']:
+                if u_id == user['u_id'] and user['permission_id'] != 3:
+                    channel['members'].append(u_id)
+                elif u_id == user['u_id'] and user['permission_id'] == 3 and channel['is_public'] == True:
+                    channel['members'].append(u_id)
+                else:
+                    return send_error('user does not have rightts')
+            return send_sucess({})
+    return send_error({'channel id does not exist'})
 
 if __name__ == "__main__":
     APP.run(port = 2000)

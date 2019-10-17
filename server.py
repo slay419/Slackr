@@ -44,7 +44,7 @@ def send_error(message):
 #encodes token given string and SECRET
 def generate_token(string):
     global SECRET
-    return jwt.encode({'string' : string}, SECRET, algorithm='HS256')
+    return jwt.encode({'string' : string}, SECRET, algorithm='HS256').decode('ascii')
 
 #decodes token given string and SECRET
 def decode_token(token):
@@ -140,7 +140,7 @@ def connect():
 
     #check if email exists and if so check if password matches
     for user in data['users']:
-        if user['email'] == email and hash_password(user['password']) == hash_password(password):
+        if user['email'] == email and (user['password']) == hash_password(password):
             user['is_logged'] = True
             return send_sucess({
                 'u_id' : user['u_id'],
@@ -227,7 +227,7 @@ def channel_create():
 
 @APP.route('/channels/listall', methods = ['GET'])
 def listall():
-    token = request.form.get('token')
+    token = request.args.get('token')
     data = get_data()
     if not is_logged_in(token):
         return send_error("User is not logged in")
@@ -245,6 +245,24 @@ def listall():
     print(data)
     return send_sucess(channels_list)
 
+
+@APP.route('/channels/list', methods = ['GET'])
+def list():
+    data = get_data()
+    token = request.args.get('token')
+    if not is_logged_in(token):
+        return send_error("User is not logged in")
+
+    u_id = decode_token(token)
+    channels_list = []
+    for channels in data['channels']:
+        if u_id in channels['members'] or u_id in channels['owners']:
+            channels_list.append({
+                'channel_id': channels['channel_id'],
+                'name': channels['name']
+            })
+
+    return send_sucess(channels_list)
 
 
 

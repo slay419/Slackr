@@ -80,6 +80,8 @@ def create():
         'name_last' : name_last,
         'u_id': 101 + len(data['users'])
     })
+
+    print(data)
     return send_sucess({
         'u_id': 101 + len(data['users']),
         'token': generate_token(email)

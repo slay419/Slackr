@@ -14,7 +14,7 @@ USERS_LIST = [
 
     {'email': 'yasin@gmail.com', 'password': 'passwordyasin',
      'name_first': 'yasin', 'name_last': 'khan', 'u_id': 3, 'token': 'token3'},
-     
+
     {'email': 'peter@gmail.com', 'password': 'passwordpeter',
      'name_first': 'peter', 'name_last': 'chen', 'u_id': 4, 'token': 'token4'}
 ]

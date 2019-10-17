@@ -63,7 +63,7 @@ def create():
     #check if email already exist
     if valid_email(email) == True: 
         for user in dict['users']:
-            if email == user['email']
+            if email == user['email']:
                 return send_error('already used email')
     else:
         return send_error('invalid email')
@@ -73,25 +73,34 @@ def create():
     if len(password < 6): #rules for length of pasword
         return send_error('password too short')
 
+
     name_first = request.form.get('name_first') #get first name
     name_last = request.form.get('name_last') #get last name
 
-    if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50 { #rules for length of name (first and last)
+    if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50: #rules for length of name (first and last)
         return send_error('names too long/short')
-    }
+    
+
+
+    handle = 
 
     hashedPassword = hash_password(password)
+
+
 
     #append all relevant information to users dictionary
     data['users'].append({
         'email' : email,
         'password' : hashedPassword,
         'name_first' : name_first,
-        'name_last' : name_last
-        'u_id': len(101 + len(data['users']))
+        'name_last' : name_last,
+        'u_id': len(101 + len(data['users'])),
+        'permission_id' : 3,
+        'handle' : handle,
+        'profile' : None
     })
     return send_sucess({ #return
-        'u_id': len(101 + len(data['users']))
+        'u_id': len(101 + len(data['users'])),
         'token' : generate_token(email)
         })
 
@@ -102,15 +111,14 @@ def connect():
     email = request.form.get('email') #get email
     password = request.form.get('password') #get password
 
-    if (valid_email(email) == False) { #check valid email
+    if valid_email(email) == False: #check valid email
         return send_error('invalid email')
-    }
 
     #check if email exists and if so check if password matches
     for user in data['users']:
         if user['email'] == email and hash_password(user['password']) == hash_password(password):
             return send_sucess({
-                'u_id' : user['u_id']
+                'u_id' : user['u_id'],
                 'token': generate_token('u_id')
             })
 
@@ -128,17 +136,15 @@ def invite():
 
     inv_u_id = decode_token(token)
 
-    if (u_id == inv_u_id) {
+    if u_id == inv_u_id:
         return send_error('cannot invite self')
-    }
 
     for channel in data['channels']:
         if channel_id == channel['channel_id']:
-            if (inv_u_id not in channel['owners']) {
+            if inv_u_id not in channel['owners']:
                 return send_error('invalid user id (not owner)')
-            }
             for user in channel['members']:
-                if u_id = user:
+                if u_id == user:
                     return send_error('user already part of channel')
             channel['members'].append(u_id)
             return send_sucess({})

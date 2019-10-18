@@ -58,14 +58,13 @@ def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 def is_logged_in(token):
-    data = get_data()
-    users_list = data['users']
-    # loop through to find token
-    for user in users_list:
-        if user['token'] == token:
-            return user['is_logged']
 
-    return False
+    u_id = decode_token(token)
+    user = user_dict(u_id)
+    if token in user['tokens']:
+        return True
+    else:
+        return False
 
 def user_dict(u_id):
     data = get_data()

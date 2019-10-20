@@ -1,9 +1,13 @@
+"""Flask server"""
+import sys
+from flask_cors import CORS
 from json import dumps
 from flask import Flask, request
 import hashlib
 import jwt
 import re
 import copy
+<<<<<<< HEAD
 import time
 
 from backend.functions.data import *
@@ -11,6 +15,61 @@ from backend.functions.channels_create import channels_create
 from backend.functions.channels_listall import channels_listall
 from backend.functions.channels_list import channels_list
 from backend.functions.channel_leave import channel_leave
+=======
+import sys
+
+APP = Flask(__name__)
+CORS(APP)
+
+@APP.route('/auth/register', methods=['POST'])
+def echo4():
+    pass
+
+#GLOBAL VARIABLES
+regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+SECRET = "daenerys"
+data = {
+    'users' : [], # should have a dictionary for each user
+    'channels' : [] #shoudl have a dictionary for each channel
+
+    # e.g. {email, password, name_first, name_last, u_id, permission_id, handle, token, profile, is_logged}
+
+    #e.g {'channel_id' : 1234 , 'name' : channelname, 'owners' : [u_id1, u_id2...], members : [u_id, u_id2....], 'ispublic': True }
+}
+#GlOBAL VARIABLES
+
+#check if email is valid
+def valid_email(email):
+    if(re.search(regex,email)):
+        return True
+    else:
+        return False
+
+#abstraction for returning global data
+def get_data():
+    global data
+    return data
+
+#abstraction for returning json string
+def send_sucess(data):
+    return dumps(data)
+
+def send_error(message):
+    return dumps({
+        '_error': message
+    })
+
+#encodes token given string and SECRET
+def generate_token(string):
+    global SECRET
+    return jwt.encode({'string' : string}, SECRET, algorithm='HS256')
+
+#decodes token given string and SECRET
+def decode_token(token):
+    global SECRET
+    decoded = jwt.decode(token, SECRET, algorithm='HS256')
+    return decoded['string']
+>>>>>>> master
 
 APP = Flask(__name__)
 
@@ -197,4 +256,8 @@ def leave():
     return send_sucess(channel_leave(token, channel_id))
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     APP.run()
+=======
+    APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))
+>>>>>>> master

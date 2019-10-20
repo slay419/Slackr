@@ -10,6 +10,7 @@ from backend.functions.data import *
 from backend.functions.channels_create import channels_create
 from backend.functions.channels_listall import channels_listall
 from backend.functions.channels_list import channels_list
+from backend.functions.channel_leave import channel_leave
 
 APP = Flask(__name__)
 
@@ -164,7 +165,7 @@ def channel_create():
     name = request.form.get('name')
     is_public = request.form.get('is_public')
     if not is_logged_in(token):
-        send_error("User not logged in")
+        return send_error("User not logged in")
     return send_sucess(channels_create(token, name, is_public))
 
 
@@ -183,7 +184,17 @@ def list():
         return send_error("User is not logged in")
     return send_sucess(channels_list(token))
 
-
+@APP.route('/channel/leave', methods = ['POST'])
+def leave():
+    token = request.form.get('token')
+    channel_id = int(request.form.get('channel_id'))
+    if not is_logged_in(token):
+        return send_error("User is not logged in")
+    if not is_joined(token, channel_id):
+        return send_error("User has not joined this channel yet")
+    if not is_valid_channel(channel_id):
+        return send_error("Channel ID is invalid")
+    return send_sucess(channel_leave(token, channel_id))
 
 if __name__ == "__main__":
     APP.run()

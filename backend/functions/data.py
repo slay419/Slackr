@@ -15,7 +15,7 @@ data = {
 
     # e.g. {email, password, name_first, name_last, u_id, permission_id, handle, token, profile, is_logged}
 
-    #e.g {'channel_id' : 1234 , 'name' : channelname, 'owners' : [u_id1, u_id2...], members : [u_id, u_id2....], 'ispublic': True }
+    #e.g {channel_id, 'name' : channelname, 'owners' : [u_id1, u_id2...], members : [u_id, u_id2....], 'ispublic': True , messages = []}
 }
 
 #check if email is valid

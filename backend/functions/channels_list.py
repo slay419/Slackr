@@ -2,6 +2,7 @@ from .data import *
 
 # Return a list of channels the user has already joined or is a owner of
 def channels_list(token):
+    data = get_data()
     u_id = decode_token(token)
     channels_list = []
     for channels in data['channels']:

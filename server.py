@@ -160,7 +160,6 @@ def logout():
 
 @APP.route('/channels/create', methods = ['POST'])
 def channel_create():
-    data = get_data()
     token = request.form.get('token')
     name = request.form.get('name')
     is_public = request.form.get('is_public')
@@ -171,7 +170,6 @@ def channel_create():
 
 @APP.route('/channels/listall', methods = ['GET'])
 def listall():
-    data = get_data()
     token = request.args.get('token')
     if not is_logged_in(token):
         return send_error("User is not logged in")
@@ -180,7 +178,6 @@ def listall():
 
 @APP.route('/channels/list', methods = ['GET'])
 def list():
-    data = get_data()
     token = request.args.get('token')
     if not is_logged_in(token):
         return send_error("User is not logged in")

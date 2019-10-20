@@ -2,6 +2,7 @@ from .data import *
 
 # Provide a list of all channels (and their associated details)
 def channels_listall(token):
+    data = get_data()
     channels_list = []
     for channels in data['channels']:
         dict = {}
@@ -9,6 +10,4 @@ def channels_listall(token):
             'channel_id': channels['channel_id'], 'name': channels['name']
         })
         channels_list.append(dict)
-        print(channels_list)
-        print(data)
         return channels_list

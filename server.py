@@ -101,15 +101,11 @@ def create():
 
     if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50: #rules for length of name (first and last)
         return send_error('names too long/short')
-<<<<<<< HEAD
-    }
-=======
 
     handle = ''.join((name_last, name_last))
     for user in data['users']:
         if handle == user['handle']:
             handle += str(1 + len(data['users']))
->>>>>>> 87292c400de83d366216ef1ba5ad58c47f1abd82
 
     hashedPassword = hash_password(password)
     u_id = 101 + len(data['users'])
@@ -261,9 +257,5 @@ def listall():
 
 
 
-<<<<<<< HEAD
-if __name__ == '__main__':
-=======
 if __name__ == "__main__":
->>>>>>> 87292c400de83d366216ef1ba5ad58c47f1abd82
     APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))

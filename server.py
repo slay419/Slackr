@@ -1,3 +1,6 @@
+"""Flask server"""
+import sys
+from flask_cors import CORS
 from json import dumps
 from flask import Flask, request
 import hashlib
@@ -5,6 +8,11 @@ import jwt
 import re
 
 APP = Flask(__name__)
+CORS(APP)
+
+@APP.route('/auth/register', methods=['POST'])
+def echo4():
+    pass
 
 #GLOBAL VARIABLES
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
@@ -15,9 +23,9 @@ data = {
 }
 #GlOBAL VARIABLES
 def valid_email(email):
-    if(re.search(regex,email)):  
+    if(re.search(regex,email)):
         return True
-    else:  
+    else:
         return False
 
 def get_data():
@@ -67,7 +75,7 @@ def create():
     if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50 {
         return send_error('names too long/short')
     }
-    
+
     hashedPassword = hash_password(password)
     data['users'].append({
         'email' : email,
@@ -101,5 +109,5 @@ def connect():
 
 
 
-if __name__ == "__main__":
-    APP.run(port = 2000)
+if __name__ == '__main__':
+    APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))

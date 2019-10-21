@@ -10,12 +10,7 @@ import copy
 import time
 
 from backend.functions.data import *
-from backend.functions.channels_create import channels_create
-from backend.functions.channels_listall import channels_listall
-from backend.functions.channels_list import channels_list
-from backend.functions.channel_leave import channel_leave
-from backend.functions.channel_addowner import channel_addowner
-from backend.functions.channel_removeowner import channel_removeowner
+from backend.functions.channel_functions import *
 
 APP = Flask(__name__)
 

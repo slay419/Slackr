@@ -8,24 +8,14 @@ channel_id hasn't been created yet
 '''
 
 def channel_leave(token, channel_id):
-    
-    pass
-
-
-
-def is_joined(token, channel_id):
-    data = get_data()
+    channel = channel_dict(channel_id)
     u_id = decode_token(token)
-    for channel_dict in data['channels']:
-        if u_id in channel_dict['members'] or u_id in channel_dict['owners']:
-            return True
-    return False
-
-# Returns true if the channel has been created already, false if no channel exists
-def is_valid_channel(channel_id):
-    data = get_data()
-    channel_list = data['channels']
-    for channels_dict in channel_list:
-        if channels_dict['channel_id'] == channel_id:
-            return True
-    return False
+    # loop through owners
+    for user in channel['owners']:
+        if user == u_id:
+            channel['owners'].remove(u_id)
+    # loop through members
+    for user in channel['members']:
+        if user == u_id:
+            channel['members'].remove(u_id)
+    return {}

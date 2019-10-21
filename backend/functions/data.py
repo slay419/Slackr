@@ -15,7 +15,7 @@ data = {
 
     # e.g. {email, password, name_first, name_last, u_id, permission_id, handle, token, profile, is_logged}
 
-    #e.g {channel_id, 'name' : channelname, 'owners' : [u_id1, u_id2...], members : [u_id, u_id2....], 'ispublic': True , messages = []}
+    #e.g {channel_id, 'name' : channelname, 'owners' : [u_id1, u_id2...], members : [u_id, u_id2....], 'is_public': True , messages = []}
 }
 
 #check if email is valid
@@ -31,7 +31,7 @@ def get_data():
     return data
 
 #abstraction for returning json string
-def send_sucess(data):
+def send_success(data):
     return dumps(data)
 
 def send_error(message):
@@ -78,3 +78,28 @@ def channel_dict(channel_id):
         if channel_id == channel['channel_id']:
             return channel
     return None
+
+def is_joined(token, channel_id):
+    data = get_data()
+    u_id = decode_token(token)
+    for channel_dict in data['channels']:
+        if u_id in channel_dict['members'] or u_id in channel_dict['owners']:
+            return True
+    return False
+
+# Returns true if the channel has been created already, false if no channel exists
+def is_valid_channel(channel_id):
+    data = get_data()
+    channel_list = data['channels']
+    for channels_dict in channel_list:
+        if channels_dict['channel_id'] == channel_id:
+            return True
+    return False
+
+def is_owner(u_id, channel_id):
+    channel = channel_dict(channel_id)
+    # loop through channel to check if owner
+    for user in channel['owners']:
+        if u_id == user:
+            return True
+    return False

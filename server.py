@@ -15,6 +15,7 @@ from backend.functions.channels_listall import channels_listall
 from backend.functions.channels_list import channels_list
 from backend.functions.channel_leave import channel_leave
 from backend.functions.channel_addowner import channel_addowner
+from backend.functions.channel_removeowner import channel_removeowner
 
 APP = Flask(__name__)
 
@@ -207,6 +208,8 @@ def addowner():
     u_id = int(request.form.get('u_id'))     # person being promoted
     if not is_logged_in(token):
         return send_error(f"User: {decode_token(token)} is not logged in")
+    #if not is_logged_in(generate_token(u_id)):
+    #    return send_error(f"User: {u_id} is not logged in")
     if not is_valid_channel(channel_id):
         return send_error(f"Channel ID: {channel_id} is invalid")
     if is_owner(u_id, channel_id):
@@ -215,6 +218,24 @@ def addowner():
         return send_error(f"User: {decode_token(token)} does not have privileges to promote others")
 
     return send_success(channel_addowner(token, channel_id, u_id))
+
+@APP.route('/channel/removeowner', methods = ['POST'])
+def removeowner():
+    token = request.form.get('token')   # person doing demoting
+    channel_id = int(request.form.get('channel_id'))
+    u_id = int(request.form.get('u_id'))     # person being demoted
+    if not is_logged_in(token):
+        return send_error(f"User: {decode_token(token)} is not logged in")
+    #if not is_logged_in(generate_token(u_id)):
+    #    return send_error(f"User: {u_id} is not logged in")
+    if not is_valid_channel(channel_id):
+        return send_error(f"Channel ID: {channel_id} is invalid")
+    if not is_owner(u_id, channel_id):
+        return send_error(f"User: {u_id} is not an owner")
+    if not is_owner(decode_token(token), channel_id):
+        return send_error(f"User: {decode_token(token)} does not have privileges to demote others")
+
+    return send_success(channel_removeowner(token, channel_id, u_id))
 
 
 if __name__ == "__main__":

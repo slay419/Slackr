@@ -14,8 +14,8 @@ Owner privileges cover ONLY their channel created
 
 def channel_addowner(token, channel_id, u_id):
     channel = channel_dict(channel_id)
-    print(channel)
+    print(f"channel owners are: {channel['owners']}")
     # append user to list of owners
     channel['owners'].append(u_id)
-    print(channel)
+    print(f"channel owners are: {channel['owners']} after appending")
     return {}

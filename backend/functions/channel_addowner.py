@@ -1,4 +1,4 @@
-
+from .data import *
 '''
 ####################### ASSUMPTIONS ######################
 Assume the person who created the channel is the owner and has authority to promote
@@ -14,7 +14,6 @@ Owner privileges cover ONLY their channel created
 
 def channel_addowner(token, channel_id, u_id):
     channel = channel_dict(channel_id)
-    u_id = decode_token(token)
     print(channel)
     # append user to list of owners
     channel['owners'].append(u_id)

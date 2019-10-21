@@ -169,7 +169,7 @@ def channel_create():
     name = request.form.get('name')
     is_public = request.form.get('is_public')
     if not is_logged_in(token):
-        return send_error("User not logged in")
+        return send_error(f"User: {decode_token(token)} not logged in")
     return send_success(channels_create(token, name, is_public))
 
 
@@ -177,7 +177,7 @@ def channel_create():
 def listall():
     token = request.args.get('token')
     if not is_logged_in(token):
-        return send_error("User is not logged in")
+        return send_error(f"User: {decode_token(token)} is not logged in")
     return send_success(channels_listall(token))
 
 
@@ -185,7 +185,7 @@ def listall():
 def list():
     token = request.args.get('token')
     if not is_logged_in(token):
-        return send_error("User is not logged in")
+        return send_error(f"User: {decode_token(token)} is not logged in")
     return send_success(channels_list(token))
 
 @APP.route('/channel/leave', methods = ['POST'])
@@ -193,11 +193,11 @@ def leave():
     token = request.form.get('token')
     channel_id = int(request.form.get('channel_id'))
     if not is_logged_in(token):
-        return send_error("User is not logged in")
+        return send_error(f"User: {decode_token(token)} is not logged in")
     if not is_joined(token, channel_id):
-        return send_error("User has not joined this channel yet")
+        return send_error(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
     if not is_valid_channel(channel_id):
-        return send_error("Channel ID is invalid")
+        return send_error(f"Channel ID: {channel_id} is invalid")
     return send_success(channel_leave(token, channel_id))
 
 @APP.route('/channel/addowner', methods = ['POST'])
@@ -206,13 +206,13 @@ def addowner():
     channel_id = int(request.form.get('channel_id'))
     u_id = int(request.form.get('u_id'))     # person being promoted
     if not is_logged_in(token):
-        return send_error("User is not logged in")
+        return send_error(f"User: {decode_token(token)} is not logged in")
     if not is_valid_channel(channel_id):
-        return send_error("Channel ID is invalid")
+        return send_error(f"Channel ID: {channel_id} is invalid")
     if is_owner(u_id, channel_id):
-        return send_error("User is already an owner")
+        return send_error(f"User: {u_id} is already an owner")
     if not is_owner(decode_token(token), channel_id):
-        return send_error("User does not have privileges to promote others")
+        return send_error(f"User: {decode_token(token)} does not have privileges to promote others")
 
     return send_success(channel_addowner(token, channel_id, u_id))
 

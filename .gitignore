@@ -1,3 +1,6 @@
+kevin_test.py
+server/test.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -122,3 +125,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+<<<<<<< HEAD
+=======
+
+# Other
+*.py~
+>>>>>>> master

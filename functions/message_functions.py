@@ -1,21 +1,12 @@
-<<<<<<< HEAD
 from json import dumps
 from flask import Flask, request
 from datetime import datetime
-=======
-"""Flask server"""
-import sys
-from flask_cors import CORS
-from json import dumps
-from flask import Flask, request
->>>>>>> master
 import hashlib
 import jwt
 import re
 import copy
 import time
 
-<<<<<<< HEAD
 
 APP = Flask(__name__)
 
@@ -92,13 +83,6 @@ def channel_dict(channel_id):
             return channel
     return None
 
-=======
-from backend.functions.data import *
-from backend.functions.channel_functions import *
-
-APP = Flask(__name__)
-
->>>>>>> master
 #########################   AUTH FUNCTIONS  ###########################
 
 #REGISTER
@@ -154,11 +138,7 @@ def create():
         'tokens'  : [],
         'profile' : None
     })
-<<<<<<< HEAD
     return send_sucess({
-=======
-    return send_success({
->>>>>>> master
         'u_id': u_id,
         'token' : token
     })
@@ -180,11 +160,7 @@ def connect():
             u_id = user['u_id']
             token = generate_token(u_id)
             user['tokens'].append(token)
-<<<<<<< HEAD
             return send_sucess({
-=======
-            return send_success({
->>>>>>> master
                 'u_id' : u_id,
                 'token': token
             })
@@ -213,11 +189,7 @@ def invite():
         if u_id == user:
             return send_error('user already part of channel')
     channel['members'].append(u_id)
-<<<<<<< HEAD
     return send_sucess({})
-=======
-    return send_success({})
->>>>>>> master
 
 
 
@@ -242,11 +214,7 @@ def join():
     else:
         return send_error('user does not have rightts')
 
-<<<<<<< HEAD
     return send_sucess({})
-=======
-    return send_success({})
->>>>>>> master
 
 @APP.route('/auth/logout', methods = ['PUT'])
 def logout():
@@ -256,25 +224,16 @@ def logout():
     user = user_dict(u_id)
     user['tokens'].remove(token)
 
-<<<<<<< HEAD
     return send_sucess({})
-=======
-    return send_success({})
->>>>>>> master
 
 #########################   CHANNEL FUNCTIONS  ###########################
 
 @APP.route('/channels/create', methods = ['POST'])
-<<<<<<< HEAD
 def channels_create():
-=======
-def channel_create():
->>>>>>> master
     token = request.form.get('token')
     name = request.form.get('name')
     is_public = request.form.get('is_public')
     if not is_logged_in(token):
-<<<<<<< HEAD
         send_error("User not logged in")
     if len(name) > 20:
         return send_error("Name of channel is longer than 20 characters.")
@@ -386,75 +345,3 @@ def send():
     
 if __name__ == "__main__":
     APP.run(debug=True)
-=======
-        return send_error(f"User: {decode_token(token)} not logged in")
-    return send_success(channels_create(token, name, is_public))
-
-
-@APP.route('/channels/listall', methods = ['GET'])
-def listall():
-    token = request.args.get('token')
-    if not is_logged_in(token):
-        return send_error(f"User: {decode_token(token)} is not logged in")
-    return send_success(channels_listall(token))
-
-
-@APP.route('/channels/list', methods = ['GET'])
-def list():
-    token = request.args.get('token')
-    if not is_logged_in(token):
-        return send_error(f"User: {decode_token(token)} is not logged in")
-    return send_success(channels_list(token))
-
-@APP.route('/channel/leave', methods = ['POST'])
-def leave():
-    token = request.form.get('token')
-    channel_id = int(request.form.get('channel_id'))
-    if not is_logged_in(token):
-        return send_error(f"User: {decode_token(token)} is not logged in")
-    if not is_joined(token, channel_id):
-        return send_error(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
-    if not is_valid_channel(channel_id):
-        return send_error(f"Channel ID: {channel_id} is invalid")
-    return send_success(channel_leave(token, channel_id))
-
-@APP.route('/channel/addowner', methods = ['POST'])
-def addowner():
-    token = request.form.get('token')   # person doing promoting
-    channel_id = int(request.form.get('channel_id'))
-    u_id = int(request.form.get('u_id'))     # person being promoted
-    if not is_logged_in(token):
-        return send_error(f"User: {decode_token(token)} is not logged in")
-    #if not is_logged_in(generate_token(u_id)):
-    #    return send_error(f"User: {u_id} is not logged in")
-    if not is_valid_channel(channel_id):
-        return send_error(f"Channel ID: {channel_id} is invalid")
-    if is_owner(u_id, channel_id):
-        return send_error(f"User: {u_id} is already an owner")
-    if not is_owner(decode_token(token), channel_id):
-        return send_error(f"User: {decode_token(token)} does not have privileges to promote others")
-
-    return send_success(channel_addowner(token, channel_id, u_id))
-
-@APP.route('/channel/removeowner', methods = ['POST'])
-def removeowner():
-    token = request.form.get('token')   # person doing demoting
-    channel_id = int(request.form.get('channel_id'))
-    u_id = int(request.form.get('u_id'))     # person being demoted
-    if not is_logged_in(token):
-        return send_error(f"User: {decode_token(token)} is not logged in")
-    #if not is_logged_in(generate_token(u_id)):
-    #    return send_error(f"User: {u_id} is not logged in")
-    if not is_valid_channel(channel_id):
-        return send_error(f"Channel ID: {channel_id} is invalid")
-    if not is_owner(u_id, channel_id):
-        return send_error(f"User: {u_id} is not an owner")
-    if not is_owner(decode_token(token), channel_id):
-        return send_error(f"User: {decode_token(token)} does not have privileges to demote others")
-
-    return send_success(channel_removeowner(token, channel_id, u_id))
-
-
-if __name__ == "__main__":
-    APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))
->>>>>>> master

@@ -1,7 +1,7 @@
 from auth_register_test         import auth_register
 from channels_create_test       import channels_create
 from channels_join_test         import channels_join
-
+from data import *
 import pytest
 
 '''

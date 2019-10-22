@@ -1,14 +1,8 @@
-from data import *
+from .data import *
 
 def user_profile_setemail(token, email):
 	
-	regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
-	  
-	# pass the regualar expression 
-	# and the string in search() method 
-	if(re.search(regex,email)):
-		pass
-	else:
+	if valid_email(email) is False:
 		raise ValueError("Email entered is not a valid email")
 	if is_email_free(email) == 0:
 		raise ValueError("Email is already in use")

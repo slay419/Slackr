@@ -7,6 +7,8 @@ from .data import *
 @APP.route('user/profile/setname', methods=['PUT'])
 def user_profile_setname(token, name_first, name_last):
 
+	data = get_users()
+
 	if len(name_first) > 50:
 		raise ValueError('First name is larger than 50 character')
 	if len(name_first) < 1:

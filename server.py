@@ -145,7 +145,22 @@ def removeowner():
 
     return send_success(channel_removeowner(token, channel_id, u_id))
 
-
+@APP.route('/channel/messages', methods = ['GET'])
+def listmessages():
+    token = request.args.get('token')
+    channel_id = int(request.args.get('channel_id')) #must be valid channel
+    start = int(request.args.get('start')) #cannot be >= no. of messages in channel
+    
+    return dumps(channel_messages(token, channel_id, start), indent=4, sort_keys=True, default=str)
+    
+@APP.route('/message/send', methods = ['POST'])
+def sendmessages():
+    token = request.form.get('token')
+    channel_id = int(request.form.get('channel_id'))
+    message = request.form.get('message')
+    
+    return send_success(message_send(token, channel_id, message))
+    
 if __name__ == "__main__":
     APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))
 

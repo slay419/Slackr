@@ -1,84 +1,20 @@
+"""Flask server"""
+import sys
+from flask_cors import CORS
 from json import dumps
 from flask import Flask, request
 import hashlib
-import time
 import jwt
 import re
 import copy
+import time
+
+from backend.functions.data import *
+from backend.functions.channel_functions import *
 
 APP = Flask(__name__)
 
-#GLOBAL VARIABLES
-regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
-SECRET = "daenerys"
-data = {
-    'users' : [], # should have a dictionary for each user
-    'channels' : [] #shoudl have a dictionary for each channel
-
-    # e.g. {email, password, name_first, name_last, u_id, permission_id, handle, token, profile, is_logged}
-
-    #e.g {'channel_id' : 1234 , 'name' : channelname, 'owners' : [u_id1, u_id2...], members : [u_id, u_id2....], 'ispublic': True }
-}
-#GlOBAL VARIABLES
-
-#check if email is valid
-def valid_email(email):
-    if(re.search(regex,email)):
-        return True
-    else:
-        return False
-
-#abstraction for returning global data
-def get_data():
-    global data
-    return data
-
-#abstraction for returning json string
-def send_sucess(data):
-    return dumps(data)
-
-def send_error(message):
-    return dumps({
-        '_error': message
-    })
-
-#encodes token given string and SECRET
-def generate_token(string):
-    global SECRET
-    return jwt.encode({'string' : string, 'time' : time.time()}, SECRET, algorithm='HS256').decode('utf-8')
-
-#decodes token given string and SECRET
-def decode_token(token):
-    global SECRET
-    decoded = jwt.decode(token.encode('utf-8'), SECRET, algorithms=['HS256'])
-    return decoded['string']
-
-#generates hash for string
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
-def is_logged_in(token):
-
-    u_id = decode_token(token)
-    user = user_dict(u_id)
-    if token in user['tokens']:
-        return True
-    else:
-        return False
-
-def user_dict(u_id):
-    data = get_data()
-    for user in data['users']:
-        if u_id == user['u_id']:
-            return user
-    return None
-
-def channel_dict(channel_id):
-    data = get_data()
-    for channel in data['channels']:
-        if channel_id == channel['channel_id']:
-            return channel
-    return None
+#########################   AUTH FUNCTIONS  ###########################
 
 #REGISTER
 @APP.route('/auth/register', methods = ['POST'])
@@ -133,7 +69,7 @@ def create():
         'tokens'  : [],
         'profile' : None
     })
-    return send_sucess({ 
+    return send_success({
         'u_id': u_id,
         'token' : token
     })
@@ -155,7 +91,7 @@ def connect():
             u_id = user['u_id']
             token = generate_token(u_id)
             user['tokens'].append(token)
-            return send_sucess({
+            return send_success({
                 'u_id' : u_id,
                 'token': token
             })
@@ -175,7 +111,7 @@ def invite():
 
     if u_id == inv_u_id:
         return send_error('cannot invite self')
-    
+
     channel = channel_dict(channel_id)
     if channel == None:
         return send_error('channel id does not exist')
@@ -184,7 +120,7 @@ def invite():
         if u_id == user:
             return send_error('user already part of channel')
     channel['members'].append(u_id)
-    return send_sucess({})
+    return send_success({})
 
 
 
@@ -209,7 +145,7 @@ def join():
     else:
         return send_error('user does not have rightts')
 
-    return send_sucess({})
+    return send_success({})
 
 @APP.route('/auth/logout', methods = ['PUT'])
 def logout():
@@ -219,62 +155,84 @@ def logout():
     user = user_dict(u_id)
     user['tokens'].remove(token)
 
-    return send_sucess({})
-    
-    
+    return send_success({})
 
 #########################   CHANNEL FUNCTIONS  ###########################
 
 @APP.route('/channels/create', methods = ['POST'])
 def channel_create():
-    data = get_data()
     token = request.form.get('token')
     name = request.form.get('name')
     is_public = request.form.get('is_public')
-    #if not is_logged_in(token):
-    #    send_error("User not logged in")
-    if len(name) > 20:
-        return send_error("Name of channel is longer than 20 characters.")
+    if not is_logged_in(token):
+        return send_error(f"User: {decode_token(token)} not logged in")
+    return send_success(channels_create(token, name, is_public))
 
-    owner_id = decode_token(token)
-    print(owner_id)
-
-    # Give the channel an ID which corresponds to the number created e.g. 1st channel is ID1 ...
-    new_channel_id = len(data['channels']) + 1
-
-    # Create a dictionary with all the relevant info and append to data
-    dict = {
-        'channel_id': new_channel_id, 'name': name, 'owners': [owner_id],
-        'members': [], 'is_public': is_public
-    }
-    data['channels'].append(dict)
-    print(data['channels'])
-    return send_sucess({
-        'channel_id': new_channel_id
-    })
 
 @APP.route('/channels/listall', methods = ['GET'])
 def listall():
-    token = request.form.get('token')
-    data = get_data()
+    token = request.args.get('token')
     if not is_logged_in(token):
-        return send_error("User is not logged in")
-
-    channels_list = []
-    for channels in data['channels']:
-        dict = {}
-        dict.update({
-            'channel_id': channels['channel_id'], 'name': channels['name']
-        })
-        channels_list.append(dict)
+        return send_error(f"User: {decode_token(token)} is not logged in")
+    return send_success(channels_listall(token))
 
 
-    print(channels_list)
-    print(data)
-    return send_sucess(channels_list)
+@APP.route('/channels/list', methods = ['GET'])
+def list():
+    token = request.args.get('token')
+    if not is_logged_in(token):
+        return send_error(f"User: {decode_token(token)} is not logged in")
+    return send_success(channels_list(token))
 
+@APP.route('/channel/leave', methods = ['POST'])
+def leave():
+    token = request.form.get('token')
+    channel_id = int(request.form.get('channel_id'))
+    if not is_logged_in(token):
+        return send_error(f"User: {decode_token(token)} is not logged in")
+    if not is_joined(token, channel_id):
+        return send_error(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
+    if not is_valid_channel(channel_id):
+        return send_error(f"Channel ID: {channel_id} is invalid")
+    return send_success(channel_leave(token, channel_id))
 
+@APP.route('/channel/addowner', methods = ['POST'])
+def addowner():
+    token = request.form.get('token')   # person doing promoting
+    channel_id = int(request.form.get('channel_id'))
+    u_id = int(request.form.get('u_id'))     # person being promoted
+    if not is_logged_in(token):
+        return send_error(f"User: {decode_token(token)} is not logged in")
+    #if not is_logged_in(generate_token(u_id)):
+    #    return send_error(f"User: {u_id} is not logged in")
+    if not is_valid_channel(channel_id):
+        return send_error(f"Channel ID: {channel_id} is invalid")
+    if is_owner(u_id, channel_id):
+        return send_error(f"User: {u_id} is already an owner")
+    if not is_owner(decode_token(token), channel_id):
+        return send_error(f"User: {decode_token(token)} does not have privileges to promote others")
+
+    return send_success(channel_addowner(token, channel_id, u_id))
+
+@APP.route('/channel/removeowner', methods = ['POST'])
+def removeowner():
+    token = request.form.get('token')   # person doing demoting
+    channel_id = int(request.form.get('channel_id'))
+    u_id = int(request.form.get('u_id'))     # person being demoted
+    if not is_logged_in(token):
+        return send_error(f"User: {decode_token(token)} is not logged in")
+    #if not is_logged_in(generate_token(u_id)):
+    #    return send_error(f"User: {u_id} is not logged in")
+    if not is_valid_channel(channel_id):
+        return send_error(f"Channel ID: {channel_id} is invalid")
+    if not is_owner(u_id, channel_id):
+        return send_error(f"User: {u_id} is not an owner")
+    if not is_owner(decode_token(token), channel_id):
+        return send_error(f"User: {decode_token(token)} does not have privileges to demote others")
+
+    return send_success(channel_removeowner(token, channel_id, u_id))
 
 
 if __name__ == "__main__":
-    APP.run(port = 2000)
+    APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))
+

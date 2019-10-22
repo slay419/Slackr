@@ -45,14 +45,14 @@ def message_send(token, channel_id, message):
     for channel in data['channels']:
         if(channel['channel_id'] == channel_id):
             newchannel.update(channel)
-    message_id = 1 + len(newchannel['messages'])
+    message_id = 1 + len(data['messages'])
     if(len(message) > 1000):
-        return send_error('message is more than 1000 characters')
+        return send('message is more than 1000 characters')
     #Obtaining u_id from token
     u_id = decode_token(token)
     #if user hasn't joined the channel they are sending a message in):
     if(u_id not in newchannel['members'] and u_id not in newchannel['owners']):
-        return send_error('user is not in correct channel')
+        return send('user is not in correct channel')
     message_dict = {
         'message_id': message_id,
         'u_id': u_id,
@@ -65,5 +65,22 @@ def message_send(token, channel_id, message):
     for channel in data['channels']:
         if(channel['channel_id'] == channel_id):
             channel['messages'].insert(0, message_dict)
+            data['messages'].append(message_dict)
     return {'message_id': message_id}
-
+    
+def message_edit(token, message_id, message):
+    data = get_data()
+    u_id = decode_token(token)
+    userdict = user_dict(u_id)
+    #u_id is used to find corresponding message
+    if(len(message) > 1000):
+        return send('message is more than 1000 characters')
+    #accesserror when nonadmin/owner attempts to edit someone elses message
+    for editmessage in data['messages']:
+        if editmessage['message_id'] == message_id:
+            if editmessage['u_id'] == u_id or userdict['permission_id'] == 3:
+                editmessage['messages'] = message
+            else:
+                return send('user is editing a message not of own')
+    #detect if no message was found
+    return {}

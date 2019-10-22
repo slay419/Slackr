@@ -11,8 +11,8 @@ regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 SECRET = "daenerys"
 data = {
     'users' : [], # should have a dictionary for each user
-    'channels' : [] #shoudl have a dictionary for each channel
-
+    'channels' : [], #shoudl have a dictionary for each channel
+    'messages' : [] #should have a dictionary for each messages
     # e.g. {email, password, name_first, name_last, u_id, permission_id, handle, token, profile, is_logged}
 
     #e.g {channel_id, 'name' : channelname, 'owners' : ['u_id': u_id1, u_id2...], members : [u_id, u_id2....], 'is_public': True , messages = []}
@@ -74,7 +74,14 @@ def channel_dict(channel_id):
         if channel_id == channel['channel_id']:
             return channel
     return None
-
+    
+def message_dict(message_id):
+    data = get_data()
+    for messages in data['messages']:
+        if message_id == messages['message_id']:
+            return messages
+    return None
+    
 def is_joined(token, channel_id):
     data = get_data()
     u_id = decode_token(token)

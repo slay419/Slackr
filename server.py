@@ -15,7 +15,7 @@ from backend.functions.channel_functions import *
 APP = Flask(__name__)
 
 #########################   AUTH FUNCTIONS  ###########################
-
+##
 #REGISTER
 @APP.route('/auth/register', methods = ['POST'])
 def create():

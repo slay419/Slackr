@@ -36,7 +36,7 @@ def connect():
     password = request.form.get('password') #get password
 
 
-    return send(channel_invite(email, password))
+    return send(auth_login(email, password))
 
 
 #INVITE

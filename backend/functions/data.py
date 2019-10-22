@@ -31,13 +31,9 @@ def get_data():
     return data
 
 #abstraction for returning json string
-def send_success(data):
+def send(data):
     return dumps(data)
 
-def send_error(message):
-    return dumps({
-        '_error': message
-    })
 
 #encodes token given string and SECRET
 def generate_token(string):

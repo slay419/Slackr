@@ -145,5 +145,35 @@ def editmessages():
 
     return send(message_edit(token, message_id, message))
 
+@APP.route('/message/react', methods = ['POST'])
+def reactmessages():
+    token = request.form.get('token')
+    message_id = request.form.get('message_id')
+    react_id = request.form.get('react_id')
+    
+    return send(message_react(token, message_id, react_id))
+
+@APP.route('/message/unreact', methods = ['POST'])
+def unreactmessages():
+    token = request.form.get('token')
+    message_id = request.form.get('message_id')
+    react_id = request.form.get('react_id')
+    
+    return send(message_unreact(token, message_id, react_id))
+    
+@APP.route('/message/pin', methods = ['POST'])
+def pinmessages():
+    token = request.form.get('token')
+    message_id = request.form.get('message_id')
+
+    return send(message_pin(token, message_id))
+
+@APP.route('/message/unpin', methods = ['POST'])
+def unpinmessages():
+    token = request.form.get('token')
+    message_id = request.form.get('message_id')
+
+    return send(message_unpin(token, message_id))
+    
 if __name__ == "__main__":
     APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000), debug=True)

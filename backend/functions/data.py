@@ -86,7 +86,7 @@ def is_joined(token, channel_id):
     data = get_data()
     u_id = decode_token(token)
     for channel_dict in data['channels']:
-        if u_id in channel_dict['members'] or u_id in channel_dict['owners']:
+        if u_id in channel_dict['all_members']:
             return True
     return False
 
@@ -102,7 +102,7 @@ def is_valid_channel(channel_id):
 def is_owner(u_id, channel_id):
     channel = channel_dict(channel_id)
     # loop through channel to check if owner
-    for dict in channel['owners']:
+    for dict in channel['owner_members']:
         if u_id == dict['u_id']:
             return True
     return False
@@ -110,13 +110,13 @@ def is_owner(u_id, channel_id):
 def is_member(u_id, channel_id):
     channel = channel_dict(channel_id)
     # loop through channel to check if member
-    for dict in channel['members']:
+    for dict in channel['all_members']:
         if u_id == dict['u_id']:
             return True
     return False
 
 def get_first_name(u_id):
-    data = get_data()
+    user = user_dict(u_id)
     for user in data['users']:
         if u_id == user['u_id']:
             return user['name_first']

@@ -18,12 +18,12 @@ def channels_create(token, name, is_public):
     dict = {
         'channel_id': new_channel_id,
         'name': name,
-        'owners': [{
+        'owner_members': [{
             'u_id': owner_id,
             'name_first': get_first_name(owner_id),
             'name_last': get_last_name(owner_id)
         }],
-        'members': [{
+        'all_members': [{
             'u_id': owner_id,
             'name_first': get_first_name(owner_id),
             'name_last': get_last_name(owner_id)
@@ -78,14 +78,14 @@ def channel_leave(token, channel_id):
 
     channel = channel_dict(channel_id)
     u_id = decode_token(token)
-    # loop through owners
-    for user in channel['owners']:
-        if user == u_id:
-            channel['owners'].remove(u_id)
+    # loop through owner_members
+    for member in channel['owner_members']:
+        if member['u_id'] == u_id:
+            channel['owner_members'].remove(member)
     # loop through members
-    for user in channel['members']:
-        if user == u_id:
-            channel['members'].remove(u_id)
+    for member in channel['all_members']:
+        if member['u_id'] == u_id:
+            channel['all_members'].remove(member)
     return {}
 
 def channel_addowner(token, channel_id, u_id):
@@ -101,10 +101,15 @@ def channel_addowner(token, channel_id, u_id):
         return f"User: {decode_token(token)} does not have privileges to promote others"
 
     channel = channel_dict(channel_id)
-    print(f"channel owners are: {channel['owners']}")
+    name_first = get_first_name(u_id)
+    name_last = get_last_name(u_id)
     # append user to list of owners
-    channel['owners'].append(u_id)
-    print(f"channel owners are: {channel['owners']} after appending")
+    channel['owner_members'].append({
+        'u_id' : u_id,
+        'name_first' : name_first,
+        'name_last' : name_last
+    })
+
     return {}
 
 
@@ -121,26 +126,33 @@ def channel_removeowner(token, channel_id, u_id):
         return f"User: {decode_token(token)} does not have privileges to demote others"
 
     channel = channel_dict(channel_id)
-    print(f"channel owners are: {channel['owners']}")
+
+    for member in channel['owner_members']:
+        if u_id == member['u_id']:
+            channel['owner_members'].remove(member)
+            break
     # remove user from list of owners
-    channel['owners'].remove(u_id)
-    print(f"channel owners are: {channel['owners']} after removing")
+    
+
     return {}
 
 def channel_invite(token, channel_id, u_id):
-    inv_u_id = decode_token(token)
-    if u_id == inv_u_id:
+    inviter_u_id = decode_token(token)
+    user = user_dict(u_id)
+    if u_id == inviter_u_id:
         return 'cannot invite self'
 
     channel = channel_dict(channel_id)
     if channel == None:
         return 'channel id does not exist'
 
-    for user in channel['members']:
-        if u_id == user:
+    for member in channel['all_members']:
+        if member['u_id'] == u_id:
             return 'user already part of channel'
-    #channel['members'].append(u_id)
-    channel_join()
+
+    invitee_token = user['tokens'][0]
+    channel_join(invitee_token, channel_id)
+
     return {}
 
 
@@ -153,15 +165,36 @@ def channel_join(token, channel_id):
         return 'channel id/ user id does not exist'
 
     if user['permission_id'] != 3:
-        channel['members'].append(u_id)
+        channel['owner_members'].append({
+            'u_id' : u_id,
+            'name_first' : user['name_first'],
+            'name_last' : user['name_last']
+        })
     elif user['permission_id'] == 3 and channel['is_public'] == True:
-        channel['members'].append(u_id)
+        channel['all_members'].append({
+            'u_id' : u_id,
+            'name_first' : user['name_first'],
+            'name_last' : user['name_last']
+        })
     else:
-        return 'user does not have rightts'
+        return 'user does not have rights'
 
     return {}
 
+def channel_details(token, channel_id):
+    channel = channel_dict(channel_id)
+    if channel == None:
+        return "channel id does not exist"
 
+    u_id = decode_token(token)
+    if is_member(u_id, channel_id) is False:
+        return "authorised user not member of channel"
+    
+    details = {
+        'name' : channel['name'],
+        'owner_members' : channel['owner_members'],
+        'all_members' : channel['all_members']
+    }
 
 def get_user_name(u_id):
     data = get_data()

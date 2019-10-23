@@ -2,8 +2,8 @@ from .data import *
 
 
 def channels_create(token, name, is_public):
-    if not is_logged_in(token):
-        return f"User: {decode_token(token)} not logged in"
+    #if not is_logged_in(token):
+    #    return f"User: {decode_token(token)} not logged in"
     if len(name) > 20:
         return "Name of channel is longer than 20 characters"
     data = get_data()
@@ -18,7 +18,11 @@ def channels_create(token, name, is_public):
     dict = {
         'channel_id': new_channel_id,
         'name': name,
-        'owners': [owner_id],
+        'owners': [{
+            'u_id': owner_id,
+            'name_first': get_first_name(owner_id),
+            'name_last': get_last_name(owner_id)
+        }],
         'members': [],
         'is_public': is_public,
         'messages': []
@@ -31,8 +35,8 @@ def channels_create(token, name, is_public):
 
 # Provide a list of all channels (and their associated details)
 def channels_listall(token):
-    if not is_logged_in(token):
-        return f"User: {decode_token(token)} is not logged in"
+    #if not is_logged_in(token):
+    #    return f"User: {decode_token(token)} is not logged in"
     data = get_data()
     channels_list = []
     for channels in data['channels']:
@@ -45,14 +49,14 @@ def channels_listall(token):
 
 # Return a list of channels the user has already joined or is a owner of
 def channels_list(token):
-    if not is_logged_in(token):
-        return f"User: {decode_token(token)} is not logged in"
+    #if not is_logged_in(token):
+    #    return f"User: {decode_token(token)} is not logged in"
 
     data = get_data()
     u_id = decode_token(token)
     channels_list = []
     for channels in data['channels']:
-        if u_id in channels['members'] or u_id in channels['owners']:
+        if is_member(u_id, channels['channel_id']) or is_owner(u_id, channels['channel_id']):
             channels_list.append({
                 'channel_id': channels['channel_id'],
                 'name': channels['name']
@@ -118,7 +122,6 @@ def channel_removeowner(token, channel_id, u_id):
     channel['owners'].remove(u_id)
     print(f"channel owners are: {channel['owners']} after removing")
     return {}
-
 
 
 

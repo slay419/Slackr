@@ -46,11 +46,12 @@ def auth_register(email, password, name_first, name_last):
         'tokens'  : [],
         'profile' : None
     })
+    #auth_login(email, password)
     return {
         'u_id': u_id,
         'token' : token
     }
-    
+
 def auth_login(email, password):
 
     data = get_data()
@@ -69,7 +70,7 @@ def auth_login(email, password):
             }
 
     return 'email does not exist or password is incorrect'
-    
+
 def channel_invite(token, channel_id, u_id):
 
     inv_u_id = decode_token(token)
@@ -105,7 +106,7 @@ def channel_join(token, channel_id):
         return 'user does not have rightts'
 
     return {}
-    
+
 def auth_logout(token):
 
     u_id = decode_token(token)
@@ -113,4 +114,3 @@ def auth_logout(token):
     user['tokens'].remove(token)
 
     return {}
-

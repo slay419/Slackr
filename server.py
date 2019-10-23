@@ -17,7 +17,7 @@ from backend.functions.message_functions import *
 APP = Flask(__name__)
 
 #########################   AUTH FUNCTIONS  ###########################
-##
+
 #REGISTER
 @APP.route('/auth/register', methods = ['POST'])
 def create():
@@ -26,7 +26,7 @@ def create():
     password = request.form.get('password') # get password
     name_first = request.form.get('name_first') #get first name
     name_last = request.form.get('name_last') #get last name
-    
+
     return send(auth_register(email, password, name_first, name_last));
 
 #LOGIN
@@ -48,7 +48,7 @@ def invite():
     channel_id = request.form.get('channel_id') #get channel_id
     u_id = request.form.get('u_id') #get u_id
 
-    
+
     return send(channel_invite(token, channel_id, u_id))
 
 
@@ -151,15 +151,17 @@ def listmessages():
     token = request.args.get('token')
     channel_id = int(request.args.get('channel_id')) #must be valid channel
     start = int(request.args.get('start')) #cannot be >= no. of messages in channel
-    
+
     return dumps(channel_messages(token, channel_id, start), indent=4, sort_keys=True, default=str)
-    
+
+#########################   MESSAGE FUNCTIONS  ###########################
+
 @APP.route('/message/send', methods = ['POST'])
 def sendmessages():
     token = request.form.get('token')
     channel_id = int(request.form.get('channel_id'))
     message = request.form.get('message')
-    
+
     return send(message_send(token, channel_id, message))
 
 @APP.route('/message/edit', methods = ['PUT'])
@@ -167,10 +169,8 @@ def editmessages():
     token = request.form.get('token')
     message_id = request.form.get('message_id')
     message = request.form.get('message')
-    
+
     return send(message_edit(token, message_id, message))
-    
+
 if __name__ == "__main__":
     APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))
-
-

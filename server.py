@@ -15,6 +15,8 @@ from backend.functions.channel_functions import *
 from backend.functions.message_functions import *
 
 APP = Flask(__name__)
+APP.config['TRAP_HTTP_EXCEPTIONS'] = True
+APP.register_error_handler(Exception, defaultHandler)
 CORS(APP)
 
 #########################   AUTH FUNCTIONS  ###########################
@@ -59,7 +61,7 @@ def invite():
 def join():
 
     token = request.form.get('token') #get token
-    channel_id = request.form.get('channel_id') #get channel_id
+    channel_id = int(request.form.get('channel_id')) #get channel_id
 
 
     return send(channel_join(token, channel_id))

@@ -5,13 +5,9 @@ def channels_create(token, name, is_public):
     #if not is_logged_in(token):
     #    return f"User: {decode_token(token)} not logged in"
     if len(name) > 20:
-        return "Name of channel is longer than 20 characters."
+        raise ValueError("Name of channel is longer than 20 characters")
     data = get_data()
     owner_id = decode_token(token)
-    print(owner_id)
-    get_user_name(owner_id)
-    print(f"owner's name is: {get_user_name(owner_id)}")
-
     # Give the channel an ID which corresponds to the number created e.g. 1st channel is ID1 ...
     new_channel_id = len(data['channels']) + 1
     # Create a dictionary with all the relevant info and append to data
@@ -32,10 +28,6 @@ def channels_create(token, name, is_public):
         'messages': []
     }
     data['channels'].append(dict)
-    print(dict)
-    print({
-        'channel_id': new_channel_id
-    })
     return {
         'channel_id': new_channel_id
     }
@@ -47,10 +39,10 @@ def channels_listall(token):
     data = get_data()
     channels_list = []
     for channels in data['channels']:
-        dict = {}
-        dict.update({
-            'channel_id': channels['channel_id'], 'name': channels['name']
-        })
+        dict = {
+            'channel_id': channels['channel_id'],
+            'name': channels['name']
+        }
         channels_list.append(dict)
     print(channels_list)
     return {'channels': channels_list}
@@ -73,12 +65,12 @@ def channels_list(token):
 
 
 def channel_leave(token, channel_id):
-    if not is_logged_in(token):
-        return f"User: {decode_token(token)} is not logged in"
-    if not is_joined(token, channel_id):
-        return f"User: {decode_token(token)} has not joined channel: {channel_id} yet"
+    #if not is_logged_in(token):
+    #    return f"User: {decode_token(token)} is not logged in"
+    if not is_member(decode_token(token), channel_id):
+        raise ValueError(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
     if not is_valid_channel(channel_id):
-        return f"Channel ID: {channel_id} is invalid"
+        raise ValueError(f"Channel ID: {channel_id} is invalid")
 
     channel = channel_dict(channel_id)
     u_id = decode_token(token)
@@ -93,16 +85,16 @@ def channel_leave(token, channel_id):
     return {}
 
 def channel_addowner(token, channel_id, u_id):
-    if not is_logged_in(token):
-        return f"User: {decode_token(token)} is not logged in"
+    #if not is_logged_in(token):
+    #    raise ValueError(f"User: {decode_token(token)} is not logged in")
     #if not is_logged_in(generate_token(u_id)):
     #    return ff"User: {u_id} is not logged in"
     if not is_valid_channel(channel_id):
-        return f"Channel ID: {channel_id} is invalid"
+        raise ValueError(f"Channel ID: {channel_id} is invalid")
     if is_owner(u_id, channel_id):
-        return f"User: {u_id} is already an owner"
+        raise ValueError(f"User: {u_id} is already an owner")
     if not is_owner(decode_token(token), channel_id):
-        return f"User: {decode_token(token)} does not have privileges to promote others"
+        raise AccessError(f"User: {decode_token(token)} does not have privileges to promote others")
 
     channel = channel_dict(channel_id)
     name_first = get_first_name(u_id)
@@ -118,25 +110,24 @@ def channel_addowner(token, channel_id, u_id):
 
 
 def channel_removeowner(token, channel_id, u_id):
-    if not is_logged_in(token):
-        return f"User: {decode_token(token)} is not logged in"
+    #if not is_logged_in(token):
+    #    return f"User: {decode_token(token)} is not logged in"
     #if not is_logged_in(generate_token(u_id)):
     #    return ff"User: {u_id} is not logged in"
     if not is_valid_channel(channel_id):
-        return f"Channel ID: {channel_id} is invalid"
+        raise ValueError(f"Channel ID: {channel_id} is invalid")
     if not is_owner(u_id, channel_id):
-        return f"User: {u_id} is not an owner"
+        raise ValueError(f"User: {u_id} is not an owner")
     if not is_owner(decode_token(token), channel_id):
-        return f"User: {decode_token(token)} does not have privileges to demote others"
+        raise AccessError(f"User: {decode_token(token)} does not have privileges to demote others")
 
     channel = channel_dict(channel_id)
 
+    # remove user from list of owners
     for member in channel['owner_members']:
         if u_id == member['u_id']:
             channel['owner_members'].remove(member)
             break
-    # remove user from list of owners
-    
 
     return {}
 
@@ -144,15 +135,15 @@ def channel_invite(token, channel_id, u_id):
     inviter_u_id = decode_token(token)
     user = user_dict(u_id)
     if u_id == inviter_u_id:
-        return 'cannot invite self'
+        raise ValueError(f"User: {u_id} cannot invite self")
 
     channel = channel_dict(channel_id)
     if channel == None:
-        return 'channel id does not exist'
+        raise ValueError(f"Channel ID: {channel_id} does not exist")
 
     for member in channel['all_members']:
         if member['u_id'] == u_id:
-            return 'user already part of channel'
+            raise AccessError(f"User: {u_id} already part of channel: {channel_id}")
 
     invitee_token = user['tokens'][0]
     channel_join(invitee_token, channel_id)
@@ -162,11 +153,14 @@ def channel_invite(token, channel_id, u_id):
 
 def channel_join(token, channel_id):
     u_id = decode_token(token)
-
     channel = channel_dict(channel_id)
     user = user_dict(u_id)
-    if user == None or channel == None:
-        return 'channel id/ user id does not exist'
+    if is_member(u_id, channel_id):
+        raise ValueError(f"User: {u_id} has already joined channel: {channel_id}")
+    if user == None:
+        raise ValueError(f"User ID: {u_id} does not exist")
+    elif  channel == None:
+        raise ValueError(f"Channel ID: {channel_id} does not exist")
 
     if user['permission_id'] != 3:
         channel['owner_members'].append({
@@ -181,19 +175,18 @@ def channel_join(token, channel_id):
             'name_last' : user['name_last']
         })
     else:
-        return 'user does not have rights'
-
+        raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
     return {}
 
 def channel_details(token, channel_id):
     channel = channel_dict(channel_id)
     if channel == None:
-        return "channel id does not exist"
+        raise ValueError(f"Channel ID: {channel_id} does not exist")
 
     u_id = decode_token(token)
     if is_member(u_id, channel_id) is False:
-        return "authorised user not member of channel"
-    
+        raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
+
     details = {
         'name' : channel['name'],
         'owner_members' : channel['owner_members'],

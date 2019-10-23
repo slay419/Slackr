@@ -1,11 +1,12 @@
 from json import dumps
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from werkzeug.exceptions import HTTPException
 import hashlib
 import jwt
 import re
 import copy
 import time
-
+from .exceptions import *
 #GLOBAL VARIABLES
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 SECRET = "daenerys"

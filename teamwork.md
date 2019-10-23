@@ -1,6 +1,5 @@
 
 
-
 # Reflection
 
 The Master Branch team has successfully completed Iteration 2 to satisfactory 
@@ -34,7 +33,7 @@ During our communication sessions, we agreed to follow a set structure to maximi
 As a result, although the process is time-consuming and the prime reason for longer group calls, it was non-the-less an imperative inclusion as the feedback to be considered was important and reduced consecutive problems later on.
 
 ## Contingency Plans
-*It is well known that 'Nothing goes to plan*
+*It is well known that "Nothing goes to plan"*
 
 Preparation for failure is a critical part of ensuring success. For our team, any problem could be overcome with enough time, thus we attempted to be tactical with our time. We scheduled our own due date to be 3 days before the course-wide specification. By this determined day, all work should be completed to a satisfactory standard of submission. The 3 day buffer zone was created as a contingency, a dedicated time to tackle any unscheduled complication. Although it was unused in the end, preparation for the worst is an easy price to pay, compared to the chaos of completing pending tasks with no time.
 

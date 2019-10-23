@@ -15,29 +15,25 @@ def search(token, query_str):
 	return messages
 
 def admin_userpermission_change(token, u_id, permission_id):
-	data = get_data()
+	if permission_id != 1 or permission_id != 2 or permission_id != 3:
+		return "invalid permission id change requested"
 
-	callersPermission = 0
+	caller_id = decode_token(token)
+	caller_user = user_dict(caller_id)
+	secondary_user = user_dict(u_id)
+	if secondary_user == None:
+		return "u_id does not refer to a valid user"
 
-	myID = decode_token(token)
-	for user in data['users']:
-		if myID == data['users']['u_id']:
-			callersPermission = data['users']['permission_id']
+	caller_permission = caller_user['permission_id']
+	if caller_permission == 3:
+		return "authorised user is not an admin or owner"
 
-	if valid_u_id(u_id) is 0:
-    	raise ValueError("u_id does not refer to a valid user")
-  	if callersPermission is not 1 or is not 2 or is not 3:
-      	raise ValueError("Permission_id does not refer to a value permission")
-    if callersPermission is 3:
-      	raise AttributeError("The authorised user is not an admin or owner")
-
-	# At this point, the caller is authorised to make changes
-	# it is also assured the target user is valid
-
-	for user in data['users']:
-		if u_id == data['users']['u_id']:
-			data['users']['permission_id'] = permission_id
-			print("Successfully updated user's permissions")
+	if caller_permission == 1 or secondary_user['permission_id'] != 1:
+		secondary_user['permission_id'] = permission_id
+	else:
+		return "owner cannot change admin permissions"
 
 	return {}
+
+
 	

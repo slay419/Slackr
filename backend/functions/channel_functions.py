@@ -1,9 +1,9 @@
-from .data import *
+from data import *
 
 
 def channels_create(token, name, is_public):
     if len(name) > 20:
-        return send_error("Name of channel is longer than 20 characters.")
+        return "Name of channel is longer than 20 characters."
     data = get_data()
     owner_id = decode_token(token)
     print(owner_id)
@@ -83,7 +83,39 @@ def channel_removeowner(token, channel_id, u_id):
     print(f"channel owners are: {channel['owners']} after removing")
     return {}
 
+def channel_invite(token, channel_id, u_id):
+    inv_u_id = decode_token(token)
+    if u_id == inv_u_id:
+        return 'cannot invite self'
 
+    channel = channel_dict(channel_id)
+    if channel == None:
+        return 'channel id does not exist'
+
+    for user in channel['members']:
+        if u_id == user:
+            return 'user already part of channel'
+    #channel['members'].append(u_id)
+    channel_join()
+    return {}
+
+
+def channel_join(token, channel_id):
+    u_id = decode_token(token)
+
+    channel = channel_dict(channel_id)
+    user = user_dict(u_id)
+    if user == None or channel == None:
+        return 'channel id/ user id does not exist'
+
+    if user['permission_id'] != 3:
+        channel['members'].append(u_id)
+    elif user['permission_id'] == 3 and channel['is_public'] == True:
+        channel['members'].append(u_id)
+    else:
+        return 'user does not have rightts'
+
+    return {}
 
 
 

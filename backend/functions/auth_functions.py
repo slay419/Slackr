@@ -10,7 +10,7 @@ def auth_register(email, password, name_first, name_last):
             if email == user['email']:
                 return 'already used email'
     else:
-        return send_error('invalid email')
+        return 'invalid email'
 
     if len(password) < 6: #rules for length of pasword
         return 'password too short'
@@ -43,8 +43,7 @@ def auth_register(email, password, name_first, name_last):
         'u_id': u_id,
         'permission_id' : permission_id,
         'handle' : handle,
-        'tokens'  : [],
-        'profile' : None
+        'tokens'  : []
     })
     #auth_login(email, password)
     return {
@@ -70,43 +69,9 @@ def auth_login(email, password):
             }
 
     return 'email does not exist or password is incorrect'
+    
 
-def channel_invite(token, channel_id, u_id):
-
-    inv_u_id = decode_token(token)
-
-    if u_id == inv_u_id:
-        return 'cannot invite self'
-
-    channel = channel_dict(channel_id)
-    if channel == None:
-        return 'channel id does not exist'
-
-    for user in channel['members']:
-        if u_id == user:
-            return 'user already part of channel'
-    channel['members'].append(u_id)
-    return {}
-
-def channel_join(token, channel_id):
-
-
-    u_id = decode_token(token)
-
-    channel = channel_dict(channel_id)
-    user = user_dict(u_id)
-    if user == None or channel == None:
-        return 'channel id/ user id does not exist'
-
-    if user['permission_id'] != 3:
-        channel['members'].append(u_id)
-    elif user['permission_id'] == 3 and channel['is_public'] == True:
-        channel['members'].append(u_id)
-    else:
-        return 'user does not have rightts'
-
-    return {}
-
+    
 def auth_logout(token):
 
     u_id = decode_token(token)

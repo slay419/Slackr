@@ -78,36 +78,26 @@ def channel_create():
     token = request.form.get('token')
     name = request.form.get('name')
     is_public = request.form.get('is_public')
-    if not is_logged_in(token):
-        return send("User: {decode_token(token)} not logged in")
+
     return send(channels_create(token, name, is_public))
 
 
 @APP.route('/channels/listall', methods = ['GET'])
 def listall():
     token = request.args.get('token')
-    if not is_logged_in(token):
-        return send("User: {decode_token(token)} is not logged in")
     return send(channels_listall(token))
 
 
 @APP.route('/channels/list', methods = ['GET'])
 def list():
     token = request.args.get('token')
-    if not is_logged_in(token):
-        return send("User: {decode_token(token)} is not logged in")
     return send(channels_list(token))
 
 @APP.route('/channel/leave', methods = ['POST'])
 def leave():
     token = request.form.get('token')
     channel_id = int(request.form.get('channel_id'))
-    if not is_logged_in(token):
-        return send("User: {decode_token(token)} is not logged in")
-    if not is_joined(token, channel_id):
-        return send("User: {decode_token(token)} has not joined channel: {channel_id} yet")
-    if not is_valid_channel(channel_id):
-        return send("Channel ID: {channel_id} is invalid")
+
     return send(channel_leave(token, channel_id))
 
 @APP.route('/channel/addowner', methods = ['POST'])
@@ -115,16 +105,6 @@ def addowner():
     token = request.form.get('token')   # person doing promoting
     channel_id = int(request.form.get('channel_id'))
     u_id = int(request.form.get('u_id'))     # person being promoted
-    if not is_logged_in(token):
-        return send("User: {decode_token(token)} is not logged in")
-    #if not is_logged_in(generate_token(u_id)):
-    #    return send_error(f"User: {u_id} is not logged in")
-    if not is_valid_channel(channel_id):
-        return send("Channel ID: {channel_id} is invalid")
-    if is_owner(u_id, channel_id):
-        return send("User: {u_id} is already an owner")
-    if not is_owner(decode_token(token), channel_id):
-        return send("User: {decode_token(token)} does not have privileges to promote others")
 
     return send(channel_addowner(token, channel_id, u_id))
 
@@ -133,16 +113,6 @@ def removeowner():
     token = request.form.get('token')   # person doing demoting
     channel_id = int(request.form.get('channel_id'))
     u_id = int(request.form.get('u_id'))     # person being demoted
-    if not is_logged_in(token):
-        return send("User: {decode_token(token)} is not logged in")
-    #if not is_logged_in(generate_token(u_id)):
-    #    return send_error(f"User: {u_id} is not logged in")
-    if not is_valid_channel(channel_id):
-        return send("Channel ID: {channel_id} is invalid")
-    if not is_owner(u_id, channel_id):
-        return send("User: {u_id} is not an owner")
-    if not is_owner(decode_token(token), channel_id):
-        return send("User: {decode_token(token)} does not have privileges to demote others")
 
     return send(channel_removeowner(token, channel_id, u_id))
 
@@ -173,4 +143,4 @@ def editmessages():
     return send(message_edit(token, message_id, message))
 
 if __name__ == "__main__":
-    APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000))
+    APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000), debug=True)

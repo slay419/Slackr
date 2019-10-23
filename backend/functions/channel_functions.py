@@ -2,8 +2,10 @@ from .data import *
 
 
 def channels_create(token, name, is_public):
+    if not is_logged_in(token):
+        return f"User: {decode_token(token)} not logged in"
     if len(name) > 20:
-        return send_error("Name of channel is longer than 20 characters.")
+        return "Name of channel is longer than 20 characters"
     data = get_data()
     owner_id = decode_token(token)
     print(owner_id)
@@ -29,6 +31,8 @@ def channels_create(token, name, is_public):
 
 # Provide a list of all channels (and their associated details)
 def channels_listall(token):
+    if not is_logged_in(token):
+        return f"User: {decode_token(token)} is not logged in"
     data = get_data()
     channels_list = []
     for channels in data['channels']:
@@ -41,6 +45,9 @@ def channels_listall(token):
 
 # Return a list of channels the user has already joined or is a owner of
 def channels_list(token):
+    if not is_logged_in(token):
+        return f"User: {decode_token(token)} is not logged in"
+
     data = get_data()
     u_id = decode_token(token)
     channels_list = []
@@ -54,6 +61,13 @@ def channels_list(token):
 
 
 def channel_leave(token, channel_id):
+    if not is_logged_in(token):
+        return f"User: {decode_token(token)} is not logged in"
+    if not is_joined(token, channel_id):
+        return f"User: {decode_token(token)} has not joined channel: {channel_id} yet"
+    if not is_valid_channel(channel_id):
+        return f"Channel ID: {channel_id} is invalid"
+
     channel = channel_dict(channel_id)
     u_id = decode_token(token)
     # loop through owners
@@ -67,6 +81,17 @@ def channel_leave(token, channel_id):
     return {}
 
 def channel_addowner(token, channel_id, u_id):
+    if not is_logged_in(token):
+        return f"User: {decode_token(token)} is not logged in"
+    #if not is_logged_in(generate_token(u_id)):
+    #    return ff"User: {u_id} is not logged in"
+    if not is_valid_channel(channel_id):
+        return f"Channel ID: {channel_id} is invalid"
+    if is_owner(u_id, channel_id):
+        return f"User: {u_id} is already an owner"
+    if not is_owner(decode_token(token), channel_id):
+        return f"User: {decode_token(token)} does not have privileges to promote others"
+
     channel = channel_dict(channel_id)
     print(f"channel owners are: {channel['owners']}")
     # append user to list of owners
@@ -76,6 +101,17 @@ def channel_addowner(token, channel_id, u_id):
 
 
 def channel_removeowner(token, channel_id, u_id):
+    if not is_logged_in(token):
+        return f"User: {decode_token(token)} is not logged in"
+    #if not is_logged_in(generate_token(u_id)):
+    #    return ff"User: {u_id} is not logged in"
+    if not is_valid_channel(channel_id):
+        return f"Channel ID: {channel_id} is invalid"
+    if not is_owner(u_id, channel_id):
+        return f"User: {u_id} is not an owner"
+    if not is_owner(decode_token(token), channel_id):
+        return f"User: {decode_token(token)} does not have privileges to demote others"
+
     channel = channel_dict(channel_id)
     print(f"channel owners are: {channel['owners']}")
     # remove user from list of owners

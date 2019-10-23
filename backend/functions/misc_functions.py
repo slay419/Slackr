@@ -37,5 +37,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 	for user in data['users']:
 		if u_id == data['users']['u_id']:
 			data['users']['permission_id'] = permission_id
-			printf("Successfully updated user's permissions")
+			print("Successfully updated user's permissions")
+
+	return {}
 	

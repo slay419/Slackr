@@ -46,11 +46,12 @@ def auth_register(email, password, name_first, name_last):
         'tokens'  : [],
         'profile' : None
     })
+    #auth_login(email, password)
     return {
         'u_id': u_id,
         'token' : token
     }
-    
+
 def auth_login(email, password):
 
     data = get_data()
@@ -79,4 +80,3 @@ def auth_logout(token):
     user['tokens'].remove(token)
 
     return {}
-

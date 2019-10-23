@@ -32,7 +32,10 @@ def channels_create(token, name, is_public):
         'messages': []
     }
     data['channels'].append(dict)
-    print(data['channels'])
+    print(dict)
+    print({
+        'channel_id': new_channel_id
+    })
     return {
         'channel_id': new_channel_id
     }
@@ -49,7 +52,8 @@ def channels_listall(token):
             'channel_id': channels['channel_id'], 'name': channels['name']
         })
         channels_list.append(dict)
-    return channels_list
+    print(channels_list)
+    return {'channels': channels_list}
 
 # Return a list of channels the user has already joined or is a owner of
 def channels_list(token):

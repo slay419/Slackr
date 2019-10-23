@@ -1,11 +1,19 @@
 from .data import *
 
 def user_profile_setemail(token, email):
+	data = get_users()
+	myID = decode_token(token)
 	
 	if valid_email(email) is False:
 		raise ValueError("Email entered is not a valid email")
 	if is_email_free(email) == 0:
 		raise ValueError("Email is already in use")
+	# At this point, the email is valid and untaken
+	for user in data['users']:
+		if myID == data['users']['u_id']:
+			data['users']['email'] = email
+			print("Successfully updated user's email")
+
 	return {}
 
 	
@@ -14,11 +22,9 @@ def user_profile_setemail(token, email):
 ## Returns 0 if the email is being used
 
 def is_email_free(email):
-	data = get_users()
-	for user in data:
-		if user['email'] is email:		
+	for user in data['users']:
+		if data['users']['email'] is email:		
 			return 0	
-	user['email'] = email
 	return 1
 
 def user_profile_sethandle(token, handle_str):
@@ -28,7 +34,12 @@ def user_profile_sethandle(token, handle_str):
 	if len(handle_str) < 1:
 		raise ValueError("Handle is less than 1 character")	
 
-	data['handle'] = handle_str
+	myID = decode_token(token)
+	for user in data['users']:
+		if myID == data['users']['u_id']:
+			data['users']['handle'] = handle_str
+			print("Successfully updated user's handle")
+
 	return {}
 
 def user_profile_setname(token, name_first, name_last):
@@ -42,10 +53,14 @@ def user_profile_setname(token, name_first, name_last):
 	if len(name_last) > 50:
 		raise ValueError('Last name is larger than 50 characters')
 	if len(name_last) < 1:
-		raise ValueError('Last name is less than 1 character')		
-	
-	data['name_first'] = name_first
-	data['name_last'] = name_last
+		raise ValueError('Last name is less than 1 character')	
+
+	myID = decode_token(token)
+	for user in data['users']:
+		if myID == data['users']['u_id']:
+			data['users']['name_first'] = name_first
+			data['users']['name_last'] = name_last
+			print("Successfully updated user's first and last name")
 
 	return {}
 
@@ -53,15 +68,18 @@ def user_profile(token,u_id):
 
 	data = get_users()
 
-	if u_id in data:
-		valid = 1
+	valid = 0
 
-	if valid is 0:
+	for user in data['users']:
+		if u_id == data['users']['u_id']:
+			valid = 1
+
+	if valid == 0:
 		raise ValueError("User ID does not exist")
 		return
 	else:
-		for user in data:
-			if user['u_id'] is u_id:
+		for user in data['users']:
+			if user['u_id'] == u_id:
 				new_dict = {email:user["email"], name_first:user["firstName"], name_last:user["lastName"], handle_str:user["handle"]}
-
+	print("Successfully found and located user's information")
 	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}

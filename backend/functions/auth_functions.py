@@ -69,9 +69,9 @@ def auth_login(email, password):
             }
 
     return 'email does not exist or password is incorrect'
-    
 
-    
+
+
 def auth_logout(token):
 
     u_id = decode_token(token)
@@ -82,9 +82,9 @@ def auth_logout(token):
 
 def password_request(email):
     data = get_data()
-    for user in data['users']
+    for user in data['users']:
         if user['email'] == email:
-            
+
 
 
 

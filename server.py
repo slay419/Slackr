@@ -15,6 +15,7 @@ from backend.functions.channel_functions import *
 from backend.functions.message_functions import *
 
 APP = Flask(__name__)
+CORS(APP)
 
 #########################   AUTH FUNCTIONS  ###########################
 

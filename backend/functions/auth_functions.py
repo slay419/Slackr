@@ -1,4 +1,4 @@
-from data import *
+from .data import *
 
 def auth_register(email, password, name_first, name_last):
 

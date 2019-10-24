@@ -76,9 +76,11 @@ def auth_logout(token):
 
     u_id = decode_token(token)
     user = user_dict(u_id)
+    if user == None:
+        return {'is_success' : False}
     user['tokens'].remove(token)
 
-    return {}
+    return {'is_success' : True}
 
 '''
 def password_request(email):

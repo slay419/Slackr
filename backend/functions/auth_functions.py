@@ -43,7 +43,7 @@ def auth_register(email, password, name_first, name_last):
         'u_id': u_id,
         'permission_id' : permission_id,
         'handle' : handle,
-        'tokens'  : [token]
+        'tokens'  : []
     })
     #auth_login(email, password)
     return {
@@ -84,5 +84,9 @@ def password_request(email):
     data = get_data()
     for user in data['users']:
         if user['email'] == email:
-         return "user is not registered"
+
+
+
+
+    return "user is not registered"
 '''

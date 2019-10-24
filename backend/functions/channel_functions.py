@@ -1,4 +1,4 @@
-from data import *
+from .data import *
 
 
 def channels_create(token, name, is_public):

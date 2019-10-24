@@ -60,7 +60,7 @@ def connect():
 def invite():
 
     token = request.form.get('token') #get token
-    channel_id = request.form.get('channel_id') #get channel_id
+    channel_id = int(request.form.get('channel_id')) #get channel_id
     u_id = int(request.form.get('u_id')) #get u_id
 
 

@@ -1,11 +1,12 @@
 from json import dumps
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from werkzeug.exceptions import HTTPException
 import hashlib
 import jwt
 import re
 import copy
 import time
-
+from .exceptions import *
 #GLOBAL VARIABLES
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 SECRET = "daenerys"
@@ -98,7 +99,16 @@ def is_valid_channel(channel_id):
         if channels_dict['channel_id'] == channel_id:
             return True
     return False
-
+    
+# Returns true if the message has been created already, false if no message exists
+def is_valid_message(message_id):
+    data = get_data()
+    message_list = data['messages']
+    for messages_dict in message_list:
+        if messages_dict['message_id'] == int(message_id):
+            return True
+    return False
+    
 def is_owner(u_id, channel_id):
     channel = channel_dict(channel_id)
     # loop through channel to check if owner

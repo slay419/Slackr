@@ -43,7 +43,7 @@ def auth_register(email, password, name_first, name_last):
         'u_id': u_id,
         'permission_id' : permission_id,
         'handle' : handle,
-        'tokens'  : []
+        'tokens'  : [token]
     })
     #auth_login(email, password)
     return {
@@ -69,9 +69,9 @@ def auth_login(email, password):
             }
 
     return 'email does not exist or password is incorrect'
-    
 
-    
+
+
 def auth_logout(token):
 
     u_id = decode_token(token)
@@ -79,13 +79,10 @@ def auth_logout(token):
     user['tokens'].remove(token)
 
     return {}
-
+'''
 def password_request(email):
     data = get_data()
-    for user in data['users']
+    for user in data['users']:
         if user['email'] == email:
-            
-
-
-
-    return "user is not registered"
+         return "user is not registered"
+'''

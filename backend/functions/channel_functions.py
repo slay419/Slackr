@@ -1,4 +1,4 @@
-from .data import *
+from data import *
 
 
 def channels_create(token, name, is_public):
@@ -192,6 +192,7 @@ def channel_details(token, channel_id):
         'owner_members' : channel['owner_members'],
         'all_members' : channel['all_members']
     }
+    return details
 
 def get_user_name(u_id):
     data = get_data()

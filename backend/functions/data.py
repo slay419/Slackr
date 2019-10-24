@@ -6,7 +6,7 @@ import jwt
 import re
 import copy
 import time
-from .exceptions import *
+from exceptions import *
 #GLOBAL VARIABLES
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 SECRET = "daenerys"

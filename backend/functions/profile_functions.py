@@ -1,7 +1,7 @@
 from .data import *
 
 def user_profile_setemail(token, email):
-	data = get_users()
+	data = get_data()
 	myID = decode_token(token)
 	
 	if valid_email(email) is False:
@@ -28,7 +28,7 @@ def is_email_free(email):
 	return 1
 
 def user_profile_sethandle(token, handle_str):
-	data = get_users()
+	data = get_data()
 	if len(handle_str) > 20:
 		raise ValueError("Handle is larger than 20 characters")
 	if len(handle_str) < 1:
@@ -44,7 +44,7 @@ def user_profile_sethandle(token, handle_str):
 
 def user_profile_setname(token, name_first, name_last):
 
-	data = get_users()
+	data = get_data()
 
 	if len(name_first) > 50:
 		raise ValueError('First name is larger than 50 character')
@@ -66,7 +66,7 @@ def user_profile_setname(token, name_first, name_last):
 
 def user_profile(token,u_id):
 
-	data = get_users()
+	data = get_data()
 
 	valid = 0
 

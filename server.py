@@ -14,6 +14,8 @@ from backend.functions.data import *
 from backend.functions.auth_functions import *
 from backend.functions.channel_functions import *
 from backend.functions.message_functions import *
+from backend.functions.profile_functions import *
+from backend.functions.misc_functions import *
 
 APP = Flask(__name__)
 APP.config['TRAP_HTTP_EXCEPTIONS'] = True
@@ -206,6 +208,61 @@ def unpinmessages():
     message_id = request.form.get('message_id')
 
     return send(message_unpin(token, message_id))
+
+#########################  USER PROFILE FUNCTIONS  ###########################
+# SET USER EMAIL
+@APP.route('user/profile/setemail', methods = ['PUT'])
+def setemail():
+    token = request.form.get('token')
+    email = request.form.get('email')
+
+    return send(user_profile_setemail(token, email))
+
+# SET USER HANDLE
+@APP.route('user/profile/sethandle', methods = ['PUT'])
+def sethandle():
+    token = request.form.get('token')
+    handle = request.form.get('handle')
+
+    return send(user_profile_sethandle(token, handle))
+
+# SET USER NAMES
+@APP.route('user/profile/setname', methods = ['PUT'])
+def setnames():
+    token = request.form.get('token')
+    name_first = request.form.get('name_first')
+    name_last = request.form.get('name_last')
+
+    return send(user_profile_setname(token, name_first,name_last))
+
+# RETRIEVE USER PROFILE
+@APP.route('user/profile', methods = ['GET'])
+def retrieveProf():
+    token = request.args.get('token')
+    u_id = request.args.get('u_id')
+
+    return send(user_profile(token, u_id))
+
+#########################  MISC. FUNCTIONS  ###########################
+
+# SEARCH
+@APP.route('search' methods = ['GET'])
+def searchWrapper():
+    token = request.args.get('token')
+    query_str = request.args.get('query_str')
+
+    return send(search(token,query_str))
+
+# ADMIN PERM CHANGE
+@APP.route('admin/userpermission/change' methods = ['POST'])
+def userPermChange():
+    token = request.form.get('token')
+    u_id = request.form.get('u_id')
+    permission_id = request.form.get('permission_id')
+
+    return send(admin_userpermission_change(token, u_id, permission_id))
+
+
 
 if __name__ == "__main__":
     APP.run(port=(sys.argv[1] if len(sys.argv) > 1 else 5000), debug=True)

@@ -79,7 +79,7 @@ def user_profile(token,u_id):
 		return
 	else:
 		for user in data['users']:
-			if user['u_id'] == u_id:
-				new_dict = {email:user["email"], name_first:user["firstName"], name_last:user["lastName"], handle_str:user["handle"]}
+			if data['users']['u_id'] == u_id:
+				new_dict = {email:data['users']['email'], name_first:data['users']['firstName'], name_last:data['users']['lastName'], handle_str:user["handle"]}
 	print("Successfully found and located user's information")
 	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}

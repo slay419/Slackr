@@ -43,7 +43,7 @@ def auth_register(email, password, name_first, name_last):
         'u_id': u_id,
         'permission_id' : permission_id,
         'handle' : handle,
-        'tokens'  : [],
+        'tokens'  : [token],
         'reset_code' : None
     })
     #auth_login(email, password)

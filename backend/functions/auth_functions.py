@@ -19,7 +19,7 @@ def auth_register(email, password, name_first, name_last):
     if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50: #rules for length of name (first and last)
         return 'names too long/short'
 
-    handle = ''.join((name_last, name_last))
+    handle = ''.join((name_first, name_last))
     for user in data['users']:
         if handle == user['handle']:
             handle += str(1 + len(data['users']))

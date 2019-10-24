@@ -30,7 +30,7 @@ def create():
     name_first = request.form.get('name_first') #get first name
     name_last = request.form.get('name_last') #get last name
 
-    return send(auth_register(email, password, name_first, name_last));
+    return send(auth_register(email, password, name_first, name_last))
 
 #LOGIN
 @APP.route('/auth/login', methods = ['PUT'])

@@ -76,6 +76,7 @@ def auth_login(email, password):
 def auth_logout(token):
 
     u_id = decode_token(token)
+
     user = user_dict(u_id)
     if user == None:
         return {'is_success' : False}

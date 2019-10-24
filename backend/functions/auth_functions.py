@@ -79,6 +79,7 @@ def auth_logout(token):
     user['tokens'].remove(token)
 
     return {}
+
 '''
 def password_request(email):
     data = get_data()

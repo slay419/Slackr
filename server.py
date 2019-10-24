@@ -61,7 +61,7 @@ def invite():
 
     token = request.form.get('token') #get token
     channel_id = request.form.get('channel_id') #get channel_id
-    u_id = request.form.get('u_id') #get u_id
+    u_id = int(request.form.get('u_id')) #get u_id
 
 
     return send(channel_invite(token, channel_id, u_id))
@@ -239,7 +239,7 @@ def setnames():
 @APP.route('/user/profile', methods = ['GET'])
 def retrieveProf():
     token = request.args.get('token')
-    u_id = request.args.get('u_id')
+    u_id = int(request.args.get('u_id'))
 
     return send(user_profile(token, u_id))
 
@@ -257,7 +257,7 @@ def searchWrapper():
 @APP.route('/admin/userpermission/change', methods = ['POST'])
 def userPermChange():
     token = request.form.get('token')
-    u_id = request.form.get('u_id')
+    u_id = int(request.form.get('u_id'))
     permission_id = request.form.get('permission_id')
 
     return send(admin_userpermission_change(token, u_id, permission_id))

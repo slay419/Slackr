@@ -184,6 +184,10 @@ def channel_details(token, channel_id):
         raise ValueError(f"Channel ID: {channel_id} does not exist")
 
     u_id = decode_token(token)
+
+    if is_member(u_id, channel_id) is False and len(channel['all_members']) == 0:
+        return
+
     if is_member(u_id, channel_id) is False:
         raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
 

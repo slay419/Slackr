@@ -1,6 +1,7 @@
 """Flask server"""
 import sys
 from flask_cors import CORS
+from flask_mail import Mail, Message
 from json import dumps
 from flask import Flask, request
 import hashlib
@@ -18,6 +19,15 @@ APP = Flask(__name__)
 APP.config['TRAP_HTTP_EXCEPTIONS'] = True
 APP.register_error_handler(Exception, defaultHandler)
 CORS(APP)
+
+APP.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME = 'masterbranch101@gmail.com',
+    MAIL_PASSWORD = "comp1531"
+)
+
 
 #########################   AUTH FUNCTIONS  ###########################
 
@@ -73,6 +83,21 @@ def logout():
 
 
     return send(auth_logout(token))
+
+#PASSWORD RESET REQ
+@APP.route('/auth/passwordreset/request', methods = ['POST'])
+def email():
+
+    email = request.form.get('email')
+    mail = Mail(APP)
+    return send(auth_passwordreset_request(email, mail))
+
+#PASSWORD RESET RESET
+@APP.route('/auth/passwordreset/reset', methods = ['POST'])
+def reset():
+    reset_code = request.form.get('reset_code')
+    new_password = request.form.get('new_password')
+    return send(auth_passwordreset_reset(reset_code, new_password))
 
 #########################   CHANNEL FUNCTIONS  ###########################
 

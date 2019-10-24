@@ -1,6 +1,8 @@
 from json import dumps
 from flask import Flask, request, jsonify
+from flask_mail import Mail, Message
 from werkzeug.exceptions import HTTPException
+from random import randint
 import hashlib
 import jwt
 import re
@@ -137,4 +139,11 @@ def get_last_name(u_id):
     for user in data['users']:
         if u_id == user['u_id']:
             return user['name_last']
+    return None
+
+def get_u_id(email):
+    data = get_data()
+    for user in data['users']:
+        if email == user['email']:
+            return user['u_id']
     return None

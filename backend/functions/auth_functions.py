@@ -43,7 +43,8 @@ def auth_register(email, password, name_first, name_last):
         'u_id': u_id,
         'permission_id' : permission_id,
         'handle' : handle,
-        'tokens'  : []
+        'tokens'  : [],
+        'reset_code' : None
     })
     #auth_login(email, password)
     return {
@@ -82,10 +83,32 @@ def auth_logout(token):
 
     return {'is_success' : True}
 
-'''
-def password_request(email):
+def auth_passwordreset_request(mail, email):
+    u_id = get_u_id(email)
+    if u_id == None:
+        return "email not registered"
+    user = user_dict(u_id)
+
+    try:
+        msg = Message("Reset Code",
+            sender="masterbranch101@gmail.com",
+            recipients=[email])
+        reset_code = str(u_id) + str(randin(100,999))
+        user['reset_code'] = reset_code
+        msg.body = f"Your reset code is {reset_code}"
+        mail.send(msg)
+        return {}
+    except Exception as e:
+        return (str(e))
+
+
+def auth_passwordreset_reset(reset_code, new_password):
     data = get_data()
+    if len(new_password) < 6:
+        return "password entered is not a valid password"
     for user in data['users']:
-        if user['email'] == email:
-         return "user is not registered"
-'''
+        if user['reset_code'] == reset_code and reset_code != None:
+            user['reset_code'] = None
+            user['password'] = new_password
+            return {}
+    return "user does not exist, althougth this should not ever be returned"

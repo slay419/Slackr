@@ -81,6 +81,6 @@ def user_profile(token,u_id):
 		raise ValueError("User ID does not exist")
 		return
 	else:
-		new_dict = {'email':userData['email'], 'name_first':userData['firstName'], 'name_last':userData['lastName'], 'handle_str':userData["handle"]}
+		new_dict = {'email':userData['email'], 'name_first':userData['name_first'], 'name_last':userData['name_last'], 'handle_str':userData["handle"]}
 	print("Successfully found and located user's information")
 	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}

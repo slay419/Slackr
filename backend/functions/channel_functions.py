@@ -61,7 +61,7 @@ def channels_list(token):
                 'channel_id': channels['channel_id'],
                 'name': channels['name']
             })
-    return channels_list
+    return {'channels': channels_list}
 
 
 def channel_leave(token, channel_id):
@@ -192,6 +192,8 @@ def channel_details(token, channel_id):
         'owner_members' : channel['owner_members'],
         'all_members' : channel['all_members']
     }
+    return details
+
 
 def get_user_name(u_id):
     data = get_data()

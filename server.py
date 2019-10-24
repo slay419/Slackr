@@ -211,7 +211,7 @@ def unpinmessages():
 
 #########################  USER PROFILE FUNCTIONS  ###########################
 # SET USER EMAIL
-@APP.route('user/profile/setemail', methods = ['PUT'])
+@APP.route('/user/profile/setemail', methods = ['PUT'])
 def setemail():
     token = request.form.get('token')
     email = request.form.get('email')
@@ -219,7 +219,7 @@ def setemail():
     return send(user_profile_setemail(token, email))
 
 # SET USER HANDLE
-@APP.route('user/profile/sethandle', methods = ['PUT'])
+@APP.route('/user/profile/sethandle', methods = ['PUT'])
 def sethandle():
     token = request.form.get('token')
     handle = request.form.get('handle')
@@ -227,7 +227,7 @@ def sethandle():
     return send(user_profile_sethandle(token, handle))
 
 # SET USER NAMES
-@APP.route('user/profile/setname', methods = ['PUT'])
+@APP.route('/user/profile/setname', methods = ['PUT'])
 def setnames():
     token = request.form.get('token')
     name_first = request.form.get('name_first')
@@ -236,7 +236,7 @@ def setnames():
     return send(user_profile_setname(token, name_first,name_last))
 
 # RETRIEVE USER PROFILE
-@APP.route('user/profile', methods = ['GET'])
+@APP.route('/user/profile', methods = ['GET'])
 def retrieveProf():
     token = request.args.get('token')
     u_id = request.args.get('u_id')
@@ -246,15 +246,15 @@ def retrieveProf():
 #########################  MISC. FUNCTIONS  ###########################
 
 # SEARCH
-@APP.route('search' methods = ['GET'])
+@APP.route('/search', methods = ['GET'])
 def searchWrapper():
     token = request.args.get('token')
     query_str = request.args.get('query_str')
 
-    return send(search(token,query_str))
+    return send(search(token, query_str))
 
 # ADMIN PERM CHANGE
-@APP.route('admin/userpermission/change' methods = ['POST'])
+@APP.route('/admin/userpermission/change', methods = ['POST'])
 def userPermChange():
     token = request.form.get('token')
     u_id = request.form.get('u_id')

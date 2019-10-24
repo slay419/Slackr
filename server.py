@@ -107,7 +107,7 @@ def reset():
 def channel_create():
     token = request.form.get('token')
     name = request.form.get('name')
-    is_public = bool(request.form.get('is_public'))
+    is_public = request.form.get('is_public')
 
     return send(channels_create(token, name, is_public))
 

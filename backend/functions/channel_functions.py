@@ -36,7 +36,7 @@ def channel_messages(token, channel_id, start):
     return {'messages': messages, 'start': start, 'end': end,}
 
     #given start return end which is start + 50 or -1 if theres no more messages
-    
+
 def channels_create(token, name, is_public):
     #if not is_logged_in(token):
     #    return f"User: {decode_token(token)} not logged in"
@@ -133,6 +133,8 @@ def channel_addowner(token, channel_id, u_id):
         raise ValueError(f"User: {u_id} is already an owner")
     if not is_owner(decode_token(token), channel_id):
         raise AccessError(f"User: {decode_token(token)} does not have privileges to promote others")
+    if not is_member(u_id, channel_id):
+        raise ValueError(f"User {u_id} has not joined channel: {channel_id} yet")
 
     channel = channel_dict(channel_id)
     name_first = get_first_name(u_id)

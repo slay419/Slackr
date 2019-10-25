@@ -183,9 +183,9 @@ def sendmessages():
 def removemessages():
     token = request.form.get('token')
     message_id = int(request.form.get('message_id'))
-    
+
     return send(message_remove(token, message_id))
-    
+
 @APP.route('/message/edit', methods = ['PUT'])
 def editmessages():
     token = request.form.get('token')
@@ -237,9 +237,9 @@ def setemail():
 @APP.route('/user/profile/sethandle', methods = ['PUT'])
 def sethandle():
     token = request.form.get('token')
-    handle = request.form.get('handle')
+    handle_str = request.form.get('handle_str')
 
-    return send(user_profile_sethandle(token, handle))
+    return send(user_profile_sethandle(token, handle_str))
 
 # SET USER NAMES
 @APP.route('/user/profile/setname', methods = ['PUT'])

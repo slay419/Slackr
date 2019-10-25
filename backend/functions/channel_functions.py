@@ -1,5 +1,6 @@
 from .data import *
-
+from datetime import datetime
+from datetime import timezone
 
 #input: token, channelid, start
 #user must be a member of the channel
@@ -21,14 +22,17 @@ def channel_messages(token, channel_id, start):
     #Checking if user is authorised in correct channel
     if(is_member(u_id, channel_id) == False):
         return send_error('user is not in correct channel')
-    index = start
-    print("Index: " + str(index))
-    print("Length of messages: " + str(len(newchannel['messages'])+1))
-    print(newchannel['messages'])
-    for i in range(index,len(newchannel['messages'])):
-        messages.append(newchannel['messages'][i])
     if end > len(newchannel['messages']):
+        endindex = len(newchannel['messages'])
         end = -1
+    else:
+        endindex = end
+    for i in range(start,endindex):
+        dt = datetime.now()
+        timestamp = dt.replace(tzinfo=timezone.utc).timestamp()
+        if timestamp > newchannel['messages'][i]['time_created']:
+            messages.append(newchannel['messages'][i])
+    newchannel['messages'].sort(key = lambda i: i['time_created'],reverse=True)
     return {'messages': messages, 'start': start, 'end': end,}
 
     #given start return end which is start + 50 or -1 if theres no more messages

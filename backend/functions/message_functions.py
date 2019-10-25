@@ -1,7 +1,6 @@
 from .data import *
 from datetime import datetime
 from datetime import timezone
-from time import sleep
 
 #########################   MESSAGE FUNCTIONS  ###########################
 def message_sendlater(token, channel_id, message, time_sent):
@@ -77,8 +76,26 @@ def message_send(token, channel_id, message):
         if(channel['channel_id'] == channel_id):
             channel['messages'].insert(0, message_dict)
             data['messages'].append(message_dict)
-            print('return 3')
+
+    print(message_dict)
     return {'message_id': message_id}
+
+def message_remove(token, message_id):
+    data = get_data()
+    #remove message from global dict
+    for message in data['messages']:
+        if message['message_id'] == message_id:
+            print("we found a match")
+            data['messages'].remove(message)
+    #Searching for correct messagedict in the channels list
+    channels = data['channels']
+    for channeldict in channels:
+        messagelist = channeldict['messages']
+        for messagedict in messagelist:
+            if messagedict['message_id'] == message_id:
+                messagelist.remove(messagedict) 
+    print (data['messages'])
+    return {}
     
 def message_edit(token, message_id, message):
     data = get_data()
@@ -110,6 +127,7 @@ def message_react(token, message_id, react_id):
                 print(message['reacts'])
             else:
                 return send('message already has this react_id')
+    print(message)
     return {}
 
 def message_unreact(token, message_id, react_id):
@@ -121,6 +139,7 @@ def message_unreact(token, message_id, react_id):
                 print(message['reacts'])
             else:
                 return send('message does not have this react_id')
+    print(message)
     return {}
     
 def message_pin(token, message_id):
@@ -141,6 +160,7 @@ def message_pin(token, message_id):
                 message['is_pinned'] = True
             else:
                 return send('message is already pinned')
+    print(message)
     return {}
 
 def message_unpin(token, message_id):
@@ -161,4 +181,5 @@ def message_unpin(token, message_id):
                 message['is_pinned'] = False
             else:
                 return send("message isn't currently pinned")
+    print(message)
     return {}

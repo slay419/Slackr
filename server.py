@@ -179,10 +179,17 @@ def sendmessages():
 
     return send(message_send(token, channel_id, message))
 
+@APP.route('/message/remove', methods = ['DELETE'])
+def removemessages():
+    token = request.form.get('token')
+    message_id = int(request.form.get('message_id'))
+    
+    return send(message_remove(token, message_id))
+    
 @APP.route('/message/edit', methods = ['PUT'])
 def editmessages():
     token = request.form.get('token')
-    message_id = request.form.get('message_id')
+    message_id = int(request.form.get('message_id'))
     message = request.form.get('message')
 
     return send(message_edit(token, message_id, message))
@@ -190,30 +197,30 @@ def editmessages():
 @APP.route('/message/react', methods = ['POST'])
 def reactmessages():
     token = request.form.get('token')
-    message_id = request.form.get('message_id')
-    react_id = request.form.get('react_id')
+    message_id = int(request.form.get('message_id'))
+    react_id = int(request.form.get('react_id'))
 
     return send(message_react(token, message_id, react_id))
 
 @APP.route('/message/unreact', methods = ['POST'])
 def unreactmessages():
     token = request.form.get('token')
-    message_id = request.form.get('message_id')
-    react_id = request.form.get('react_id')
+    message_id = int(request.form.get('message_id'))
+    react_id = int(request.form.get('react_id'))
 
     return send(message_unreact(token, message_id, react_id))
 
 @APP.route('/message/pin', methods = ['POST'])
 def pinmessages():
     token = request.form.get('token')
-    message_id = request.form.get('message_id')
+    message_id = int(request.form.get('message_id'))
 
     return send(message_pin(token, message_id))
 
 @APP.route('/message/unpin', methods = ['POST'])
 def unpinmessages():
     token = request.form.get('token')
-    message_id = request.form.get('message_id')
+    message_id = int(request.form.get('message_id'))
 
     return send(message_unpin(token, message_id))
 

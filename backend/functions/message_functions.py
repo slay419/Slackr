@@ -80,12 +80,19 @@ def message_send(token, channel_id, message):
 
 def message_remove(token, message_id):
     data = get_data()
+    u_id = decode_token(token)
+    userdict = user_dict(u_id)
     #remove message from global dict
     if not is_valid_message(message_id):
-        return ValueError('Message (based on ID) no longer exists')
+        raise ValueError('Message (based on ID) no longer exists')
     for message in data['messages']:
         if message['message_id'] == message_id:
-            data['messages'].remove(message)
+            if message['u_id'] == u_id or userdict['permission_id'] == 3:
+                data['messages'].remove(message)
+            else:
+                print('accesserrrooooor')
+                raise AccessError('user is removing a message not of own')
+        
     #Searching for correct messagedict in the channels list
     channels = data['channels']
     for channeldict in channels:
@@ -101,55 +108,59 @@ def message_edit(token, message_id, message):
     userdict = user_dict(u_id)
     #u_id is used to find corresponding message
     if(len(message) > 1000):
-        return send('message is more than 1000 characters')
+        raise ValueError('message is more than 1000 characters')
+    if not is_valid_message(message_id):
+        raise ValueError('Message (based on ID) no longer exists')
     #accesserror when nonadmin/owner attempts to edit someone elses message
     for editmessage in data['messages']:
-        print(editmessage['message_id'])
-        print(message_id)
         if editmessage['message_id'] == int(message_id):
             if editmessage['u_id'] == u_id or userdict['permission_id'] == 3:
                 editmessage['message'] = message
-                print('message was edited')
             else:
-                return send('user is editing a message not of own')
+                raise AccessError('user is editing a message not of own')
     #detect if no message was found
     return {}
     
 def message_react(token, message_id, react_id):
     data = get_data()
     #check valid react_id
+    if not is_valid_message(message_id):
+        raise ValueError('message_id is not a valid message within a channel that the authorised user has joined')
+    if react_id != 1:
+        raise ValueError('react_id is not a valid React ID.')
     for message in data['messages']:
         if message['message_id'] == int(message_id):
             if react_id not in message['reacts']:
                 message['reacts'].append(react_id)
-                print(message['reacts'])
             else:
-                return send('message already has this react_id')
-    print(message)
+                raise ValueError('message already has this react_id')
     return {}
 
 def message_unreact(token, message_id, react_id):
     data = get_data()
+    if not is_valid_message(message_id):
+        raise ValueError('message_id is not a valid message within a channel that the authorised user has joined')
+    if react_id != 1:
+        raise ValueError('react_id is not a valid React ID.')
     for message in data['messages']:
         if message['message_id'] == int(message_id):
             if react_id in message['reacts']:
                 message['reacts'].remove(react_id)
-                print(message['reacts'])
             else:
-                return send('message does not have this react_id')
-    print(message)
+                raise ValueError('message does not have this react_id')
     return {}
     
 def message_pin(token, message_id):
     data = get_data()
     #check valid message
     if not is_valid_message(message_id):
-        return send("Message ID is invalid")
+        raise ValueError("Message ID is invalid")
     #checking if user is an admin
     u_id = decode_token(token)
     user =  user_dict(u_id)
     if user['permission_id'] != 1:
-        return send('user is not an admin')
+        print(user)
+        raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is already
     #pinned, if not pin it
     for message in data['messages']:
@@ -157,20 +168,19 @@ def message_pin(token, message_id):
             if message['is_pinned'] == False:
                 message['is_pinned'] = True
             else:
-                return send('message is already pinned')
-    print(message)
+                raise ValueError('message is already pinned')
     return {}
 
 def message_unpin(token, message_id):
     data = get_data()
     #check valid message
     if not is_valid_message(message_id):
-        return send("Message ID is invalid")
+        raise ValueError("Message ID is invalid")
     #checking if user is an admin
     u_id = decode_token(token)
     user =  user_dict(u_id)
     if user['permission_id'] != 1:
-        return send('user is not an admin')
+        raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is
     #pinned, if it is unpin it
     for message in data['messages']:
@@ -178,6 +188,5 @@ def message_unpin(token, message_id):
             if message['is_pinned'] == True:
                 message['is_pinned'] = False
             else:
-                return send("message isn't currently pinned")
-    print(message)
+                raise ValueError("message isn't currently pinned")
     return {}

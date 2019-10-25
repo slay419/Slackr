@@ -1,8 +1,9 @@
-import pytest
-from auth_register_test import auth_register
-from channels_create_test import channels_create
-from channel_join_test import channel_join
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join
+from functions.message_functions import message_send
+from functions.data import *
 
+import pytest
 '''
 ####################### ASSUMPTIONS #####################
 All test assume that nothing (users/channels/reacts/messages) exist prior to testing
@@ -10,8 +11,6 @@ It is assumed that messages sent must be atleast one character long
 '''
 
 #Send a message from authorised_user to the channel specified by channel_id
-def message_send(token, channel_id, message):
-	pass 
 	
 ######################## GLOBAL VARIABLES SETUP ######################
 
@@ -25,45 +24,48 @@ channel1 = channelDict1['channel_id']
 channelDict2 = channels_create(user1,'chat2',True)
 channel2 = channelDict2['channel_id']
 
-channel_join(user1,channel1)
-
+messagelist = data['messages']
 ##########################    END SETUP   ########################
 
 
 #Testing string 'hello'
 def test_message_send_1():
-	message_send(user1, channel1, 'hello')
+    reset_messages()
+    assert message_send(user1, channel1, 'hello') == {'message_id': messagelist[0]['message_id']}
 
 #Testing special characters
 def test_message_send_2():
-	message_send(user1, channel1, '!@#$%^&*()_+=')	
-
+    reset_messages()
+    assert message_send(user1, channel1, '!@#$%^&*()_+=') == {'message_id': messagelist[0]['message_id']}
+    
 #Testing numbers
 def test_message_send_3():
-	message_send(user1, channel1, '1234567890')
-
-#Testing sending messages to other channels (should function, not stated in spec)
-def test_message_send_4():
-	message_send(user1, channel2, 'hello')
+    reset_messages()
+    assert message_send(user1, channel1, '1234567890') == {'message_id': messagelist[0]['message_id']}
 
 #Testing mixture of characters,numbers,special characters
-def test_message_send_5():
-	message_send(user1, channel2, 'HeLlo123!@#%')
-
+def test_message_send_4():
+    reset_messages()
+    assert message_send(user1, channel2, 'HeLlo123!@#%') == {'message_id': messagelist[0]['message_id']}
+    
 #Testing 999 character string
-def test_message_send_6():
-	message_send(user1, channel2, 999*'a')
+def test_message_send_5():
+    reset_messages()
+    assert message_send(user1, channel2, 999*'a') == {'message_id': messagelist[0]['message_id']}
 
 #Testing 1000 character string
-def test_message_send_7():
-	message_send(user1, channel1, 1000*'a')
+def test_message_send_6():
+    reset_messages()
+    assert message_send(user1, channel1, 1000*'a') == {'message_id': messagelist[0]['message_id']}
 
 #Testing string 1001 character string
-def test_message_send_8():
-	with pytest.raises(ValueError):
-		message_send(user1, channel1, 1001*'a')
+def test_message_send_7():
+    reset_messages()
+    with pytest.raises(ValueError):
+	    message_send(user1, channel1, 1001*'a')
 
 #Testing string definitely > 1000 characters
-def test_message_send_9():
-	with pytest.raises(ValueError):
-		message_send(user1, channel1, 5000*'a')
+def test_message_send_8():
+    reset_messages()
+    with pytest.raises(ValueError):
+	    message_send(user1, channel1, 5000*'a')

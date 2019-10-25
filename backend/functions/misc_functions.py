@@ -41,9 +41,9 @@ def standup_start(token, channel_id):
 	data = get_data()
 
 	if channel_dict(channel_id) is None:
-		raise ValueError("Channel does not exist")
+		raise ValueError(f"Channel ID: {channel_id} does not exist")
 	if is_member(decode_token(token), channel_id) is False:
-		raise AccessError("Authorised User is not a member of the channel")
+		raise AccessError(f"Authorised User: {decode_token(token)} is not a member of the channel")
 
 	channelHandler = channel_dict(channel_id)
 
@@ -55,8 +55,7 @@ def standup_start(token, channel_id):
 		print("The standup has begun, and will stop at: ")
 		print(EndTimeStr)
 	else:
-		raise AccessError("Standup already running on this channel")
-		return {}
+		raise AccessError(f"Standup already running on this channel ID: {channel_id}")
 
 	timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
 	return timestamp

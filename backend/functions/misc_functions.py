@@ -17,22 +17,22 @@ def search(token, query_str):
 
 def admin_userpermission_change(token, u_id, permission_id):
 	if permission_id != 1 and permission_id != 2 and permission_id != 3:
-		return "invalid permission id change requested"
+		raise ValueError(f"Invalid permission id change: {permission_id} requested")
 
 	caller_id = decode_token(token)
 	caller_user = user_dict(caller_id)
 	secondary_user = user_dict(u_id)
 	if secondary_user == None:
-		return "u_id does not refer to a valid user"
+		raise ValueError(f"User ID: {u_id} does not refer to a valid user")
 
 	caller_permission = caller_user['permission_id']
 	if caller_permission == 3:
-		return "authorised user is not an admin or owner"
+		raise AccessError(f"Authorised user: {caller_id} is not an admin or owner")
 
 	if caller_permission == 1 or secondary_user['permission_id'] != 1:
 		secondary_user['permission_id'] = permission_id
 	else:
-		return "owner cannot change admin permissions"
+		raise ValueError("Owner cannot change admin permissions")
 
 	return {}
 

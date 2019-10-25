@@ -6,11 +6,11 @@ def user_profile_setemail(token, email):
 	userData = user_dict(u_id)
 
 	if userData == None:
-		raise ValueError("User ID does not exist")
+		raise ValueError(f"User ID: {u_id} does not exist")
 	if valid_email(email) is False:
-		raise ValueError("Email entered is not a valid email")
+		raise ValueError(f"Email: {email} entered is not a valid email")
 	if is_email_free(email) == 0:
-		raise ValueError("Email is already in use")
+		raise ValueError(f"Email: {email} is already in use")
 	# At this point, the email is valid and untaken
 
 	userData['email'] = email
@@ -35,11 +35,11 @@ def user_profile_sethandle(token, handle_str):
 	userData = user_dict(u_id)
 
 	if userData == None:
-		raise ValueError("User ID does not exist")
+		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(handle_str) > 20:
-		raise ValueError("Handle is larger than 20 characters")
+		raise ValueError(f"Handle: {handle_str} is larger than 20 characters")
 	if len(handle_str) < 1:
-		raise ValueError("Handle is less than 1 character")
+		raise ValueError("Handle cannot be empty")
 
 	myID = decode_token(token)
 
@@ -55,15 +55,15 @@ def user_profile_setname(token, name_first, name_last):
 	userData = user_dict(u_id)
 
 	if userData == None:
-		raise ValueError("User ID does not exist")
+		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(name_first) > 50:
-		raise ValueError('First name is larger than 50 character')
+		raise ValueError(f"First name: {name_first} is longer than 50 characters")
 	if len(name_first) < 1:
-		raise ValueError('First name is less than 1 character')
+		raise ValueError(f"First name: {name_first} cannot be empty")
 	if len(name_last) > 50:
-		raise ValueError('Last name is larger than 50 characters')
+		raise ValueError(f"Last name: {name_last} is longer than 50 characters")
 	if len(name_last) < 1:
-		raise ValueError('Last name is less than 1 character')
+		raise ValueError(f"Last name: {name_last} cannot be empty")
 
 	userData['name_first'] = name_first
 	userData['name_last'] = name_last
@@ -78,7 +78,7 @@ def user_profile(token,u_id):
 	userData = user_dict(u_id)
 
 	if userData == None:
-		raise ValueError("User ID does not exist")
+		raise ValueError(f"User ID: {u_id} does not exist")
 		return
 	else:
 		new_dict = {

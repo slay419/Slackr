@@ -25,7 +25,7 @@ def user_profile_setemail(token, email):
 
 def is_email_free(email):
 	for user in data['users']:
-		if data['users']['email'] is email:
+		if user['email'] == email:
 			return 0
 	return 1
 
@@ -41,15 +41,12 @@ def user_profile_sethandle(token, handle_str):
 	if len(handle_str) < 1:
 		raise ValueError("Handle cannot be empty")
 
-	myID = decode_token(token)
-
 	userData['handle'] = handle_str
 	print("Successfully updated user's handle")
 
 	return {}
 
 def user_profile_setname(token, name_first, name_last):
-
 	data = get_data()
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
@@ -72,20 +69,16 @@ def user_profile_setname(token, name_first, name_last):
 	return {}
 
 def user_profile(token,u_id):
-
 	data = get_data()
-
 	userData = user_dict(u_id)
-
 	if userData == None:
 		raise ValueError(f"User ID: {u_id} does not exist")
-		return
-	else:
-		new_dict = {
-            'email': userData['email'],
-            'name_first': userData['name_first'],
-            'name_last':userData['name_last'],
-            'handle_str':userData["handle"]
-        }
+
+	new_dict = {
+        'email': userData['email'],
+        'name_first': userData['name_first'],
+        'name_last': userData['name_last'],
+        'handle_str': userData["handle"]
+    }
 	print("Successfully found and located user's information")
 	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}

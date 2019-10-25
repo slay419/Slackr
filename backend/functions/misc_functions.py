@@ -16,7 +16,7 @@ def search(token, query_str):
 	return messages
 
 def admin_userpermission_change(token, u_id, permission_id):
-	if permission_id != 1 or permission_id != 2 or permission_id != 3:
+	if permission_id != 1 and permission_id != 2 and permission_id != 3:
 		return "invalid permission id change requested"
 
 	caller_id = decode_token(token)

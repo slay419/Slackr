@@ -13,7 +13,7 @@ def auth_register(email, password, name_first, name_last):
         raise ValueError(f"Email: {email} is invalid")
 
     if len(password) < 6: #rules for length of pasword
-        raise ValueError(f"Password Legnth is too short")
+        raise ValueError(f"Password Length is too short")
 
     if len(name_first) < 1:
         raise ValueError(f"First name: {name_first} is too short")

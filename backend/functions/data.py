@@ -147,3 +147,9 @@ def get_u_id(email):
         if email == user['email']:
             return user['u_id']
     return None
+
+# used for pytests
+def reset_channels():
+    global data
+    channels = data['channels']
+    channels.clear()

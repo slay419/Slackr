@@ -35,5 +35,48 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 	return {}
 
+def standup_start(token, channel_id):
 
+	data = get_data()
+
+	if channel_dict(channel_id) is None:
+		raise ValueError("Channel does not exist")
+	if is_joined(token, channel_id) is False:
+		raise AttributeError("Authorised User is not a member of the channel")
+
+	channelHandler = channel_dict(channel_dict)
+
+	if channelHandler['standup_active'] is False:
+		channelHandler['standup_active'] = True
+		# Change 15 down for debugging purposes if needed
+		EndTime = datetime.now() + timedelta(minutes=15)
+		EndTimeStr = EndTime.strftime("%H:%M:%S")
+		print("The standup has begun, and will stop at: ")
+		print(EndTimeStr)
+	else:
+		raise AttributeError("Standup already running on this channel")
+		return {}
+
+	return EndTime
+
+def standup_send(token, channel_id, message):
+
+	data = get_data()
+
+	channelHandler = channel_dict(channel_id)
+
+	if channel_dict(channel_id) is None:
+		raise ValueError("Channel does not exist")
+	if len(message) > 1000:
+		raise ValueError ("Message more than 1000 characters")
+	if len(message) < 1:
+		raise ValueError ("Message empty")			
+	if is_joined(token ,channel_id) is False:
+		raise AttributeError("Authorised User is not a member of the channel")
+	if channelHandler['standup_active'] is False:
+		raise ValueError ("There is no standup running in this channel")
+	
+	channelHandler['standup_queue'].append(message)
+
+	return{}
 	

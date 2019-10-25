@@ -26,6 +26,7 @@ def channels_create(token, name, is_public):
         }],
         'is_public': is_public,
         'messages': [],
+        'standup_queue': [],
         'standup_active': False
     }
     data['channels'].append(dict)

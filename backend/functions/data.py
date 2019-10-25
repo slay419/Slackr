@@ -149,7 +149,21 @@ def get_u_id(email):
     return None
 
 # used for pytests
+def reset_users():
+    global data
+    users = data['users']
+    users.clear()
+    
 def reset_channels():
     global data
     channels = data['channels']
     channels.clear()
+    
+def reset_messages():
+    global data
+    messages = data['messages']
+    messages.clear()
+    channels = data['channels']
+    for channeldict in channels:
+        messagelist = channeldict['messages']
+        messagelist.clear()

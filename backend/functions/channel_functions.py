@@ -1,6 +1,38 @@
 from .data import *
 
 
+#input: token, channelid, start
+#user must be a member of the channel
+def channel_messages(token, channel_id, start):
+    data = get_data()
+    end = start + 50
+    messages = []
+    #Checking channel_id is valid
+    newchannel = {}
+    for channel in data['channels']:
+        if(channel['channel_id'] == channel_id):
+            newchannel.update(channel)
+    if not newchannel:
+        return send_error('Invalid channel_id')
+    #Checking length of messages
+    if(start > len(newchannel['messages'])):
+        return send_error('Start index is > then amount of messages')
+    u_id = decode_token(token)
+    #Checking if user is authorised in correct channel
+    if(is_member(u_id, channel_id) == False):
+        return send_error('user is not in correct channel')
+    index = start
+    print("Index: " + str(index))
+    print("Length of messages: " + str(len(newchannel['messages'])+1))
+    print(newchannel['messages'])
+    for i in range(index,len(newchannel['messages'])):
+        messages.append(newchannel['messages'][i])
+    if end > len(newchannel['messages']):
+        end = -1
+    return {'messages': messages, 'start': start, 'end': end,}
+
+    #given start return end which is start + 50 or -1 if theres no more messages
+    
 def channels_create(token, name, is_public):
     #if not is_logged_in(token):
     #    return f"User: {decode_token(token)} not logged in"

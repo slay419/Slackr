@@ -159,10 +159,18 @@ def listmessages():
     channel_id = int(request.args.get('channel_id')) #must be valid channel
     start = int(request.args.get('start')) #cannot be >= no. of messages in channel
 
-    return dumps(channel_messages(token, channel_id, start), indent=4, sort_keys=True, default=str)
+    return send(channel_messages(token, channel_id, start))
 
 #########################   MESSAGE FUNCTIONS  ###########################
+@APP.route('/message/sendlater', methods = ['POST'])
+def sendlatermessages():
+    token = request.form.get('token')
+    channel_id = int(request.form.get('channel_id'))
+    message = request.form.get('message')
+    time_sent = int(request.form.get('time_sent'))
 
+    return send(message_sendlater(token, channel_id, message, time_sent))
+    
 @APP.route('/message/send', methods = ['POST'])
 def sendmessages():
     token = request.form.get('token')

@@ -1,5 +1,5 @@
 from .data import *
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
@@ -58,7 +58,8 @@ def standup_start(token, channel_id):
 		raise AccessError("Standup already running on this channel")
 		return {}
 
-	return EndTime
+	timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
+	return timestamp
 
 def standup_send(token, channel_id, message):
 

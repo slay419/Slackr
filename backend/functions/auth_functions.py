@@ -8,16 +8,21 @@ def auth_register(email, password, name_first, name_last):
     if valid_email(email) == True:
         for user in data['users']:
             if email == user['email']:
-                return 'already used email'
+                raise ValueError(f"Email: {email} is already registered")
     else:
-        return 'invalid email'
+        raise ValueError(f"Email: {email} is invalid")
 
     if len(password) < 6: #rules for length of pasword
-        return 'password too short'
+        raise ValueError(f"Password Legnth is too short")
 
-
-    if len(name_first) < 1 or len(name_first) > 50 or len(name_last) < 1 or len(name_last) > 50: #rules for length of name (first and last)
-        return 'names too long/short'
+    if len(name_first) < 1:
+        raise ValueError(f"First name: {name_first} is too short")
+    elif len(name_first) > 50:
+        raise ValueError(f"First name: {name_first} is too long")
+    elif len(name_last) < 1:
+        raise ValueError(f"Last name: {name_last} is too short")
+    elif len(name_last) > 50:
+        raise ValueError(f"Last name: {name_last} is too long")
 
     handle = ''.join((name_first, name_last))
     for user in data['users']:
@@ -56,7 +61,7 @@ def auth_login(email, password):
 
     data = get_data()
     if valid_email(email) == False: #check valid email
-        return 'invalid email'
+        raise ValueError(f"Email: {email} is invalid")
 
     #check if email exists and if so check if password matches
     for user in data['users']:
@@ -69,7 +74,7 @@ def auth_login(email, password):
                 'token': token
             }
 
-    return 'email does not exist or password is incorrect'
+    raise ValueError(f"Email: {email} does not exist or password is incorrect")
 
 
 
@@ -87,7 +92,7 @@ def auth_logout(token):
 def auth_passwordreset_request(mail, email):
     u_id = get_u_id(email)
     if u_id == None:
-        return "email not registered"
+        raise ValueError(f"Email: {email} not registered")
     user = user_dict(u_id)
 
     try:
@@ -106,10 +111,10 @@ def auth_passwordreset_request(mail, email):
 def auth_passwordreset_reset(reset_code, new_password):
     data = get_data()
     if len(new_password) < 6:
-        return "password entered is not a valid password"
+        raise ValueError("New password is too short")
     for user in data['users']:
         if user['reset_code'] == reset_code and reset_code != None:
             user['reset_code'] = None
             user['password'] = new_password
             return {}
-    return "user does not exist, althougth this should not ever be returned"
+    raise ValueError(f"User does not exist, althougth this should not ever be returned")

@@ -1,4 +1,5 @@
 from .data import *
+from datetime import datetime, timedelta
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
@@ -11,7 +12,7 @@ def search(token, query_str):
 		for message in data['channels']['messages']:
 			if query_str in data['messages']['message']:
 				message.append(data['messages']['message'])
-	
+
 	return messages
 
 def admin_userpermission_change(token, u_id, permission_id):
@@ -41,10 +42,10 @@ def standup_start(token, channel_id):
 
 	if channel_dict(channel_id) is None:
 		raise ValueError("Channel does not exist")
-	if is_joined(token, channel_id) is False:
-		raise AttributeError("Authorised User is not a member of the channel")
+	if is_member(decode_token(token), channel_id) is False:
+		raise AccessError("Authorised User is not a member of the channel")
 
-	channelHandler = channel_dict(channel_dict)
+	channelHandler = channel_dict(channel_id)
 
 	if channelHandler['standup_active'] is False:
 		channelHandler['standup_active'] = True
@@ -54,7 +55,7 @@ def standup_start(token, channel_id):
 		print("The standup has begun, and will stop at: ")
 		print(EndTimeStr)
 	else:
-		raise AttributeError("Standup already running on this channel")
+		raise AccessError("Standup already running on this channel")
 		return {}
 
 	return EndTime
@@ -70,13 +71,12 @@ def standup_send(token, channel_id, message):
 	if len(message) > 1000:
 		raise ValueError ("Message more than 1000 characters")
 	if len(message) < 1:
-		raise ValueError ("Message empty")			
+		raise ValueError ("Message empty")
 	if is_joined(token ,channel_id) is False:
 		raise AttributeError("Authorised User is not a member of the channel")
 	if channelHandler['standup_active'] is False:
 		raise ValueError ("There is no standup running in this channel")
-	
+
 	channelHandler['standup_queue'].append(message)
 
 	return{}
-	

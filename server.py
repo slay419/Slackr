@@ -107,7 +107,7 @@ def reset():
 def channel_create():
     token = request.form.get('token')
     name = request.form.get('name')
-    is_public = request.form.get('is_public')
+    is_public = bool(request.form.get('is_public'))
 
     return send(channels_create(token, name, is_public))
 
@@ -257,7 +257,7 @@ def retrieveProf():
 @APP.route('/standup/start', methods = ['POST'])
 def standupStart():
     token = request.form.get('token')
-    channel_id = request.form.get('channel_id')
+    channel_id = int(request.form.get('channel_id'))
 
     return send(standup_start(token, channel_id))
 
@@ -265,7 +265,7 @@ def standupStart():
 @APP.route('/standup/send', methods = ['POST'])
 def standupSend():
     token = request.form.get('token')
-    channel_id = request.form.get('channel_id')
+    channel_id = int(request.form.get('channel_id'))
     message = request.form.get('message')
 
     return send(standup_send(token, channel_id, message))

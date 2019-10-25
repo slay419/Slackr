@@ -1,9 +1,8 @@
-from auth_register_test         import auth_register
-from channels_create_test       import channels_create
-from channel_join_test          import channel_join
-from channel_addowner_test      import channel_addowner
-from error                      import AccessError
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join, channels_list, channel_addowner, channel_removeowner
 
+from functions.data import *
+from functions.exceptions import *
 
 import pytest
 
@@ -20,60 +19,22 @@ Owners are the first person to create the channel
 Owner privileges cover ONLY their channel created
 '''
 
-def channel_removeowner(token, channel_id, u_id):
-    if is_invalid_channel(channel_id):
-        # Cannot demote a user in a channel they have not joined or does not exist
-        raise ValueError("Channel ID does NOT exist.")
-    if is_owner(u_id) == 0:
-        # Cannot demote a user that is already an owner
-        raise ValueError("User is NOT an owner")
-    if is_authorised(token) == 0:
-        # Cannot demote a user if the person conducting the action does not have the authority
-        raise AccessError("User with token does not have the permission to perform this action.")
-    pass
-
-'''
-Returns 1 if the channel id does not exist and is invalid
-Returns 0 if the channel id otherwise
-'''
-def is_invalid_channel(channel_id):
-    pass
-
-'''
-If the user with u_id is an owner/admin, returns 1
-If the user is a member, returns 0
-'''
-def is_owner(u_id):
-    pass
-
-'''
-If the user with token is an owner or admin, returns 1
-If the user is a member, returns 0
-'''
-def is_authorised(token):
-    pass
-
 ######################## GLOBAL VARIABLES SETUP ######################
 # Assume owner_id is an admin since he is the first person to sign up
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-owner_token = ownderDict['token']
+owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']
 
 userDict = auth_register("person1@gmail.com", "password", "person", "one")
-u_token = userDict1['token']
-u_id = userDict1['u_id']
+u_token = userDict['token']
+u_id = userDict['u_id']
 
 ##########################    END SETUP   ########################
 
-# Testing demoting a user from a channel not created yet
-def test_channel_removeowner_1():
-    admin_userpermission_change(owner_token, u_id, 1)
-    with pytest.raises(ValueError):
-        channel_removeowner(owner_token, 1234, u_id)
-
 # Testing demoting an owner from a wrong channel id
-def test_channel_removeowner_2():
-    channel= channels_create(owner_token, "Channel Name", True)
+def test_channel_removeowner_1():
+    reset_channels()
+    channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -82,14 +43,16 @@ def test_channel_removeowner_2():
         channel_removeowner(owner_token, invalid_id, u_id)
 
 # Testing demoting a member that has not joined the channel yet
-def test_channel_removeowner_3():
+def test_channel_removeowner_2():
+    reset_channels()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
         channel_removeowner(owner_token, channel_id, u_id)
 
 # Testing demoting a member in a channel they have joined
-def test_channel_removeowner_4():
+def test_channel_removeowner_3():
+    reset_channels()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -97,7 +60,8 @@ def test_channel_removeowner_4():
         channel_removeowner(owner_token, channel_id, u_id)
 
 # Testing demoting a member in a channel they have been demoted before
-def test_channel_removeowner_5():
+def test_channel_removeowner_4():
+    reset_channels()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -107,7 +71,8 @@ def test_channel_removeowner_5():
         channel_removeowner(owner_token, channel_id, u_id)
 
 # Testing a member attempting to demote himself - has no authority
-def test_channel_removeowner_6():
+def test_channel_removeowner_5():
+    reset_channels()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -116,14 +81,16 @@ def test_channel_removeowner_6():
 
 # Testing a member attempting to demote an owner
 def test_channel_removeowner_7():
+    reset_channels()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(AccessError):
-        channel_removeowner(u_token, channel_id, owner_token)
+        channel_removeowner(u_token, channel_id, owner_id)
 
 # Testing a member attempting to demote another member - has no authority
 def test_channel_removeowner_8():
+    reset_channels()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -138,23 +105,26 @@ def test_channel_removeowner_8():
 
 # Testing an owner demoting another owner under the right conditions
 def test_channel_removeowner_9():
+    reset_channels()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
     channel_removeowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id) == 0)
-    assert(is_owner(owner_id) == 1)     # Checking the owner has not been demoted as well
+    assert(is_owner(u_id, channel_id) == 0)
+    assert(is_owner(owner_id, channel_id) == 1)     # Checking the owner has not been demoted as well
 
 # Testing an owner can be demoted multiple times after being promoted again
+def test_channel_removeowner_10():
+    reset_channels()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id))
+    assert(is_owner(u_id, channel_id))
     channel_removeowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id) == 0)
+    assert(is_owner(u_id, channel_id) == 0)
     channel_addowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id))
+    assert(is_owner(u_id, channel_id))
     channel_removeowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id) == 0)
+    assert(is_owner(u_id, channel_id) == 0)

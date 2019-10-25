@@ -170,7 +170,7 @@ def sendlatermessages():
     time_sent = int(request.form.get('time_sent'))
 
     return send(message_sendlater(token, channel_id, message, time_sent))
-    
+
 @APP.route('/message/send', methods = ['POST'])
 def sendmessages():
     token = request.form.get('token')
@@ -291,7 +291,7 @@ def searchWrapper():
 def userPermChange():
     token = request.form.get('token')
     u_id = int(request.form.get('u_id'))
-    permission_id = request.form.get('permission_id')
+    permission_id = int(request.form.get('permission_id'))
 
     return send(admin_userpermission_change(token, u_id, permission_id))
 

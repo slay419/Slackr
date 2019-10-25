@@ -67,16 +67,15 @@ def standup_send(token, channel_id, message):
 	channelHandler = channel_dict(channel_id)
 
 	if channel_dict(channel_id) is None:
-		raise ValueError("Channel does not exist")
+		raise ValueError(f"Channel ID: {channel_id} does not exist")
 	if len(message) > 1000:
-		raise ValueError ("Message more than 1000 characters")
+		raise ValueError ("Message is more than 1000 characters long")
 	if len(message) < 1:
-		raise ValueError ("Message empty")
-	if is_joined(token ,channel_id) is False:
-		raise AttributeError("Authorised User is not a member of the channel")
+		raise ValueError ("Message cannot be empty")
+	if is_member(decode_token(token) ,channel_id) is False:
+		raise AccessError(f"Authorised User: {decode_token(token)} is not a member of the channel")
 	if channelHandler['standup_active'] is False:
-		raise ValueError ("There is no standup running in this channel")
+		raise ValueError (f"There is no standup running in channel ID: {channel_id}")
 
 	channelHandler['standup_queue'].append(message)
-
 	return{}

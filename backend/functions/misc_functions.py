@@ -32,7 +32,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 	if caller_permission == 1 or secondary_user['permission_id'] != 1:
 		secondary_user['permission_id'] = permission_id
 	else:
-		raise ValueError("Owner cannot change admin permissions")
+		raise AccessError("Owner cannot change admin permissions")
 
 	return {}
 

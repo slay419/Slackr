@@ -1,11 +1,11 @@
-import pytest
-# re module provides support 
-# for regular expressions 
-import re
-from auth_login_test import auth_login 
-from flask import Flask, request
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join, channels_list
+from functions.misc_functions import admin_userpermission_change
+from functions.profile_functions import user_profile, user_profile_sethandle, user_profile_setemail
 
-from .data import *
+from functions.data import *
+
+import pytest
 
 ###SIDE NOTE: Web resources were used in order to create the basic algorithm to determine
 ### what a valid email is
@@ -18,58 +18,54 @@ by other interenet algorithms
 Assume the function returns a ValueError if the string is empty
 '''
 
-
-## This function does:
-## Update the authorised user's email address
-
-## Function will fail if:
-## 1. Email entered is not a valid email.
-## 2. Email address is already being used by another user
-
-def user_profile_setemail(token, email):
-	pass
-'''
-Returns 1 if the email is free to use
-Returns 0 if the email is being used
-'''
-
-def is_email_free(email):
-	pass
-
-######################## GLOBAL VARIABLES SETUP ######################
-
-userDict = auth_login("person1@gmail.com", "password")
-u_token = userDict1['token']
-
-##########################    END SETUP   ########################
-
-
 # Testing an invalid email
 def test_user_profile_setemail_1():
-	
+	reset_users()
+	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = userDict['token']
 	with pytest.raises(ValueError):
-		user_profile_setname(u_token, 'myemail.com')
+		user_profile_setemail(u_token, 'myemail.com')
 
 # Testing an empty email
 def test_user_profile_setemail_2():
-	
+	reset_users()
+	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = userDict['token']
 	with pytest.raises(ValueError):
-		user_profile_setname(u_token, '')
+		user_profile_setemail(u_token, '')
 
 # Testing an long but valid email
 def test_user_profile_setemail_3():
-
-	user_profile_setname(u_token, 'abcdefghijklmnopqrstuvwxyz@email.com')
+	reset_users()
+	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = userDict['token']
+	u_id = userDict['u_id']
+	user_profile_setemail(u_token, 'abcdefghijklmnopqrstuvwxyz@email.com')
+	assert (user_profile(u_token, u_id) == {
+        'email' : 'abcdefghijklmnopqrstuvwxyz@email.com',
+        'name_first' : 'firstname',
+        'name_last' : 'lastname',
+        'handle_str' : 'firstnamelastname'
+    })
 
 # Testing an short but valid email
 def test_user_profile_setemail_4():
+	reset_users()
+	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = userDict['token']
+	u_id = userDict['u_id']
+	user_profile_setemail(u_token, 'abc@email.com')
+	assert (user_profile(u_token, u_id) == {
+        'email' : 'abc@email.com',
+        'name_first' : 'firstname',
+        'name_last' : 'lastname',
+        'handle_str' : 'firstnamelastname'
+    })
 
-	user_profile_setname(u_token, 'abc@email.com')
-	
 # Testing a email that is being used
 def test_user_profile_setemail_5():
+	reset_users()
 	userDict2 = auth_register("person2@gmail.com", "password", "person2", "two")
 	u_token2 = userDict2['token']
-	
 	with pytest.raises(ValueError):
-		user_profile_setname(u_token, 'person2@gmail@gmail.com')
+		user_profile_setemail(u_token2, 'person2@gmail@gmail.com')

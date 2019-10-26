@@ -17,18 +17,6 @@ Assume NONE is returned in handle_str field if no handle has been set
 
 '''
 
-################# GLOBAL VARIABLES SETUP ######################
-
-userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
-user1 = userDict1['token']
-user1_id = userDict1['u_id']
-
-userDict2 = auth_register('steven2@gmail.com','hello123','Steven2','Lay')
-user2 = userDict2['token']
-user2_id = userDict2['u_id']
-
-##########################    END SETUP   ########################
-
 
 #Testing user1's profile with no handle
 def test_user_profile_1():

@@ -174,6 +174,8 @@ def channel_removeowner(token, channel_id, u_id):
 def channel_invite(token, channel_id, u_id):
     inviter_u_id = decode_token(token)
     user = user_dict(u_id)
+    if user == None:
+        raise ValueError(f"User: {u_id} does not exist")
     if u_id == inviter_u_id:
         raise ValueError(f"User: {u_id} cannot invite self")
 
@@ -204,6 +206,11 @@ def channel_join(token, channel_id):
 
     if user['permission_id'] != 3:
         channel['owner_members'].append({
+            'u_id' : u_id,
+            'name_first' : user['name_first'],
+            'name_last' : user['name_last']
+        })
+        channel['all_members'].append({
             'u_id' : u_id,
             'name_first' : user['name_first'],
             'name_last' : user['name_last']

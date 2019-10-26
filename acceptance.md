@@ -1,30 +1,38 @@
+# Acceptances
+Acceptance criteria is followed to ensure the implementation is correct and as desired.
+In addition to the following criteria, further testing with pytest and code coverage, ensured the backend works as intended
 
 ## Users functions
 As a user, I want a profile picture, so I can identify others effeciently on the platform 
+
 *User Acceptance Criteria*
 - The profile picture is shown on the user profile
 - The profile picture is a square, other sizes must be cropped
 - The profile picture by default is a grey silhouette
 - The profile picture can be changed by clicking on "Change profile picture"
 - The profile picture must be between a minimum and maximum size
-*Acceptance Tests*
--The user can find and upload a picture as their profile picture
--The user cannot upload a picture with invalid dimensions e.g too large too small
--The user can upload rectangular pictures, and will then crop to size
--The user can upload photos of the minimum and maximum size
 
-As a user, I want to change my personal information, so that I can also push my latest contact details to others
+*Acceptance Tests*
+- The user can find and upload a picture as their profile picture
+- The user cannot upload a picture with invalid dimensions e.g too large too small
+- The user can upload rectangular pictures, and will then crop to size
+- The user can upload photos of the minimum and maximum size
+
+As a user, I want to change my personal information, such as names and email, so that I can also push my latest contact details to others
+
 *User Acceptance Criteria*
 - The user can change their details by clicking "Change details" button on their profile
 - The fields contain the current information that can be changed to non-empty and valid information
 - The fields cannot be too long and are limited by length
 - Only the user can change their own personal information
+
 *Acceptance Tests*
 - The user cannot leave required fields empty
 - The user can change a non-required filled field to be empty
 - The user cannot enter a too-long field
 
 As a user, I want a handle, so that I can keep my identity private unless divulged.
+
 *User Acceptance Criteria*
 - The user is prompted to create a handle upon account registration.
 - The user must not exceed 20 characters for their new handle
@@ -32,6 +40,7 @@ As a user, I want a handle, so that I can keep my identity private unless divulg
 - Empty handle is not valid
 - The user can change their handle by clicking "Change details" button on their profile
 - The user can only modify their own handle
+
 *Acceptance Tests*
 - The user can have a handle of pure special characters, up to and including 20 characters but not more
 - Leading and trailing spaces are ignored

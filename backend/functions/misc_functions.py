@@ -55,7 +55,7 @@ def standup_start(token, channel_id):
 		print("The standup has begun, and will stop at: ")
 		print(EndTimeStr)
 	else:
-		raise AccessError(f"Standup already running on this channel ID: {channel_id}")
+		raise ValueError(f"Standup already running on this channel ID: {channel_id}")
 
 	timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
 	return timestamp

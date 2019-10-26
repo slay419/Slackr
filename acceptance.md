@@ -1,27 +1,32 @@
 # Acceptances
 Acceptance criteria is followed to ensure the implementation is correct and as desired.
-In addition to the following criteria, further testing with pytest and code coverage, ensured the backend works as intended
+Combining both these criteria as well as further testing with Pytest and code coverage, allowed us to be sure
+that the backend would be working as intended.
 
 ## Auth functions
-As a user I want to able to login so that I can access my slackr account
-- There are a fields for entering username and password on the login page
-- usernames of valid email format are only accepted
+As a user I want to able to login so that I can access my Slackr account
+- There are fields for entering username and password on the login page
+- Usernames of valid email format are only accepted
+- After successfully logging in, the web server will direct me to the home page where I can access Slackr's features
+- If logging in is unsuccessful, an appropriate error message will pop up and allow me to try again
 
-As a user I want to be able to register so that I can access slackr services
+As a user I want to be able to register so that I can access Slackr services
 - There is a link for registration on the front page
-- navigating to registration link enables user to create a new account
-- On the registration page there are fields for email, password, first name, last name.
+- Navigating to registration link enables user to create a new account
+- On the registration page there are fields for email, password, first name, last name
 - Name fields will not allow more than 50 characters for registration
 - Password fields must have a minimum of 5 characters for registration
 - Registered users are logged in once the process is complete
 
 As a user I want to be able to reset my password so that I can access my account if I forget my password
 - There is a link for forgotten passwords
-- navigating to a forgotton password link enables user to reset password
+- Navigating to a forgotten password link enables users to reset their password
 - A reset code is generated when valid information is passed into the fields
 
 As a user I want the ability to logout so that I can keep my account secure when I am not using it
 - There is an active logout link when logged in.
+- The web server will direct me to the log in page
+- The main features of Slackr will no longer be able to be accessed/viewed until logged in again
 
 ## Channels functions
 As a user I want the ability to create private channels, so that I can maintain confidentiality
@@ -49,13 +54,23 @@ As a user I want to be able to leave a channel so I can no longer see messages o
 -	Users who previously joined that channel will no longer see it in their list of channels joined
 
 As a user I want the ability to invite other users to my channel so that I can collaborate with them
-- Can invite a particular user to a channel created by the current logged in user.
+- A user within a channel can interact with a button to invite a user that has not joined yet
+- The user will be able to input a specific user's ID when activated
+- The other user will be automatically joined to the channel
+- The other member will not have any owner or admin privileges within the channel unless they are the owner of Slackr
+- The other member will be able to interact with the channel as if they joined themselves
+- The other member will be included in a list of members
 
 As a user I want the ability to view details on a channel I am part of so that I can get a summary of it
-- Can view details about any channel the user is currently a member of
+- Channel details will be displayed within the channel at the top of the page
+- There are two separate lists displayed: Owner and Member lists
+- The information will be automatically updated when a new member joins or leaves  
 
 As a user I want the ability to see past messages so that I can recollect information
-- Can view 50 most recent messages from channel user is a member of
+- There is a history button that will list a maximum of 50 messages previously sent to the channel
+- The list of messages will be ordered from newest to oldest
+- If there are less than 50 messages, it will show all of them
+- If there are more than 50 messages, it will show only the most recent 50
 
 
 ## Messages functions
@@ -109,7 +124,7 @@ As a user, I want to be able to send messages at later times so that I can set r
 
 
 ## User Profile functions
-As a user, I want a profile picture, so I can identify others effeciently on the platform
+As a user, I want a profile picture, so I can identify others efficiently on the platform
 
 *User Acceptance Criteria*
 - The profile picture is shown on the user profile

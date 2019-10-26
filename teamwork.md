@@ -11,13 +11,14 @@ Taking advice from seasoned coders, __Agile__ programming was the decided approa
 providing a balance between adaptation and order. Agile mindset was in play from the release of the specification. Faced with over-whelming expectations
 drafts were made for all the work at hand, as a focus on __small incremental changes__ as well as provide scaffolding for further implementation
 
- Constant testing was another significant agile trait that had to be followed. Written tests from iteration 1 wer
- continously updated as the core functions changed, to ensure every fragment of the core functions worked. Pytest coverage was an importan
+ Constant testing was another significant agile trait that had to be followed. Written tests from iteration 1 were
+ continously updated as the core functions changed, to ensure every fragment of the core functions worked. Pytest coverage was an important
  indicator as to ensure all the code implemented was correct. As such, 100% coverage was ideal.
  
- As time progressed, more information regarding implementation, as well as the clarity of specification, was released, prompting the need to __constantly re-evaluate__ our tasks. Point poker was used to determin
- effort for the new tasks. This was done through a group chat in order relay our ideas to one another. Point poker established the importance of the Auth functions, as the literal cornerstone of our iteration, a
- everything else would be built around, thus these tasks were handled with the highest priority
+ As time progressed, more information regarding implementation, as well as the clarity of specification, was released, prompting the need to __constantly re-evaluate__ our tasks. Point poker was used to determine
+ effort for the new tasks. This was done through our weekly group chat in order relay our ideas to one another. Point poker established the importance of the Auth functions, as the literal cornerstone of our iteration, as
+ everything else would be built around, thus these tasks were handled with the highest priority. Code sprints followed point poker, with 3 days of focused code implementation, supported by intrinsic testing and a team meeting
+ for reflection. This would typically coincide with an update on the task, thus the short cycle of planning and inplementing, started again.
 
  Agile, thus, proved to be the suitable approach for our team, countering our inexperience, and strengthening the perceptive attitude of our team.
 ## Communication

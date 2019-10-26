@@ -1,10 +1,15 @@
 
-
 # Reflection
 
 The Master Branch team has successfully completed Iteration 2 to satisfactory 
 success, reaching the intended target for code completion, at a comfortable rate and
-time to spare.
+time to spare
+
+## Approach
+*A successful and well-tested paradigm, forms the backbone of the project*
+
+Taking advice from seasoned coders, __ Agile__ programming was the decided approach . Agile proved most suitable for our team
+providing a balance between adaptation and order. Agile mindset was in play from the release of the specification. Faced with over
 
 ## Communication
 *Communication is the heart, in keeping an oriented and well-functioning team.*

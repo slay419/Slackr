@@ -14,14 +14,14 @@ def channel_messages(token, channel_id, start):
         if(channel['channel_id'] == channel_id):
             newchannel.update(channel)
     if not newchannel:
-        return send_error('Invalid channel_id')
+        raise ValueError(f"Invalid channel ID: {channel_id}")
     #Checking length of messages
     if(start > len(newchannel['messages'])):
-        return send_error('Start index is > then amount of messages')
+        raise ValueError(f"Start index: {start} is greater than the amount of messages")
     u_id = decode_token(token)
     #Checking if user is authorised in correct channel
     if(is_member(u_id, channel_id) == False):
-        return send_error('user is not in correct channel')
+        raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
     if end > len(newchannel['messages']):
         endindex = len(newchannel['messages'])
         end = -1

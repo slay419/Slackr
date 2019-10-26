@@ -151,6 +151,10 @@ def get_u_id(email):
             return user['u_id']
     return None
 
+def get_permission_id(u_id):
+    user = user_dict(u_id)
+    return user['permission_id']
+
 def get_reset_code(u_id):
     user = user_dict(u_id)
     return user['reset_code']

@@ -1,5 +1,9 @@
-from auth_register_test     import auth_register
-from channels_create        import channels_create
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join, channels_list
+from functions.misc_functions import admin_userpermission_change
+
+from functions.data import *
+
 import pytest
 
 '''
@@ -12,7 +16,7 @@ e.g. channel_id1 created first will be lower than the channel_id2 created last
 ######################## GLOBAL VARIABLES SETUP ######################
 
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-owner_token = ownderDict['token']
+owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']
 
 ##########################    END SETUP   ########################
@@ -90,12 +94,12 @@ def test_channels_create_15():
 # Testing expected previous behaviour with a different token
 def test_channels_create_16():
     userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    different_token = userDict1['token']
+    different_token = userDict['token']
     channel_id = channels_create(different_token, "Name123!@#", False)
 
 # Testing long name with a different token
 def test_channels_create_17():
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    different_token = userDict1['token']
+    userDict = auth_register("person2@gmail.com", "password", "person", "one")
+    different_token = userDict['token']
     with pytest.raises(ValueError):
         channel_id = channels_create(different_token, "VeryLongName123456!@#$^$", False)

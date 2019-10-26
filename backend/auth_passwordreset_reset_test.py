@@ -1,7 +1,9 @@
-import pytest
-from functions.auth_functions import auth_register
-from functions.data import *
+#MANUAL TESTING HAS BEEN DONE ON SERVER SIDE
 
+#FUNCTION REQUIRES CALL FROM auth_passwordreset_request() which can only be called when server.py is running. (For more details please check test_auth_passwordreset_request.py)
+
+
+'''
 
 #Valid reset code and valid password
 def test_auth_passwordreset_reset_1():
@@ -56,4 +58,4 @@ def test_auth_passwordreset_reset_10():
 def test_auth_passwordreset_reset_11():
     auth_passwordreset_reset('validresetcode', 'validpassword')
     auth_passwordreset_reset('invalidresetcode', 'validpassword2')
-
+'''

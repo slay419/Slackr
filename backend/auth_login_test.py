@@ -1,5 +1,5 @@
 import pytest
-from functions.auth_functions import auth_register, auth_logout
+from functions.auth_functions import auth_register, auth_logout, auth_login
 from functions.data import *
 
 #Assumptions: Email validation function is already implemented in auth_login.
@@ -21,7 +21,7 @@ def test_auth_login_2():
     dict1 = auth_register('myemail2@gmail.com', 'mypassword', 'Steven', 'Peter')
     token1 = dict1['token']
     auth_logout(token1)
-    dict2 = auth_login("myemail2@gmail.com", "mypasswor2")
+    dict2 = auth_login("myemail2@gmail.com", "mypassword")
     token2 = dict2['token']
     assert(is_logged_in(token2))
 
@@ -65,5 +65,5 @@ def test_auth_login_8():
     token1 = dict1['token']
     auth_logout(token1)
     with pytest.raises(ValueError):
-        auth_login("myemail2@gmail.com", "mypassword")
+        auth_login("myemail2@gmail.com", "mypasswordwrong")
 

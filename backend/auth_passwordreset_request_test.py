@@ -16,4 +16,9 @@ APP.config.update(
 
 '''
 
-#
+# line 95 (server.py)
+
+'''
+mail = Mail(APP)
+
+'''

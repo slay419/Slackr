@@ -79,15 +79,13 @@ def auth_login(email, password):
 
 
 def auth_logout(token):
-
-    u_id = decode_token(token)
-
-    user = user_dict(u_id)
-    if user == None:
+    if is_logged_in(token) == True:
+        u_id = decode_token(token)
+        user = user_dict(u_id)
+        user['tokens'].remove(token)
+        return {'is_success' : True}
+    else:
         return {'is_success' : False}
-    user['tokens'].remove(token)
-
-    return {'is_success' : True}
 
 def auth_passwordreset_request(mail, email):
     u_id = get_u_id(email)

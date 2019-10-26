@@ -7,14 +7,19 @@ time to spare
 ## Approach
 *A successful and well-tested paradigm, forms the backbone of the project*
 
-Taking advice from seasoned coders, __ Agile__ programming was the decided approach . Agile proved most suitable for our team
+Taking advice from seasoned coders, __Agile__ programming was the decided approach . Agile proved most suitable for our team
 providing a balance between adaptation and order. Agile mindset was in play from the release of the specification. Faced with over-whelming expectations
 drafts were made for all the work at hand, as a focus on __small incremental changes__ as well as provide scaffolding for further implementation
 
  Constant testing was another significant agile trait that had to be followed. Written tests from iteration 1 wer
  continously updated as the core functions changed, to ensure every fragment of the core functions worked. Pytest coverage was an importan
  indicator as to ensure all the code implemented was correct. As such, 100% coverage was ideal.
+ 
+ As time progressed, more information regarding implementation, as well as the clarity of specification, was released, prompting the need to __constantly re-evaluate__ our tasks. Point poker was used to determin
+ effort for the new tasks. This was done through a group chat in order relay our ideas to one another. Point poker established the importance of the Auth functions, as the literal cornerstone of our iteration, a
+ everything else would be built around, thus these tasks were handled with the highest priority
 
+ Agile, thus, proved to be the suitable approach for our team, countering our inexperience, and strengthening the perceptive attitude of our team.
 ## Communication
 *Communication is the heart, in keeping an oriented and well-functioning team.*
 

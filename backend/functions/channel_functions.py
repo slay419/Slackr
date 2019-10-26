@@ -208,6 +208,11 @@ def channel_join(token, channel_id):
             'name_first' : user['name_first'],
             'name_last' : user['name_last']
         })
+        channel['all_members'].append({
+            'u_id' : u_id,
+            'name_first' : user['name_first'],
+            'name_last' : user['name_last']
+        })
     elif user['permission_id'] == 3 and channel['is_public'] == True:
         channel['all_members'].append({
             'u_id' : u_id,

@@ -121,6 +121,8 @@ def is_owner(u_id, channel_id):
 
 def is_member(u_id, channel_id):
     channel = channel_dict(channel_id)
+    if channel == None:
+        return False
     # loop through channel to check if member
     for dict in channel['all_members']:
         if u_id == dict['u_id']:
@@ -153,12 +155,12 @@ def reset_users():
     global data
     users = data['users']
     users.clear()
-    
+
 def reset_channels():
     global data
     channels = data['channels']
     channels.clear()
-    
+
 def reset_messages():
     global data
     messages = data['messages']

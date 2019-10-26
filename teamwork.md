@@ -11,7 +11,7 @@ Taking advice from seasoned coders, __Agile__ programming was the decided approa
 providing a balance between adaptation and order. Agile mindset was in play from the release of the specification, our development framewrok embodied three phases of sprints, where
 members would build, test and review each module in an iterative procedure. 
 
- Test Driven Development was a significant agile trait that had followed. Written tests from iteration 1 were
+ __Test Driven Development__ was a significant agile trait that had followed. Written tests from iteration 1 were
  continously updated as the core functions changed, to ensure every fragment of the core functions worked. Pytest coverage was an important
  indicator as to ensure all the code implemented was correct. As such, 100% coverage was ideal.
  
@@ -54,9 +54,9 @@ Preparation for failure is a critical part of ensuring success. For our team, an
 
 On a lower-level, small issues came up which were tackled professionally by the team. Any self-focused issues were asked on Piazza, with the responses forwarded to the group. Furthermore, most issues that arose, were solved by other members, thus removing the need to search for external solutions. The installation of Flask and other Python third-party services was a prime illustration. Some virtual environments required the installation of Flask servers, luckily, it was a concern that was tackled before, thus could be solved simply by the input of another team member.
 
-Some obstacles were not time-constrained, such as vague definitions and expectations. These were settle quickly by correspondence with staff, such as tutors and lecturers. Occasionally team members met in-person for pair programming, this helped mitigate any inconsistencies in our project whether that be in the code itself, style and understanding.
+Some obstacles were not time-constrained, such as vague definitions and expectations. These were settle quickly by correspondence with staff, such as tutors and lecturers. Occasionally team members met in-person for __pair programming__ which served as a valuable tool for mitigating inconsistencies in our overall style and formating of code.
 
-To surmise, the team was vigilant to handle an unfavorable outcome on a large scale. Although it never occurred, the preparation was respected and followed.
+To summarise, the team was vigilant to handle an unfavorable outcome on a large scale. Although it never occurred, the preparation was respected and followed.
 
 ## Member Coordination
 *Teams will perform at peak efficiency when coordination is valued and appreciated*

@@ -8,10 +8,10 @@ time to spare
 *A successful and well-tested paradigm, forms the backbone of the project*
 
 Taking advice from seasoned coders, __Agile__ programming was the decided approach . Agile proved most suitable for our team
-providing a balance between adaptation and order. Agile mindset was in play from the release of the specification. Faced with over-whelming expectations
-drafts were made for all the work at hand, as a focus on __small incremental changes__ as well as provide scaffolding for further implementation
+providing a balance between adaptation and order. Agile mindset was in play from the release of the specification, our development framewrok embodied three phases of sprints, where
+members would build, test and review each module in an iterative procedure. 
 
- Constant testing was another significant agile trait that had to be followed. Written tests from iteration 1 were
+ Test Driven Development was a significant agile trait that had followed. Written tests from iteration 1 were
  continously updated as the core functions changed, to ensure every fragment of the core functions worked. Pytest coverage was an important
  indicator as to ensure all the code implemented was correct. As such, 100% coverage was ideal.
  
@@ -45,7 +45,7 @@ During our communication sessions, we agreed to follow a set structure to maximi
  4. Other members voice feedback on any issue
  5. Progress to the next member
 
-As a result, although the process is time-consuming and the prime reason for longer group calls, it was non-the-less an imperative inclusion as the feedback to be considered was important and reduced consecutive problems later on.
+As a result, these coherent discussions served as an imperative inclusion as the feedback to be considered was important and reduced consecutive problems later on.
 
 ## Contingency Plans
 *It is well known that "Nothing goes to plan"*
@@ -54,7 +54,7 @@ Preparation for failure is a critical part of ensuring success. For our team, an
 
 On a lower-level, small issues came up which were tackled professionally by the team. Any self-focused issues were asked on Piazza, with the responses forwarded to the group. Furthermore, most issues that arose, were solved by other members, thus removing the need to search for external solutions. The installation of Flask and other Python third-party services was a prime illustration. Some virtual environments required the installation of Flask servers, luckily, it was a concern that was tackled before, thus could be solved simply by the input of another team member.
 
-Some obstacles were not time-constrained, such as vague definitions and expectations. These were settle quickly by correspondence with staff, such as tutors and lecturers.
+Some obstacles were not time-constrained, such as vague definitions and expectations. These were settle quickly by correspondence with staff, such as tutors and lecturers. Occasionally team members met in-person for pair programming, this helped mitigate any inconsistencies in our project whether that be in the code itself, style and understanding.
 
 To surmise, the team was vigilant to handle an unfavorable outcome on a large scale. Although it never occurred, the preparation was respected and followed.
 

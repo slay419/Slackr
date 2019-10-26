@@ -85,6 +85,7 @@ def message_dict(message_id):
             return messages
     return None
 
+#DONT USE BAD CODE
 def is_joined(token, channel_id):
     data = get_data()
     u_id = decode_token(token)
@@ -148,7 +149,16 @@ def get_u_id(email):
             return user['u_id']
     return None
 
+def get_reset_code(u_id):
+    user = user_dict(u_id)
+    return user['reset_code']
+
 # used for pytests
+def reset_data():
+    global data
+    reset_users()
+    reset_channels()
+
 def reset_users():
     global data
     users = data['users']

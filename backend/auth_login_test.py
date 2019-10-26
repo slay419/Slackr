@@ -1,57 +1,69 @@
 import pytest
-from auth_register_test import auth_register
+from functions.auth_functions import auth_register, auth_logout
+from functions.data import *
 
 #Assumptions: Email validation function is already implemented in auth_login.
 #The database of registered users is empty.
 
-def auth_login(email, password):
-    if (email_validate(email) is False):
-        raise ValueError
-    pass
-
-def email_validate(email):
-    pass 
-
-
-#BEGIN SETUP
-auth_register('myemail@gmail.com', 'mypassword', 'Kevin', 'Yasin')
-auth_register('myemail2@gmail.com', 'mypassword2', 'Steven', 'Peter')
-#END SETUP
-
 #registered email and correct password
 def test_auth_login_1():
-    auth_login("myemail@gmail.com", "mypassword")
+    reset_data()
+    dict1 = auth_register('myemail@gmail.com', 'mypassword', 'Kevin', 'Yasin')
+    token1 = dict1['token']
+    auth_logout(token1)
+    dict2 = auth_login("myemail@gmail.com", "mypassword")
+    token2 = dict2['token']
+    assert(is_logged_in(token2))
+
+#registered user, correct pass
+def test_auth_login_2():
+    reset_data()
+    dict1 = auth_register('myemail2@gmail.com', 'mypassword', 'Steven', 'Peter')
+    token1 = dict1['token']
+    auth_logout(token1)
+    dict2 = auth_login("myemail2@gmail.com", "mypasswor2")
+    token2 = dict2['token']
+    assert(is_logged_in(token2))
 
 #registered email and incorrect pass
-def test_auth_login_2():
+def test_auth_login_3():
+    reset_data()
+    dict1 = auth_register('myemail@gmail.com', 'mypassword', 'Kevin', 'Yasin')
+    token1 = dict1['token']
+    auth_logout(token1)
     with pytest.raises(ValueError):
         auth_login("myemail@gmail.com", "incorrectpass")
 
 #unregistered email
-def test_auth_login_3():
+def test_auth_login_4():
+    reset_data()
     with pytest.raises(ValueError):
         auth_login("unregistereduser@gmail.com", "randompass")
 
 #invalid email
-def test_auth_login_4():
+def test_auth_login_5():
+    reset_data()
     with pytest.raises(ValueError):
         auth_login("inVAL1D3mail$", "randompass")
 
 #invalid email
-def test_auth_login_5():
+def test_auth_login_6():
+    reset_data()
     with pytest.raises(ValueError):
         auth_login("1", "1")
 
 #invalid email
-def test_auth_login_6():
+def test_auth_login_7():
+    reset_data()
     with pytest.raises(ValueError):
         auth_login("", "")
 
 #registered user, incorrect pass
-def test_auth_login_7():
+def test_auth_login_8():
+    reset_data()
+    dict1 = auth_register('myemail2@gmail.com', 'mypassword', 'Steven', 'Peter')
+    token1 = dict1['token']
+    auth_logout(token1)
     with pytest.raises(ValueError):
         auth_login("myemail2@gmail.com", "mypassword")
 
-#registered user, correct pass
-def test_auth_login_8():
-    auth_login("myemail2@gmail.com", "mypasswor2")

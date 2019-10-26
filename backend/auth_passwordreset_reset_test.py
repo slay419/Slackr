@@ -1,14 +1,12 @@
 import pytest
-
-#Assumed validresetcode is taken literally
-
-def auth_passwordreset_reset(reset_code, new_password):
-    pass
+from functions.auth_functions import auth_register
+from functions.data import *
 
 
 #Valid reset code and valid password
 def test_auth_passwordreset_reset_1():
-    auth_passwordreset_reset('validresetcode', 'validpassowrd')
+    
+    auth_passwordreset_reset('validresetcode', 'newpassword')
 
 #valid reset code and valid password
 def test_auth_passwordreset_reset_2():

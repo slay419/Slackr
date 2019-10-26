@@ -81,7 +81,7 @@ def test_admin_userpermission_change_6():
 
 
 # owner cant change admin user permsssion
-def test_admin_userpermission_change_6():
+def test_admin_userpermission_change_7():
 	reset_users()
 	adminDict = auth_register("admin@gmail.com", "password", "admin", "privileges")
 	admin_token = adminDict['token']

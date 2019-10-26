@@ -174,6 +174,8 @@ def channel_removeowner(token, channel_id, u_id):
 def channel_invite(token, channel_id, u_id):
     inviter_u_id = decode_token(token)
     user = user_dict(u_id)
+    if user == None:
+        rase ValueError(f"User: {u_id} does not exist")
     if u_id == inviter_u_id:
         raise ValueError(f"User: {u_id} cannot invite self")
 

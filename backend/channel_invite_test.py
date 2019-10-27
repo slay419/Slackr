@@ -20,7 +20,7 @@ def test_channel_invite_test_1():
     dict3 = channels_create(token1, 'someChannel', 1)
     channel_id1 = dict3['channel_id']
 
-    channel_invite(token1, channel_id1, u_id2)
+    assert(channel_invite(token1, channel_id1, u_id2) == {})
 
     assert(is_member(u_id2, channel_id1))
 
@@ -37,7 +37,7 @@ def test_channel_invite_test_2():
     dict3 = channels_create(token2, 'someChannel', 0)
     channel_id1 = dict3['channel_id']
 
-    channel_invite(token2, channel_id1, u_id1)
+    assert(channel_invite(token2, channel_id1, u_id1) == {})
 
     assert(is_member(u_id1, channel_id1))
 
@@ -57,8 +57,8 @@ def test_channel_invite_test_3():
     dict4 = auth_register('email3@gmail.com', 'validpass', 'Yasin', 'Peter')
     u_id3 = dict4['u_id'] 
 
-    channel_invite(token1, channel_id1, u_id2)
-    channel_invite(token1, channel_id1, u_id3)
+    assert(channel_invite(token1, channel_id1, u_id2) == {})
+    assert(channel_invite(token1, channel_id1, u_id3) == {})
 
     assert(is_member(u_id2, channel_id1))
     assert(is_member(u_id3, channel_id1))

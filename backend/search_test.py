@@ -17,9 +17,12 @@ Assume searching will be 'find-in-word'. i.e searching for 'a' will result in 'e
 because the letter a is present
 Assume the search message is not case sensetive because it is not possible at the moment
 '''
+def floor_message_time(message_id):
+	message = message_dict(message_id)
+	message['time_created'] = math.floor(message['time_created'])
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
 owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']
@@ -39,26 +42,31 @@ channel_id2 = second_channel['channel_id']
 
 message1 = message_send(owner_token, channel_id, "message1")
 message_id1 = message1['message_id']
+floor_message_time(message_id1)
 now = datetime.now()
 m1_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
 
 message2 = message_send(owner_token, channel_id, "message12")
 message_id2 = message2['message_id']
+floor_message_time(message_id2)
 now = datetime.now()
 m2_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
 
 message3 = message_send(owner_token, channel_id, "message3")
 message_id3 = message3['message_id']
+floor_message_time(message_id3)
 now = datetime.now()
 m3_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
 
 message4 = message_send(owner_token, channel_id, "message4")
 message_id4 = message4['message_id']
+floor_message_time(message_id4)
 now = datetime.now()
 m4_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
 
 message5 = message_send(u_token, channel_id2, "message32")
 message_id5 = message5['message_id']
+floor_message_time(message_id5)
 now = datetime.now()
 m5_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
 ##########################    END SETUP   ########################

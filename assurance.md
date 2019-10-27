@@ -4,7 +4,7 @@ Combining both these criteria as well as further testing with Pytest and code co
 that the backend would be working as intended.
 
 ## Auth functions
-As a user I want to able to login so that I can access my Slackr account
+__As a user I want to able to login so that I can access my Slackr account__
 
 *User Acceptance Criteria*
 - There are fields for entering username and password on the login page
@@ -16,7 +16,7 @@ As a user I want to able to login so that I can access my Slackr account
 - You can succesfully login with pre-registered information
 - An attempt to login with non-registered information will return an error
 
-As a user I want to be able to register so that I can access Slackr services
+__As a user I want to be able to register so that I can access Slackr services__
 
 *User Acceptance Criteria*
 - There is a link for registration on the front page
@@ -30,7 +30,7 @@ As a user I want to be able to register so that I can access Slackr services
 - You can succesfully register with non-registered information
 - An attempt to register with already-registered information will return an error
 
-As a user I want to be able to reset my password so that I can access my account if I forget my password
+__As a user I want to be able to reset my password so that I can access my account if I forget my password__
 
 *User Acceptance Criteria*
 - There is a link for forgotten passwords
@@ -41,7 +41,7 @@ As a user I want to be able to reset my password so that I can access my account
 - On success, a link will be sent to the user containing a redirection to reset the password
 - The reset link will only be sent if the user has entered a valid details
 
-As a user I want the ability to logout so that I can keep my account secure when I am not using it
+__As a user I want the ability to logout so that I can keep my account secure when I am not using it__
 
 *User Acceptance Criteria*
 - There is an active logout link when logged in.
@@ -53,7 +53,7 @@ As a user I want the ability to logout so that I can keep my account secure when
 - You cannot log out twice.
 
 ## Channels functions
-As a user I want the ability to create private channels, so that I can maintain confidentiality
+__As a user I want the ability to create private channels, so that I can maintain confidentiality__
 
 *User Acceptance Criteria*
 -	There is a “Private Channel” checkbox that can be selected when creating a channel
@@ -66,7 +66,7 @@ As a user I want the ability to create private channels, so that I can maintain 
 -  Private channel messages cannot be seen by those not inside the channel
 -  Private channels will show up on the channel list
 
-As a user I want the ability to create public channels, so that I can have open discussions
+__As a user I want the ability to create public channels, so that I can have open discussions__
 
 *User Acceptance Criteria*
 -	There is a “Public Channel” checkbox that can be selected when creating a channel
@@ -79,7 +79,7 @@ As a user I want the ability to create public channels, so that I can have open 
 -  Public channel messages can be seen by those not inside the channel
 -  Public channels will show up on the channel list
 
-As a user I want to be able to join a channel so I can send and receive messages with a specific group of people already in the channel
+__As a user I want to be able to join a channel so I can send and receive messages with a specific group of people already in the channel__
 
 *User Acceptance Criteria*
 -	There is a “Join Channel” button located at the top of the interface, next to the Channel Name, if the user is not part of the channel yet
@@ -90,7 +90,7 @@ As a user I want to be able to join a channel so I can send and receive messages
 - You can join the channel if you are not already part of it
 - Joining will show you the current list of messages
 
-As a user I want to be able to leave a channel so I can no longer see messages or communicate with a specific group if I do not wish to.
+__As a user I want to be able to leave a channel so I can no longer see messages or communicate with a specific group if I do not wish to.__
 
 *User Acceptance Criteria*
 -	There is a “Leave Channel” button located at the top of the interface, next to the Channel Name if the user is current part of the channel
@@ -102,7 +102,7 @@ As a user I want to be able to leave a channel so I can no longer see messages o
 - You cannot remove another person from the channe
 - Once removed, you cannot see that channel anymore
 
-As a user I want the ability to invite other users to my channel so that I can collaborate with them
+__As a user I want the ability to invite other users to my channel so that I can collaborate with them__
 
 *User Acceptance Criteria*
 - A user within a channel can interact with a button to invite a user that has not joined yet
@@ -117,7 +117,7 @@ As a user I want the ability to invite other users to my channel so that I can c
 - You cannot invite another person who is already in the channel
 - You can invite users who are not in the channel
 
-As a user I want the ability to view details on a channel I am part of so that I can get a summary of it
+__As a user I want the ability to view details on a channel I am part of so that I can get a summary of it__
 
 *User Acceptance Criteria*
 - Channel details will be displayed within the channel at the top of the page
@@ -128,7 +128,7 @@ As a user I want the ability to view details on a channel I am part of so that I
 - Calling this function will show details of the channel
 - You can only call this function if you are in this channel
 
-As a user I want the ability to see past messages so that I can recollect information
+__As a user I want the ability to see past messages so that I can recollect information__
 
 *User Acceptance Criteria*
 - There is a history button that will list a maximum of 50 messages previously sent to the channel
@@ -142,7 +142,7 @@ As a user I want the ability to see past messages so that I can recollect inform
 
 
 ## Messages functions
-As a user, I want to send messages, so that I can communicate with other people on the platform
+__As a user, I want to send messages, so that I can communicate with other people on the platform__
 
 *User Acceptance Criteria*
   - A message bar should exist near the bottom of the chatbox
@@ -155,7 +155,7 @@ As a user, I want to send messages, so that I can communicate with other people 
   - The sent messages should be removed added to the channel dictionary
   - You can only send messages to channels you are in
 
-As an admin, I want to be able to remove messages, so I can filter inappropriate/irrelevant content
+__As an admin, I want to be able to remove messages, so I can filter inappropriate/irrelevant content__
 
 *User Acceptance Criteria*
   - Remove message button accessed by right-clicking an existing message in the chat log
@@ -166,7 +166,7 @@ As an admin, I want to be able to remove messages, so I can filter inappropriate
   - The remove messages should be removed from the channel dictionary
   - It is impossible to remove someone elses message, unless you are authorised
 
-As an admin, I want to be able to edit messages, so I can rectify wrong/irrelevant information
+__As an admin, I want to be able to edit messages, so I can rectify wrong/irrelevant information__
 
 *User Acceptance Criteria*
   - Edit message button accessed by right-clicking an existing message in the chat log
@@ -179,7 +179,7 @@ As an admin, I want to be able to edit messages, so I can rectify wrong/irreleva
   - The edited messages should be changed in the channel dictionary
   - It is impossible to edit someone elses message, unless you are authorised
 
-As a user, I want to be able to react to messages, so I can express my thoughts on a subject
+__As a user, I want to be able to react to messages, so I can express my thoughts on a subject__
 
 *User Acceptance Criteria*
   - React message button accessed by right-clicking an existing message in the chat log
@@ -191,7 +191,7 @@ As a user, I want to be able to react to messages, so I can express my thoughts 
   - The reacted message will be changed in the channel dictionary
   - You cannot react to a message you have already reacted to
 
-As a user, I want to be able to unreact to messages when I change my mind about something
+__As a user, I want to be able to unreact to messages when I change my mind about something__
 
 *User Acceptance Criteria*
   - Unreact message button accessed by right-clicking an existing message in the chat log
@@ -202,7 +202,7 @@ As a user, I want to be able to unreact to messages when I change my mind about 
   - The unreacted message will be changed in the channel dictionary
   - Only the person who reacted, can unreact
 
-As an admin, I want to be able to pin messages to highlight important posts so I can organise my channels
+__As an admin, I want to be able to pin messages to highlight important posts so I can organise my channels__
 
 *User Acceptance Criteria*
   - Pinning a message can only be able to be done by admin/owners
@@ -214,7 +214,7 @@ As an admin, I want to be able to pin messages to highlight important posts so I
  - Pinning a message will remove it from the channel dictionary
  - Only authorised users can pin
 
-As an admin, I want to be able to unpin messages for when an important messages is no longer relevant
+__As an admin, I want to be able to unpin messages for when an important messages is no longer relevant__
 
 *User Acceptance Criteria*
   - Unpinning a message can only be able to be done by admin/owners
@@ -225,7 +225,7 @@ As an admin, I want to be able to unpin messages for when an important messages 
  - Unpinning a message will remove it from the channel dictionary
  - Only authorised users can unpin
 
-As a user, I want to be able to send messages at later times so that I can set reminders for myself/other members
+__As a user, I want to be able to send messages at later times so that I can set reminders for myself/other members__
 
 *User Acceptance Criteria*
 - The “Send Later” feature is next to the message bar at the bottom of the user’s screen
@@ -240,7 +240,7 @@ As a user, I want to be able to send messages at later times so that I can set r
 - The message is successfully logged onto the channel when submitted
 
 ## User Profile functions
-As a user, I want a profile picture, so I can identify others efficiently on the platform
+__As a user, I want a profile picture, so I can identify others efficiently on the platform__
 
 *User Acceptance Criteria*
 - The profile picture is shown on the user profile
@@ -255,8 +255,7 @@ As a user, I want a profile picture, so I can identify others efficiently on the
 - The user can upload rectangular pictures, and will then crop to size
 - The user can upload photos of the minimum and maximum size
 
-As a user, I want to change my personal information, such as names and email, so that I can also push my latest contact details to others
-
+__As a user, I want to change my personal information, such as names and email, so that I can also push my latest contact details to others__
 *User Acceptance Criteria*
 - The user can change their details by clicking "Change details" button on their profile
 - The fields contain the current information that can be changed to non-empty and valid information
@@ -268,7 +267,7 @@ As a user, I want to change my personal information, such as names and email, so
 - The user can change a non-required filled field to be empty
 - The user cannot enter a too-long field
 
-As a user, I want a handle, so that I can keep my identity private unless divulged.
+__As a user, I want a handle, so that I can keep my identity private unless divulged.__
 
 *User Acceptance Criteria*
 - The user is prompted to create a handle upon account registration.
@@ -286,7 +285,7 @@ As a user, I want a handle, so that I can keep my identity private unless divulg
 
 ## Miscellaneous functions
 
-As a admin, I want permission controls , so that I can set different users with different privileges and permissions
+__As a admin, I want permission controls , so that I can set different users with different privileges and permissions__
 
 *User Acceptance Criteria*
 - An admin or owner can promote or demote others
@@ -303,7 +302,7 @@ As a admin, I want permission controls , so that I can set different users with 
 - The admin and owner cannot demote a member
 - The admin cannot demote a owner
 
-As a user, I want dedicated support for standups, so that I can organise asynchronised standups that promote buisness
+__As a user, I want dedicated support for standups, so that I can organise asynchronised standups that promote buisness__
 
 *User Acceptance Criteria*
 - Standups can be initiated by a "Start standup" button on the channel
@@ -316,7 +315,7 @@ As a user, I want dedicated support for standups, so that I can organise asynchr
 - The resulting summary is downloadable
 - If no messages are sent in the standup, no summary is generated
 
-As a user, I want a search bar function, so that I can access archived messages faster and reduce the time taken to find related messages.
+__As a user, I want a search bar function, so that I can access archived messages faster and reduce the time taken to find related messages.__
 
 *User Acceptance Criteria*
 - The search field is placed on the top

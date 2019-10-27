@@ -59,3 +59,27 @@ def test_auth_passwordreset_reset_11():
     auth_passwordreset_reset('validresetcode', 'validpassword')
     auth_passwordreset_reset('invalidresetcode', 'validpassword2')
 '''
+
+import pytest
+from auth_passwordreset_request_test import auth_passwordreset_request
+from functions.data import *
+from functions.auth_functions import auth_register, auth_passwordreset_reset
+
+def test_1():
+    reset_data()
+    dict1 = auth_register('yasin.k101@gmail.com', 'mypass1234', 'Yasin', 'Khan')
+    u_id = dict1['u_id']
+    auth_passwordreset_request('yasin.k101@gmail.com')
+    user = user_dict(u_id)
+    reset_code = user['reset_code']
+    auth_passwordreset_reset(reset_code, 'newpassword')
+    assert(user['password'] == 'newpassword')
+
+def test_2():
+    reset_data()
+    dict1 = auth_register('yasin.k101@gmail.com', 'mypass1234', 'Yasin', 'Khan')
+    u_id = dict1['u_id']
+    auth_passwordreset_request('yasin.k101@gmail.com')
+    user = user_dict(u_id)
+    reset_code = user['reset_code']
+    assert(u_id == int(reset_code[:3]))

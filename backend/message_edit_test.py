@@ -97,3 +97,9 @@ def test_message_edit_6():
     with pytest.raises(ValueError):
 	    message_edit(admin1, 1, 'hello world')
 
+#Testing a user editing another users message
+def test_message_edit_7():
+    reset_messages()
+    message_send(admin1, channel1, 'testing')
+    with pytest.raises(AccessError):
+	    message_edit(user1, 1, 'hello world')

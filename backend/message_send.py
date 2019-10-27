@@ -18,11 +18,17 @@ userDict1 = auth_register('steven@gmail.com','hello123','Steven','Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
 
+userDict2 = auth_register('2steven@gmail.com','hello123','2Steven','Lay')
+user2 = userDict2['token']
+user_id2 = userDict2['u_id']
+
 channelDict1 = channels_create(user1,'chat1',True)
 channel1 = channelDict1['channel_id']
 
 channelDict2 = channels_create(user1,'chat2',True)
 channel2 = channelDict2['channel_id']
+
+channel_join(user2, channel1)
 
 messagelist = data['messages']
 ##########################    END SETUP   ########################
@@ -69,3 +75,9 @@ def test_message_send_8():
     reset_messages()
     with pytest.raises(ValueError):
 	    message_send(user1, channel1, 5000*'a')
+	    
+#Messaging non joined channel
+def test_message_send_9():
+    reset_messages()
+    with pytest.raises(AccessError):
+	    message_send(user2, channel2, 'hello')

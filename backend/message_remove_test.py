@@ -101,3 +101,10 @@ def test_message_remove_7():
     reset_messages()
     with pytest.raises(ValueError):
 	    message_remove(admin1, 1)
+	    
+#Testing a user removing another users message
+def test_message_remove_8():
+    reset_messages()
+    message_send(admin1, channel1, 'Hello world!')
+    with pytest.raises(AccessError):
+        message_remove(user1, 1)

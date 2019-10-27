@@ -30,8 +30,17 @@ admin_id1 = adminDict1['u_id']
 admin = user_dict(admin_id1)
 admin['permission_id'] = 1
 
+adminDict2 = auth_register('2adminsteven@gmail.com','adminhello123','adminSteven','Lay')
+admin2 = adminDict2['token']
+admin_id2 = adminDict2['u_id']
+admin_2 = user_dict(admin_id2)
+admin_2['permission_id'] = 1
+
 channelDict1 = channels_create(admin1, 'chat1', True)
 channel1 = channelDict1['channel_id']
+
+channelDict2 = channels_create(admin2, 'chat2', True)
+channel2 = channelDict2['channel_id']
 
 channel_join(user1, channel1)
 
@@ -75,3 +84,10 @@ def test_message_pin_5():
     reset_messages()
     with pytest.raises(ValueError):
 	    message_pin(admin1, 1)
+	    
+#Member is not a part of channel
+def test_message_pin_6():
+    reset_messages()
+    message_send(admin1, channel1, 'Test message')
+    with pytest.raises(AccessError):
+        message_pin(admin2, 1)

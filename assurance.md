@@ -1,7 +1,19 @@
+# Assurance
+The first thing our group collectively did was to create acceptance criteria for each user story/backend function.
+This was done to give each of us a goal to work towards when building & testing the functions, whilst ensuring
+that the final product would work as intended.
+
+The main acceptance criteria we focussed on while implementing the functions were the edge cases, for example:
+"Name fields will not allow more than 50 characters for registration".
+This was done because other acceptance criteria such as "There is a button at the top..." would be relevant to
+the frontend and not for us. By following these criteria closely, we have verified that our
+functions work and behave as expected under all conditions.
+
+In addition to this, our group continuously tested each function first using an API such as Postman,
+and then cemented further testing through adjusting our Pytests in iteration 1. By ensuring the outputs were as expected,
+as well as passing all our Pytests, we can assure that our functions have been validated.
+
 # Acceptances
-Acceptance criteria is followed to ensure the implementation is correct and as desired.
-Combining both these criteria as well as further testing with Pytest and code coverage, allowed us to be sure
-that the backend would be working as intended.
 
 ## Auth functions
 __As a user I want to able to login so that I can access my Slackr account__
@@ -122,7 +134,7 @@ __As a user I want the ability to view details on a channel I am part of so that
 *User Acceptance Criteria*
 - Channel details will be displayed within the channel at the top of the page
 - There are two separate lists displayed: Owner and Member lists
-- The information will be automatically updated when a new member joins or leaves 
+- The information will be automatically updated when a new member joins or leaves
 
 *Acceptance Tests*
 - Calling this function will show details of the channel

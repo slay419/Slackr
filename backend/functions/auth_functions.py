@@ -87,24 +87,6 @@ def auth_logout(token):
     else:
         return {'is_success' : False}
 
-def auth_passwordreset_request(mail, email):
-    u_id = get_u_id(email)
-    if u_id == None:
-        raise ValueError(f"Email: {email} not registered")
-    user = user_dict(u_id)
-
-    try:
-        msg = Message("Reset Code",
-            sender="masterbranch101@gmail.com",
-            recipients=[email])
-        reset_code = str(u_id) + str(randin(100,999))
-        user['reset_code'] = reset_code
-        msg.body = f"Your reset code is {reset_code}"
-        mail.send(msg)
-        return {}
-    except Exception as e:
-        return (str(e))
-
 
 def auth_passwordreset_reset(reset_code, new_password):
     data = get_data()

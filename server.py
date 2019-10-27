@@ -2,8 +2,10 @@
 import sys
 from flask_cors import CORS
 from flask_mail import Mail, Message
+from random import randint
 from json import dumps
 from flask import Flask, request
+
 import hashlib
 import jwt
 import re
@@ -92,7 +94,23 @@ def email():
 
     email = request.form.get('email')
     mail = Mail(APP)
-    return send(auth_passwordreset_request(email, mail))
+    u_id = get_u_id(email)
+    if u_id == None:
+        raise ValueError(f"Email: {email} not registered")
+    user = user_dict(u_id)
+
+    try:
+        msg = Message("Reset Code",
+            sender="masterbranch101@gmail.com",
+            recipients=[email])
+        reset_code = str(u_id) + str(randint(100,999))
+        user['reset_code'] = reset_code
+        msg.body = f"Your reset code is {reset_code}"
+        mail.send(msg)
+        return {}
+    except Exception as e:
+        return (str(e))
+
 
 #PASSWORD RESET RESET
 @APP.route('/auth/passwordreset/reset', methods = ['POST'])

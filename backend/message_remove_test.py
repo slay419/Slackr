@@ -83,12 +83,7 @@ def test_message_remove_4():
 #Testing admin trying to remove another persons message (in this case a users)
 def test_message_remove_5():
     reset_messages()
-<<<<<<< HEAD
-    print(data['messages'])
     message_send(user1, channel1, "hey admin, did you hear you can remove other people messages")
-=======
-    message_send(user1, channel1, "hey admin, did you hear you can remove other people messages")	
->>>>>>> 35b03f0c2675f926cf27fc4e1726437e3435be4f
     message_send(admin1, channel1, 'yep, let me show you my admin rights')
     assert message_remove(admin1, 1) == {}
     assert is_valid_message(1) == False

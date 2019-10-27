@@ -18,7 +18,7 @@ other users from different locations
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
@@ -51,34 +51,34 @@ channel_join(admin2, channel1)
 #Testing admin unpinning own pinned message
 def test_message_unpin_1():
     reset_messages()
-    message_send(admin1, channel1, 'testing 123')	
+    message_send(admin1, channel1, 'testing 123')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
             assert messagedict['is_pinned'] == False
-            
+
 #Testing admin pinning and unpinning message for a user
 def test_message_unpin_2():
     reset_messages()
-    message_send(user1, channel1, 'could an admin pin and unpin this message, it is very important')	
+    message_send(user1, channel1, 'could an admin pin and unpin this message, it is very important')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
             assert messagedict['is_pinned'] == False
-            
+
 #Testing admin2 unpinning a message that admin1 pinned
 def test_message_unpin_3():
     reset_messages()
-    message_send(admin1, channel1, 'apparently we can unpin each others messages')	
-    message_send(admin2, channel1, 'let me try that')	
+    message_send(admin1, channel1, 'apparently we can unpin each others messages')
+    message_send(admin2, channel1, 'let me try that')
     message_pin(admin1, 1)
     assert message_unpin(admin2, 1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
             assert messagedict['is_pinned'] == False
-            
+
 #Testing user unpinning a pinned message
 def test_message_unpin_4():
     reset_messages()

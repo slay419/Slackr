@@ -17,7 +17,7 @@ It is assumed that messages sent must be atleast one character long
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
@@ -40,7 +40,7 @@ channel_join(user1, channel1)
 #Testing admin pinning own message
 def test_message_pin_1():
     reset_messages()
-    message_send(admin1, channel1, 'testing 123')	
+    message_send(admin1, channel1, 'testing 123')
     assert message_pin(admin1, 1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
@@ -49,7 +49,7 @@ def test_message_pin_1():
 #Testing admin pinning another persons message (a users)
 def test_message_pin_2():
     reset_messages()
-    message_send(user1, channel1, 'could an admin pin this message, it is very important')	
+    message_send(user1, channel1, 'could an admin pin this message, it is very important')
     assert message_pin(admin1, 1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
@@ -58,7 +58,7 @@ def test_message_pin_2():
 #Testing user pinning another persons message (an admins)
 def test_message_pin_3():
     reset_messages()
-    message_send(admin1, channel1, 'could a user pin this message for test purposes')	
+    message_send(admin1, channel1, 'could a user pin this message for test purposes')
     with pytest.raises(ValueError):
 	    message_pin(user1, 1)
 

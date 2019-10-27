@@ -20,6 +20,7 @@ Assume "time_left" can retrieve the date_time object from standup_start
 '''
 
 ######################## GLOBAL VARIABLES SETUP ######################
+reset_data()
 # First user
 ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
 owner_token = ownerDict['token']

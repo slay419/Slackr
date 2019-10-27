@@ -164,6 +164,7 @@ def reset_data():
     global data
     reset_users()
     reset_channels()
+    reset_messages()
 
 def reset_users():
     global data

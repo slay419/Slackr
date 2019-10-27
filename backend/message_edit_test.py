@@ -18,7 +18,7 @@ other users from different locations
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
@@ -52,7 +52,7 @@ channel_join(admin2,channel1)
 #Testing editing a message sent from an admin
 def test_message_edit_1():
     reset_messages()
-    message_send(admin1, channel1, 'testing 123')	
+    message_send(admin1, channel1, 'testing 123')
     assert message_edit(admin1, 1, 'new message') == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
@@ -60,14 +60,14 @@ def test_message_edit_1():
 
 #Testing user attempting to edit other peoples messages
 def test_message_edit_2():
-    message_send(admin1, channel1, 'sorry guys only admins can edit other messages')	
+    message_send(admin1, channel1, 'sorry guys only admins can edit other messages')
     message_send(user1, channel1, 'are you joking? let me test that')
     with pytest.raises(AccessError):
 	    message_edit(user1, 1, 'testing')
 
 #Testing admin trying to edit another persons message (in this case an admins)
 def test_message_edit_3():
-    message_send(admin1, channel1, "hey admin 2, apparently we can edit each others messages")	
+    message_send(admin1, channel1, "hey admin 2, apparently we can edit each others messages")
     message_send(admin2, channel1, 'that sounds pretty standard to me')
     assert message_edit(admin1, 2, 'admin1 is really cool') == {}
     for messagedict in data['messages']:
@@ -76,13 +76,13 @@ def test_message_edit_3():
 
 #Testing admin trying to edit another persons message (in this case a users)
 def test_message_edit_4():
-    message_send(user1, channel1, "hey admin, did you hear you can edit other people messages")	
+    message_send(user1, channel1, "hey admin, did you hear you can edit other people messages")
     message_send(admin1, channel1, 'yep, let me show you my admin rights')
     assert message_edit(admin1, 1, 'imagine not being an admin') == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
             assert messagedict['message'] == 'imagine not being an admin'
-            
+
 #Testing editing a message that doesn't exist
 def test_message_edit_5():
     reset_messages()
@@ -103,3 +103,4 @@ def test_message_edit_7():
     message_send(admin1, channel1, 'testing')
     with pytest.raises(AccessError):
 	    message_edit(user1, 1, 'hello world')
+

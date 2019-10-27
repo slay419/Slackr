@@ -13,7 +13,7 @@ import pytest
 
 
 #SETUP BEGIN
-
+reset_data()
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
 owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']
@@ -114,7 +114,7 @@ def test_channel_messages_2():
         'start': 2,
         'end': 52,
     })
-    
+
 #view from  middle messages (overflow)
 def test_channel_messages_3():
     list1 = []
@@ -127,7 +127,7 @@ def test_channel_messages_3():
         'start': 25,
         'end': -1
     })
-    
+
 #view from out of index
 def test_channel_messages_4():
     list1 = []

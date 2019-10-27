@@ -15,7 +15,7 @@ All test assume that reacts exist from react_id 0 -> react_id 50
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 userDict1 = auth_register('steven@gmail.com','hello123','Steven','Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']

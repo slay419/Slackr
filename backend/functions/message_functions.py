@@ -1,11 +1,12 @@
 from .data import *
 from datetime import datetime
 from datetime import timezone
+import math
 
 #########################   MESSAGE FUNCTIONS  ###########################
 def message_sendlater(token, channel_id, message, time_sent):
     data = get_data()
-    
+
     #The message_id will be 1 + length of messages in a specific channel
     newchannel = {}
     for channel in data['channels']:
@@ -39,7 +40,7 @@ def message_sendlater(token, channel_id, message, time_sent):
             channel['messages'].insert(0, message_dict)
             data['messages'].append(message_dict)
     return {'message_id': message_id}
-    
+
 #input: token,channelid,message
 def message_send(token, channel_id, message):
     #Initialising all data from input
@@ -66,7 +67,7 @@ def message_send(token, channel_id, message):
         'message_id': message_id,
         'u_id': u_id,
         'message': message,
-        'time_created': timestamp,
+        'time_created': math.floor(timestamp),
         'is_unread': True,
         'reacts': [],
         'is_pinned': False,
@@ -92,16 +93,16 @@ def message_remove(token, message_id):
             else:
                 print('accesserrrooooor')
                 raise AccessError('user is removing a message not of own')
-        
+
     #Searching for correct messagedict in the channels list
     channels = data['channels']
     for channeldict in channels:
         messagelist = channeldict['messages']
         for messagedict in messagelist:
             if messagedict['message_id'] == message_id:
-                messagelist.remove(messagedict) 
+                messagelist.remove(messagedict)
     return {}
-    
+
 def message_edit(token, message_id, message):
     data = get_data()
     u_id = decode_token(token)
@@ -120,7 +121,7 @@ def message_edit(token, message_id, message):
                 raise AccessError('user is editing a message not of own')
     #detect if no message was found
     return {}
-    
+
 def message_react(token, message_id, react_id):
     data = get_data()
     #check valid react_id
@@ -149,7 +150,7 @@ def message_unreact(token, message_id, react_id):
             else:
                 raise ValueError('message does not have this react_id')
     return {}
-    
+
 def message_pin(token, message_id):
     data = get_data()
     #check valid message

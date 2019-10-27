@@ -8,12 +8,19 @@ def search(token, query_str):
 
 	messages = []
 
-	for channel in channels_list(token):
+	for message_dict in data['messages']:
+		if query_str in message_dict['message']:
+			messages.append(message_dict)
+
+	print(f"messages found: {messages}")
+	return {'messages': messages}
+	'''
+	for channel in data['channels']:
 		for message in data['channels']['messages']:
 			if query_str in data['messages']['message']:
 				message.append(data['messages']['message'])
+	'''
 
-	return {'messages': messages}
 
 def admin_userpermission_change(token, u_id, permission_id):
 	if permission_id != 1 and permission_id != 2 and permission_id != 3:

@@ -90,7 +90,7 @@ def logout():
 
 #PASSWORD RESET REQ
 @APP.route('/auth/passwordreset/request', methods = ['POST'])
-def email():
+def reset_request():
 
     email = request.form.get('email')
     mail = Mail(APP)
@@ -114,7 +114,7 @@ def email():
 
 #PASSWORD RESET RESET
 @APP.route('/auth/passwordreset/reset', methods = ['POST'])
-def reset():
+def reset_restore():
     reset_code = request.form.get('reset_code')
     new_password = request.form.get('new_password')
     return send(auth_passwordreset_reset(reset_code, new_password))

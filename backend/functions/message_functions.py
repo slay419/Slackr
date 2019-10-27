@@ -1,7 +1,6 @@
 from .data import *
 from datetime import datetime
 from datetime import timezone
-import math
 
 #########################   MESSAGE FUNCTIONS  ###########################
 def message_sendlater(token, channel_id, message, time_sent):
@@ -67,7 +66,7 @@ def message_send(token, channel_id, message):
         'message_id': message_id,
         'u_id': u_id,
         'message': message,
-        'time_created': math.floor(timestamp),
+        'time_created': timestamp,
         'is_unread': True,
         'reacts': [],
         'is_pinned': False,

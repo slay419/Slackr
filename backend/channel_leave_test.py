@@ -15,7 +15,7 @@ channel_id hasn't been created yet
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
 owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']
@@ -133,4 +133,4 @@ def test_channel_leave_8():
             {'channel_id': channel_id2, 'name': "Second Channel"},
             {'channel_id': channel_id4, 'name': "Fourth Channel"}
         ]
-    })  
+    })

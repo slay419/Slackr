@@ -20,6 +20,7 @@ Owner privileges cover ONLY their channel created
 '''
 
 ######################## GLOBAL VARIABLES SETUP ######################
+reset_data()
 # Assume owner_id is an admin since he is the first person to sign up
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
 owner_token = ownerDict['token']

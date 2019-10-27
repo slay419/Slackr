@@ -15,7 +15,7 @@ Assume the person creating the channel is already an owner and joined the channe
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
 owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']

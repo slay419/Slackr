@@ -17,6 +17,7 @@ Assume you cannot have two standups running at the same time on the same channel
 '''
 
 ######################## GLOBAL VARIABLES SETUP ######################
+reset_data()
 # First user
 ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
 owner_token = ownerDict['token']

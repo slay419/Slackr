@@ -14,10 +14,10 @@ All test assume that reacts exist from react_id 0 -> react_id 50
 '''
 
 #Given a message within a channel the authorised user is part of, remove a "react" to that particular message
-	
-	
-######################## GLOBAL VARIABLES SETUP ######################
 
+
+######################## GLOBAL VARIABLES SETUP ######################
+reset_data()
 userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']

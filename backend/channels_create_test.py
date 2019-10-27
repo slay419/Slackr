@@ -14,7 +14,7 @@ e.g. channel_id1 created first will be lower than the channel_id2 created last
 '''
 
 ######################## GLOBAL VARIABLES SETUP ######################
-
+reset_data()
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
 owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']

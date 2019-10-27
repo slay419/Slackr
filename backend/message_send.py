@@ -11,9 +11,9 @@ It is assumed that messages sent must be atleast one character long
 '''
 
 #Send a message from authorised_user to the channel specified by channel_id
-	
-######################## GLOBAL VARIABLES SETUP ######################
 
+######################## GLOBAL VARIABLES SETUP ######################
+reset_data()
 userDict1 = auth_register('steven@gmail.com','hello123','Steven','Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
@@ -37,7 +37,7 @@ def test_message_send_1():
 def test_message_send_2():
     reset_messages()
     assert message_send(user1, channel1, '!@#$%^&*()_+=') == {'message_id': messagelist[0]['message_id']}
-    
+
 #Testing numbers
 def test_message_send_3():
     reset_messages()
@@ -47,7 +47,7 @@ def test_message_send_3():
 def test_message_send_4():
     reset_messages()
     assert message_send(user1, channel2, 'HeLlo123!@#%') == {'message_id': messagelist[0]['message_id']}
-    
+
 #Testing 999 character string
 def test_message_send_5():
     reset_messages()

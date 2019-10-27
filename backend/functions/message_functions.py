@@ -1,7 +1,6 @@
 from .data import *
 from datetime import datetime
 from datetime import timezone
-import math
 
 #########################   MESSAGE FUNCTIONS  ###########################
 def message_sendlater(token, channel_id, message, time_sent):
@@ -67,7 +66,7 @@ def message_send(token, channel_id, message):
         'message_id': message_id,
         'u_id': u_id,
         'message': message,
-        'time_created': math.floor(timestamp),
+        'time_created': timestamp,
         'is_unread': True,
         'reacts': [],
         'is_pinned': False,
@@ -88,7 +87,7 @@ def message_remove(token, message_id):
         raise ValueError('Message (based on ID) no longer exists')
     for message in data['messages']:
         if message['message_id'] == message_id:
-            if message['u_id'] == u_id or userdict['permission_id'] == 3:
+            if message['u_id'] == u_id or userdict['permission_id'] != 3:
                 data['messages'].remove(message)
             else:
                 print('accesserrrooooor')
@@ -115,7 +114,7 @@ def message_edit(token, message_id, message):
     #accesserror when nonadmin/owner attempts to edit someone elses message
     for editmessage in data['messages']:
         if editmessage['message_id'] == int(message_id):
-            if editmessage['u_id'] == u_id or userdict['permission_id'] == 3:
+            if editmessage['u_id'] == u_id or userdict['permission_id'] != 3:
                 editmessage['message'] = message
             else:
                 raise AccessError('user is editing a message not of own')
@@ -160,7 +159,6 @@ def message_pin(token, message_id):
     u_id = decode_token(token)
     user =  user_dict(u_id)
     if user['permission_id'] != 1:
-        print(user)
         raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is already
     #pinned, if not pin it

@@ -12,14 +12,7 @@ def search(token, query_str):
 		if query_str in message_dict['message']:
 			messages.append(message_dict)
 
-	print(f"messages found: {messages}")
 	return {'messages': messages}
-	'''
-	for channel in data['channels']:
-		for message in data['channels']['messages']:
-			if query_str in data['messages']['message']:
-				message.append(data['messages']['message'])
-	'''
 
 
 def admin_userpermission_change(token, u_id, permission_id):

@@ -22,24 +22,28 @@ reset_data()
 userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
 user1 = userDict1['token']
 user_id1 = userDict1['u_id']
+user = user_dict(user_id1)
+user['permission_id'] = 3
 
 adminDict1 = auth_register('adminsteven@gmail.com','adminhello123','adminSteven','Lay')
 admin1 = adminDict1['token']
 admin_id1 = adminDict1['u_id']
-adminDict1['permission_id'] = 1
+admin = user_dict(admin_id1)
+admin['permission_id'] = 2
 
 adminDict2 = auth_register('admin2steven@gmail.com','adminhello123','adminSteven','Lay')
 admin2 = adminDict2['token']
 admin_id2 = adminDict2['u_id']
-adminDict2['permission_id'] = 1
+admin_2 = user_dict(admin_id2)
+admin_2['permission_id'] = 2
 
-channelDict1 = channels_create(user1, 'chat1', True)
+channelDict1 = channels_create(admin1, 'chat1', True)
 channel1 = channelDict1['channel_id']
 
 channelDict2 = channels_create(user1, 'chat2', True)
 channel2 = channelDict2['channel_id']
 
-channel_join(admin1,channel1)
+channel_join(user1,channel1)
 channel_join(admin2,channel1)
 
 ##########################    END SETUP   ########################
@@ -54,12 +58,12 @@ def test_message_edit_1():
         if messagedict['message_id'] == 1:
             assert messagedict['message'] == 'new message'
 
-#Testing user attempting to edit message
+#Testing user attempting to edit other peoples messages
 def test_message_edit_2():
-    message_send(admin1, channel1, 'sorry guys only admins can edit messages')
+    message_send(admin1, channel1, 'sorry guys only admins can edit other messages')
     message_send(user1, channel1, 'are you joking? let me test that')
     with pytest.raises(AccessError):
-	    message_edit(user1, 2, 'testing')
+	    message_edit(user1, 1, 'testing')
 
 #Testing admin trying to edit another persons message (in this case an admins)
 def test_message_edit_3():

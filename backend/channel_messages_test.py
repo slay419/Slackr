@@ -35,78 +35,97 @@ m7 = message_send(owner_token, channel_id, "message7")
 m8 = message_send(owner_token, channel_id, "message8")
 m9 = message_send(owner_token, channel_id, "message9")
 m10 = message_send(owner_token, channel_id, "message10")
-md1 = message_dict(m1['message_id'])
-md2 = message_dict(m2['message_id'])
-md3 = message_dict(m3['message_id'])
-md4 = message_dict(m4['message_id'])
-md5 = message_dict(m5['message_id'])
-md6 = message_dict(m6['message_id'])
-md7 = message_dict(m7['message_id'])
-md8 = message_dict(m8['message_id'])
-md9 = message_dict(m9['message_id'])
-md10 = message_dict(m10['message_id'])
+m11 = message_send(owner_token, channel_id, "message10")
+m12 = message_send(owner_token, channel_id, "message10")
+m13 = message_send(owner_token, channel_id, "message10")
+m14 = message_send(owner_token, channel_id, "message10")
+m15 = message_send(owner_token, channel_id, "message10")
+m16 = message_send(owner_token, channel_id, "message10")
+m17 = message_send(owner_token, channel_id, "message10")
+m18 = message_send(owner_token, channel_id, "message10")
+m19 = message_send(owner_token, channel_id, "message10")
+m20 = message_send(owner_token, channel_id, "message10")
+m21 = message_send(owner_token, channel_id, "message10")
+m22 = message_send(owner_token, channel_id, "message10")
+m23 = message_send(owner_token, channel_id, "message10")
+m24 = message_send(owner_token, channel_id, "message10")
+m25 = message_send(owner_token, channel_id, "message10")
+m26 = message_send(owner_token, channel_id, "message10")
+m27 = message_send(owner_token, channel_id, "message10")
+m28 = message_send(owner_token, channel_id, "message10")
+m29 = message_send(owner_token, channel_id, "message10")
+m30 = message_send(owner_token, channel_id, "message10")
+m31 = message_send(owner_token, channel_id, "message10")
+m32 = message_send(owner_token, channel_id, "message10")
+m33 = message_send(owner_token, channel_id, "message10")
+m34 = message_send(owner_token, channel_id, "message10")
+m35 = message_send(owner_token, channel_id, "message10")
+m36 = message_send(owner_token, channel_id, "message10")
+m37 = message_send(owner_token, channel_id, "message10")
+m38 = message_send(owner_token, channel_id, "message10")
+m39 = message_send(owner_token, channel_id, "message10")
+m40 = message_send(owner_token, channel_id, "message10")
+m41 = message_send(owner_token, channel_id, "message10")
+m42 = message_send(owner_token, channel_id, "message10")
+m43 = message_send(owner_token, channel_id, "message10")
+m44 = message_send(owner_token, channel_id, "message10")
+m45 = message_send(owner_token, channel_id, "message10")
+m46 = message_send(owner_token, channel_id, "message10")
+m47 = message_send(owner_token, channel_id, "message10")
+m48 = message_send(owner_token, channel_id, "message10")
+m49 = message_send(owner_token, channel_id, "message10")
+m50 = message_send(owner_token, channel_id, "message10")
+m51 = message_send(owner_token, channel_id, "message10")
+m52 = message_send(owner_token, channel_id, "message10")
 
-list1 = [
-    md1, md2, md3, md4, md5, md6, md7, md8, md9, md10
-]
-
+messagelist = data['messages']
+messagelist.sort(key = lambda i: i['time_created'],reverse=True)
 #SETUP END
 
 #different cases where the user should be able to view the message
 
 #edge case, view from most recent message
 def test_channel_messages_1():
-    print(list1)
-    print(list1.sort(key = lambda i: i['time_created'],reverse=True))
+    list1 = []
+    start = 0
+    end = start + 50
+    for i in range(start, end):
+        list1.append(messagelist[i])
     assert(channel_messages(owner_token, channel_id, 0) == {
-        'messages': list1.sort(key = lambda i: i['time_created'],reverse=True),
+        'messages': list1,
         'start': 0,
-        'end': -1
+        'end': 50,
     })
 
-'''
-#view from  middle messages
+#Viewing from 2nd message in
 def test_channel_messages_2():
-    channel_messages(owner_token, channel_id, 25)
-
+    list1 = []
+    start = 2
+    end = start + 50
+    for i in range(start, end):
+        list1.append(messagelist[i])
+    assert(channel_messages(owner_token, channel_id, 2) == {
+        'messages': list1,
+        'start': 2,
+        'end': 52,
+    })
+    
+#view from  middle messages (overflow)
 def test_channel_messages_3():
-    channel_messages(owner_token, channel_id, 50)
-
-#view from very last message
+    list1 = []
+    start = 25
+    end = 52
+    for i in range(start, end):
+        list1.append(messagelist[i])
+    assert (channel_messages(owner_token, channel_id, 25) == {
+        'messages': list1,
+        'start': 25,
+        'end': -1
+    })
+    
+#view from out of index
 def test_channel_messages_4():
-    channel_messages(owner_token, channel_id, 80)
-
-#start is greater than number of messages in channel
-def test_channel_messages_5():
+    list1 = []
+    start = 53
     with pytest.raises(ValueError):
-        channel_messages(owner_token, channel_id, 81)
-
-#channel_id does not exist, valid start index (edge case: 80)
-def test_channel_messages_6():
-    with pytest.raises(ValueError):
-        channel_messages(owner_token, channel_id + 1, 80)
-
-#both channel_d does not exist and invalid start index
-def test_channel_messages_7():
-    with pytest.raises(ValueError):
-        channel_messages(owner_token, channel_id + 1, 81)
-
-#channel_id does not exist valid start index (edge case: 0)
-def test_channel_messages_8():
-    with pytest.raises(ValueError):
-        channel_messages(u_token, channel_id + 1, 0)
-
-#user is not a member of channel
-
-def test_channel_messages_9():
-    with pytest.raises(AccessError):
-        channel_messages(u_token, channel_id, 0)
-
-def test_channel_messages_10():
-    with pytest.raises(AccessError):
-        channel_messages(u_token, channel_id, 81)
-
-def test_channel_messages_11():
-    with pytest.raises(AccessError):
-        channel_messages(u_token, channel_id, 50)
-'''
+        channel_messages(owner_token, channel_id, 53)

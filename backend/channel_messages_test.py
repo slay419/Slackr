@@ -25,6 +25,11 @@ u_id = userDict['u_id']
 channel_dict = channels_create(owner_token, 'channel name', True)
 channel_id = channel_dict['channel_id']
 
+channel_dict2 = channels_create(owner_token, 'channel 2', True)
+channel_id2 = channel_dict['channel_id']
+
+channel_join(u_token, channel_id)
+
 m1 = message_send(owner_token, channel_id, "message1")
 m2 = message_send(owner_token, channel_id, "message2")
 m3 = message_send(owner_token, channel_id, "message3")
@@ -129,3 +134,23 @@ def test_channel_messages_4():
     start = 53
     with pytest.raises(ValueError):
         channel_messages(owner_token, channel_id, 53)
+
+#Testing invalid channel
+def test_channel_messages_5():
+    list1 = []
+    start = 0
+    end = start + 50
+    for i in range(start, end):
+        list1.append(messagelist[i])
+    with pytest.raises(ValueError):
+        channel_messages(owner_token, 3, 0)
+
+#Testing channel member not a part of
+def test_channel_messages_6():
+    list1 = []
+    start = 0
+    end = start + 50
+    for i in range(start, end):
+        list1.append(messagelist[i])
+    with pytest.raises(AccessError):
+        channel_messages(u_token, 2, 0)

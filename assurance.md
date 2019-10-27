@@ -11,7 +11,7 @@ functions work and behave as expected under all conditions.
 
 In addition to this, our group continuously tested each function first using an API such as Postman,
 and then cemented further testing through adjusting our Pytests in iteration 1. By ensuring the outputs were as expected,
-as well as passing all our Pytests, we can assure that our functions have been validated.
+as well as passing all our Pytests and Acceptance Tests previously wrote, we can assure that our functions have been validated.
 
 # Acceptances
 

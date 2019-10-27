@@ -164,7 +164,7 @@ __As a user, I want to send messages, so that I can communicate with other peopl
   - The user can only send messages in a channel they have joined
 
 *Acceptance Tests*
-  - The sent messages should be removed added to the channel dictionary
+  - The sent messages should be added to the channel dictionary
   - You can only send messages to channels you are in
 
 __As an admin, I want to be able to remove messages, so I can filter inappropriate/irrelevant content__

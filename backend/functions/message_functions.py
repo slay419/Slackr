@@ -90,7 +90,6 @@ def message_remove(token, message_id):
             if message['u_id'] == u_id or userdict['permission_id'] != 3:
                 data['messages'].remove(message)
             else:
-                print('accesserrrooooor')
                 raise AccessError('user is removing a message not of own')
 
     #Searching for correct messagedict in the channels list
@@ -158,16 +157,26 @@ def message_pin(token, message_id):
     #checking if user is an admin
     u_id = decode_token(token)
     user =  user_dict(u_id)
+    #get channel_id
+    channels = data['channels']
+    for channeldict in channels:
+        messagelist = channeldict['messages']
+        for messagedict in messagelist:
+            if messagedict['message_id'] == message_id:
+                channel_id = channeldict['channel_id']
     if user['permission_id'] != 1:
         raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is already
     #pinned, if not pin it
     for message in data['messages']:
         if message['message_id'] == int(message_id):
+            if(is_member(u_id, channel_id) == False):
+                raise AccessError('Authorised user has not joined the channel they are trying to pin to')
             if message['is_pinned'] == False:
                 message['is_pinned'] = True
             else:
                 raise ValueError('message is already pinned')
+                
     return {}
 
 def message_unpin(token, message_id):
@@ -178,12 +187,21 @@ def message_unpin(token, message_id):
     #checking if user is an admin
     u_id = decode_token(token)
     user =  user_dict(u_id)
+    #get channel_id
+    channels = data['channels']
+    for channeldict in channels:
+        messagelist = channeldict['messages']
+        for messagedict in messagelist:
+            if messagedict['message_id'] == message_id:
+                channel_id = channeldict['channel_id']
     if user['permission_id'] != 1:
         raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is
     #pinned, if it is unpin it
     for message in data['messages']:
         if message['message_id'] == int(message_id):
+            if(is_member(u_id, channel_id) == False):
+                raise AccessError('Authorised user has not joined the channel they are trying to pin to')
             if message['is_pinned'] == True:
                 message['is_pinned'] = False
             else:

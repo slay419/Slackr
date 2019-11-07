@@ -47,7 +47,7 @@ def create():
     return send(auth_register(email, password, name_first, name_last))
 
 #LOGIN
-@APP.route('/auth/login', methods = ['PUT'])
+@APP.route('/auth/login', methods = ['POST'])
 def connect():
 
     email = request.form.get('email') #get email
@@ -80,7 +80,7 @@ def join():
 
     return send(channel_join(token, channel_id))
 
-@APP.route('/auth/logout', methods = ['PUT'])
+@APP.route('/auth/logout', methods = ['POST'])
 def logout():
 
     token = request.form.get('token') #get token

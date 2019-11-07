@@ -276,6 +276,16 @@ def retrieveProf():
 
     return send(user_profile(token, u_id))
 
+@APP.route('/user/profile/uploadphoto', methods = ['POST'])
+def uploadPhoto():
+    token = request.form.get('token')
+    img_url = str(request.form.get('img_url'))
+    x_start = int(request.form.get('x_start'))
+    y_start = int(request.form.get('y_start'))
+    x_end = int(request.form.get('x_end'))
+    y_end = int(request.form.get('y_end'))
+
+    return user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end)
 #########################  MISC. FUNCTIONS  ###########################
 
 # STANDUP START

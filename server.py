@@ -285,7 +285,7 @@ def uploadPhoto():
     x_end = int(request.form.get('x_end'))
     y_end = int(request.form.get('y_end'))
 
-    return user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end)
+    return send(user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end))
 #########################  MISC. FUNCTIONS  ###########################
 
 # STANDUP START
@@ -305,6 +305,15 @@ def standupSend():
 
     return send(standup_send(token, channel_id, message))
 
+@APP.route('/standup/active', methods = ['GET'])
+def standupActive():
+    token = request.args.get('token')
+    channel_id = int(request.args.get('channel_id'))
+
+    return send({
+        'is_active': False,
+        'time_finish': 1234
+    })
 
 # SEARCH
 @APP.route('/search', methods = ['GET'])

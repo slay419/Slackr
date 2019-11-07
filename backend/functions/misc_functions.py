@@ -36,7 +36,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 	return {}
 
-def standup_start(token, channel_id):
+def standup_start(token, channel_id, length):
 
 	data = get_data()
 
@@ -49,8 +49,7 @@ def standup_start(token, channel_id):
 
 	if channelHandler['standup_active'] is False:
 		channelHandler['standup_active'] = True
-		# Change 15 down for debugging purposes if needed
-		EndTime = datetime.now() + timedelta(minutes=15)
+		EndTime = datetime.now() + timedelta(seconds=length)
 		EndTimeStr = EndTime.strftime("%H:%M:%S")
 		print("The standup has begun, and will stop at: ")
 		print(EndTimeStr)

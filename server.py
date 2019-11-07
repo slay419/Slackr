@@ -305,15 +305,13 @@ def standupSend():
 
     return send(standup_send(token, channel_id, message))
 
+# STANDUP ACTIVE
 @APP.route('/standup/active', methods = ['GET'])
 def standupActive():
     token = request.args.get('token')
     channel_id = int(request.args.get('channel_id'))
 
-    return send({
-        'is_active': False,
-        'time_finish': 1234
-    })
+    return send(standup_active(token,channel_id))
 
 # SEARCH
 @APP.route('/search', methods = ['GET'])

@@ -8,6 +8,7 @@ import jwt
 import re
 import copy
 import time
+import urllib.request
 from PIL import Image
 from .exceptions import *
 #GLOBAL VARIABLES

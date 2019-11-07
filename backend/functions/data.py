@@ -8,6 +8,7 @@ import jwt
 import re
 import copy
 import time
+from PIL import Image
 from .exceptions import *
 #GLOBAL VARIABLES
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'

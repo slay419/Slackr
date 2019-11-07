@@ -286,6 +286,11 @@ def uploadPhoto():
     y_end = int(request.form.get('y_end'))
 
     return send(user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end))
+
+@APP.route('/users/all', methods = ['GET'])
+def users_all():
+    token = request.args.get('token')
+    return send(users_listall(token))
 #########################  MISC. FUNCTIONS  ###########################
 
 # STANDUP START

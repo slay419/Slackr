@@ -82,3 +82,14 @@ def user_profile(token,u_id):
     }
 	print("Successfully found and located user's information")
 	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}
+
+def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
+	# Extract the image from the URL and store at 'filePath' location
+	userCounter = 1
+	filePath = "./pictures/profilepic" + str(userCounter) + ".jpg"
+	urllib.request.urlretrieve(img_url,filePath)
+
+	data = get_data()
+	imageObject = Image.open(img_url)
+	cropped = imageObject.crop((x_start,y_start,x_end,y_end))
+	cropped.save(img_url)

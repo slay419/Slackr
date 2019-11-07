@@ -87,9 +87,13 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	# Extract the image from the URL and store at 'filePath' location
 	userCounter = 1
 	filePath = "./pictures/profilepic" + str(userCounter) + ".jpg"
+	userCounter += 1
 	urllib.request.urlretrieve(img_url,filePath)
-
+	print("Successfully saved the user image")
+	# Crop picture
 	data = get_data()
-	imageObject = Image.open(img_url)
+	imageObject = Image.open(filePath)
 	cropped = imageObject.crop((x_start,y_start,x_end,y_end))
-	cropped.save(img_url)
+	cropped.save(filePath)
+	print("Successfully cropped the user image")
+	return{}

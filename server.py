@@ -38,7 +38,6 @@ APP.config.update(
 #REGISTER
 @APP.route('/auth/register', methods = ['POST'])
 def create():
-
     email = request.form.get('email') #get email
     password = request.form.get('password') # get password
     name_first = request.form.get('name_first') #get first name
@@ -49,49 +48,37 @@ def create():
 #LOGIN
 @APP.route('/auth/login', methods = ['POST'])
 def connect():
-
     email = request.form.get('email') #get email
     password = request.form.get('password') #get password
 
-
     return send(auth_login(email, password))
-
 
 #INVITE
 @APP.route('/channel/invite', methods = ['POST'])
 def invite():
-
     token = request.form.get('token') #get token
     channel_id = int(request.form.get('channel_id')) #get channel_id
     u_id = int(request.form.get('u_id')) #get u_id
 
-
     return send(channel_invite(token, channel_id, u_id))
-
-
 
 #JOIN
 @APP.route('/channel/join', methods = ['POST'])
 def join():
-
     token = request.form.get('token') #get token
     channel_id = int(request.form.get('channel_id')) #get channel_id
-
 
     return send(channel_join(token, channel_id))
 
 @APP.route('/auth/logout', methods = ['POST'])
 def logout():
-
     token = request.form.get('token') #get token
-
 
     return send(auth_logout(token))
 
 #PASSWORD RESET REQ
 @APP.route('/auth/passwordreset/request', methods = ['POST'])
 def reset_request():
-
     email = request.form.get('email')
     mail = Mail(APP)
     u_id = get_u_id(email)

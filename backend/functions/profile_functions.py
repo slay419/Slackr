@@ -84,6 +84,9 @@ def user_profile(token,u_id):
 	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}
 
 def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
+	# Append img_url to user data
+	user = user_dict(decode_token(token))
+	user['profile_img_url'] = img_url
 	# Extract the image from the URL and store at 'filePath' location
 	userCounter = 1
 	filePath = "./pictures/profilepic" + str(userCounter) + ".jpg"
@@ -98,6 +101,19 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	print("Successfully cropped the user image")
 	return{}
 
-def users_listall(token) {
-	
-}
+def users_listall(token):
+	data = get_data()
+	user_list = []
+	for user_dict in data['users']:
+		# Extract the relevant info into a dictionary and append to a list
+		dict = {
+			'u_id': user_dict['u_id'],
+			'email': user_dict['email'],
+			'name_first': user_dict['name_first'],
+			'name_last': user_dict['name_last'],
+			'handle_str': user_dict['handle'],
+			'profile_img_url': user_dict['profile_img_url']
+		}
+		user_list.append(dict)
+
+	return {'users': user_list}

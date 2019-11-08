@@ -49,7 +49,8 @@ def auth_register(email, password, name_first, name_last):
         'permission_id' : permission_id,
         'handle' : handle,
         'tokens'  : [token],
-        'reset_code' : None
+        'reset_code' : None,
+        'profile_img_url' : None
     })
     #auth_login(email, password)
     return {

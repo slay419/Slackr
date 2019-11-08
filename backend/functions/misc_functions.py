@@ -51,7 +51,7 @@ def standup_start(token, channel_id, length):
 		EndTimeStr = EndTime.strftime("%H:%M:%S")
 		print("The standup has begun, and will stop at: ")
 		print(EndTimeStr)
-		timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
+		timestamp = EndTime.replace().timestamp()
 		channelHandler['standup_end'] = timestamp
 		return {'time_finish': timestamp}
 	else:

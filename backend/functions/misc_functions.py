@@ -98,6 +98,12 @@ def standup_active(token, channel_id):
 			'time_finish': channelHandler['standup_end']
 		}
 	else:
+		if CompareTime == channelHandler['standup_end']:
+			newMessage = ""
+			newMessage.join(channelHandler['standup_queue'])
+			
+			message_send(token, channel_id, newMessage)
+
 		channelHandler['standup_active'] = False
 		return {
 			'is_active': False,

@@ -18,7 +18,10 @@ def message_sendlater(token, channel_id, message, time_sent):
     if(is_member(u_id, channel_id) == False):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
     dt = datetime.now()
-    timestamp = dt.replace(tzinfo=timezone.utc).timestamp()
+    timestamp = dt.timestamp()
+    print(dt)
+    print('time sent = ' + str(time_sent))
+    print('time stamp = ' + str(timestamp))
     if time_sent < timestamp:
         raise ValueError('Time sent is a time in the past')
     message_dict = {
@@ -30,10 +33,9 @@ def message_sendlater(token, channel_id, message, time_sent):
         'reacts': [],
         'is_pinned': False,
     }
-    for channel in data['channels']:
-        if(channel['channel_id'] == channel_id):
-            channel['messages'].insert(0, message_dict)
-            data['messages'].append(message_dict)
+    channel = channel_dict(channel_id)
+    channel['messages'].insert(0, message_dict)
+    data['messages'].append(message_dict)
     return {'message_id': message_id}
 
 #input: token,channelid,message
@@ -53,7 +55,7 @@ def message_send(token, channel_id, message):
     if(is_member(u_id, channel_id) == False):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
     dt = datetime.now()
-    timestamp = dt.replace(tzinfo=timezone.utc).timestamp()
+    timestamp = dt.timestamp()
     message_dict = {
         'message_id': message_id,
         'u_id': u_id,
@@ -63,11 +65,9 @@ def message_send(token, channel_id, message):
         'reacts': [],
         'is_pinned': False,
     }
-    for channel in data['channels']:
-        if(channel['channel_id'] == channel_id):
-            channel['messages'].insert(0, message_dict)
-            data['messages'].append(message_dict)
-
+    channel = channel_dict(channel_id)
+    channel['messages'].insert(0, message_dict)
+    data['messages'].append(message_dict)
     return {'message_id': message_id}
 
 def message_remove(token, message_id):
@@ -77,13 +77,11 @@ def message_remove(token, message_id):
     #remove message from global dict
     if not is_valid_message(message_id):
         raise ValueError('Message (based on ID) no longer exists')
-    for message in data['messages']:
-        if message['message_id'] == message_id:
-            if message['u_id'] == u_id or userdict['permission_id'] != 3:
-                data['messages'].remove(message)
-            else:
-                raise AccessError('user is removing a message not of own')
-
+    message = message_dict(message_id)
+    if message['u_id'] == u_id or userdict['permission_id'] != 3:
+        data['messages'].remove(message)
+    else:
+        raise AccessError('user is removing a message not of own')
     #Searching for correct messagedict in the channels list
     channels = data['channels']
     for channeldict in channels:
@@ -103,12 +101,11 @@ def message_edit(token, message_id, message):
     if not is_valid_message(message_id):
         raise ValueError('Message (based on ID) no longer exists')
     #accesserror when nonadmin/owner attempts to edit someone elses message
-    for editmessage in data['messages']:
-        if editmessage['message_id'] == int(message_id):
-            if editmessage['u_id'] == u_id or userdict['permission_id'] != 3:
-                editmessage['message'] = message
-            else:
-                raise AccessError('user is editing a message not of own')
+    editmessage = message_dict(message_id)
+    if editmessage['u_id'] == u_id or userdict['permission_id'] != 3:
+        editmessage['message'] = message
+    else:
+        raise AccessError('user is editing a message not of own')
     #detect if no message was found
     return {}
 
@@ -142,8 +139,14 @@ def message_react(token, message_id, react_id):
             else:
                 for react_dict in message['reacts']:
                     if react_dict['react_id'] == react_id:
-                        react_dict['u_ids'].append(u_id)
-                        react_dict['is_this_user_reacted'] = True
+                        if u_id not in react_dict['u_ids']:
+                            react_dict['u_ids'].append(u_id)
+                            react_dict['is_this_user_reacted'] = True
+                        else:
+                            raise ValueError('user has already reacted to this message')
+    for message in data['messages']:
+        if message['message_id'] == message_id:
+            print(message['reacts'])
     return {}
 
 def message_unreact(token, message_id, react_id):
@@ -165,6 +168,9 @@ def message_unreact(token, message_id, react_id):
                     if react_dict['react_id'] == react_id:
                         react_dict['u_ids'].remove(u_id)
                         react_dict['is_this_user_reacted'] = False
+    for message in data['messages']:
+        if message['message_id'] == message_id:
+            print(message['reacts'])
     return {}
 
 def message_pin(token, message_id):
@@ -186,15 +192,13 @@ def message_pin(token, message_id):
         raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is already
     #pinned, if not pin it
-    for message in data['messages']:
-        if message['message_id'] == int(message_id):
-            if(is_member(u_id, channel_id) == False):
-                raise AccessError('Authorised user has not joined the channel they are trying to pin to')
-            if message['is_pinned'] == False:
-                message['is_pinned'] = True
-            else:
-                raise ValueError('message is already pinned')
-                
+    message = message_dict(message_id)
+    if(is_member(u_id, channel_id) == False):
+        raise AccessError('Authorised user has not joined the channel they are trying to pin to')
+    if message['is_pinned'] == False:
+        message['is_pinned'] = True
+    else:
+        raise ValueError('message is already pinned')
     return {}
 
 def message_unpin(token, message_id):
@@ -216,12 +220,11 @@ def message_unpin(token, message_id):
         raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is
     #pinned, if it is unpin it
-    for message in data['messages']:
-        if message['message_id'] == int(message_id):
-            if(is_member(u_id, channel_id) == False):
-                raise AccessError('Authorised user has not joined the channel they are trying to pin to')
-            if message['is_pinned'] == True:
-                message['is_pinned'] = False
-            else:
-                raise ValueError("message isn't currently pinned")
+    message = messagedict(message_id)
+    if(is_member(u_id, channel_id) == False):
+        raise AccessError('Authorised user has not joined the channel they are trying to pin to')
+    if message['is_pinned'] == True:
+        message['is_pinned'] = False
+    else:
+        raise ValueError("message isn't currently pinned")
     return {}

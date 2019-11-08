@@ -7,10 +7,6 @@ def message_sendlater(token, channel_id, message, time_sent):
     data = get_data()
 
     #The message_id will be 1 + length of messages in a specific channel
-    newchannel = {}
-    for channel in data['channels']:
-        if(channel['channel_id'] == channel_id):
-            newchannel.update(channel)
     message_id = 1 + len(data['messages'])
     if not is_valid_channel(channel_id):
         raise ValueError('Channel ID is not a valid channel')
@@ -46,10 +42,6 @@ def message_send(token, channel_id, message):
     data = get_data()
 
     #The message_id will be 1 + length of messages in a specific channel
-    newchannel = {}
-    for channel in data['channels']:
-        if(channel['channel_id'] == channel_id):
-            newchannel.update(channel)
     message_id = 1 + len(data['messages'])
     if not is_valid_channel(channel_id):
         raise ValueError('Channel ID is not a valid channel')
@@ -123,30 +115,56 @@ def message_edit(token, message_id, message):
 def message_react(token, message_id, react_id):
     data = get_data()
     #check valid react_id
+    u_id = decode_token(token)
     if not is_valid_message(message_id):
         raise ValueError('message_id is not a valid message within a channel that the authorised user has joined')
     if react_id != 1:
         raise ValueError('react_id is not a valid React ID.')
+    #First set is_this_user_reacted to false if not contained in u_id
     for message in data['messages']:
-        if message['message_id'] == int(message_id):
-            if react_id not in message['reacts']:
-                message['reacts'].append(react_id)
+        for react in message['reacts']:
+            if u_id not in react['u_ids']:
+                react['is_this_user_reacted'] = False
             else:
-                raise ValueError('message already has this react_id')
+               react['is_this_user_reacted'] = True
+    #Check if the message has react_dict already
+    for message in data['messages']:
+        if message['message_id'] == message_id:
+            #if react_id dict doesn't already exist for specific message
+            if not any(d['react_id'] == react_id for d in message['reacts']):
+                dict = {
+                    'react_id': react_id,
+                    'u_ids': [u_id],
+                    'is_this_user_reacted': True
+                }
+                message['reacts'].append(dict)
+            #if the dict does already exist, append the u_id to it
+            else:
+                for react_dict in message['reacts']:
+                    if react_dict['react_id'] == react_id:
+                        react_dict['u_ids'].append(u_id)
+                        react_dict['is_this_user_reacted'] = True
     return {}
 
 def message_unreact(token, message_id, react_id):
     data = get_data()
+    u_id = decode_token(token)
     if not is_valid_message(message_id):
         raise ValueError('message_id is not a valid message within a channel that the authorised user has joined')
     if react_id != 1:
         raise ValueError('react_id is not a valid React ID.')
+    #Check if the message has react_dict already
     for message in data['messages']:
-        if message['message_id'] == int(message_id):
-            if react_id in message['reacts']:
-                message['reacts'].remove(react_id)
-            else:
+        if message['message_id'] == message_id:
+            #if react_id dict doesn't already exist for specific message
+            if not any(d['react_id'] == react_id for d in message['reacts']):
                 raise ValueError('message does not have this react_id')
+            #if the dict does already exist, append the u_id to it
+            else:
+                for react_dict in message['reacts']:
+                    if react_dict['react_id'] == react_id:
+                        react_dict['u_ids'].remove(u_id)
+                        react_dict['is_this_user_reacted'] = False
     return {}
 
 def message_pin(token, message_id):

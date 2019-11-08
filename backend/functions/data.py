@@ -88,6 +88,7 @@ def message_dict(message_id):
     return None
 
 #DONT USE BAD CODE
+'''
 def is_joined(token, channel_id):
     data = get_data()
     u_id = decode_token(token)
@@ -95,7 +96,7 @@ def is_joined(token, channel_id):
         if u_id in channel_dict['all_members']:
             return True
     return False
-
+'''
 # Returns true if the channel has been created already, false if no channel exists
 def is_valid_channel(channel_id):
     data = get_data()

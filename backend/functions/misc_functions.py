@@ -36,7 +36,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 	return {}
 
-def standup_start(token, channel_id):
+def standup_start(token, channel_id, length):
 
 	data = get_data()
 
@@ -49,16 +49,17 @@ def standup_start(token, channel_id):
 
 	if channelHandler['standup_active'] is False:
 		channelHandler['standup_active'] = True
-		# Change 15 down for debugging purposes if needed
-		EndTime = datetime.now() + timedelta(minutes=15)
+		EndTime = datetime.now() + timedelta(seconds=length)
 		EndTimeStr = EndTime.strftime("%H:%M:%S")
 		print("The standup has begun, and will stop at: ")
 		print(EndTimeStr)
+		timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
+		channelHandler['standup_end'] = timestamp
+		return timestamp
 	else:
 		raise ValueError(f"Standup already running on this channel ID: {channel_id}")
 
-	timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
-	return timestamp
+	
 
 def standup_send(token, channel_id, message):
 
@@ -79,3 +80,18 @@ def standup_send(token, channel_id, message):
 
 	channelHandler['standup_queue'].append(message)
 	return{}
+
+def standup_active(token, channel_id):
+	data = get_data()
+
+	if channel_dict(channel_id) is None:
+		raise ValueError(f"Channel ID: {channel_id} does not exist")
+	if is_member(decode_token(token), channel_id) is False:
+		raise AccessError(f"Authorised User: {decode_token(token)} is not a member of the channel")
+
+	channelHandler = channel_dict(channel_id)
+
+	if channelHandler['standup_active'] is False:
+		return None
+	else:
+		return {True, channelHandler['standup_end']}

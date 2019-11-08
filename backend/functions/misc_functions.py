@@ -5,9 +5,7 @@ from datetime import datetime, timedelta, timezone
 # channels that the user is part of
 def search(token, query_str):
 	data = get_data()
-
 	messages = []
-
 	for message_dict in data['messages']:
 		if query_str in message_dict['message']:
 			messages.append(message_dict)
@@ -59,7 +57,7 @@ def standup_start(token, channel_id, length):
 	else:
 		raise ValueError(f"Standup already running on this channel ID: {channel_id}")
 
-	
+
 
 def standup_send(token, channel_id, message):
 
@@ -92,6 +90,12 @@ def standup_active(token, channel_id):
 	channelHandler = channel_dict(channel_id)
 
 	if channelHandler['standup_active'] is False:
-		return None
+		return {
+			'is_active': False,
+			'time_finish': channelHandler['standup_end']
+		}
 	else:
-		return {True, channelHandler['standup_end']}
+		return {
+			'is_active': True,
+			'time_finish': channelHandler['standup_end']
+		}

@@ -293,7 +293,7 @@ def uploadPhoto():
 def standupStart():
     token = request.form.get('token')
     channel_id = int(request.form.get('channel_id'))
-    length = int((request.form.get('length'))
+    length = int(request.form.get('length'))
 
     return send(standup_start(token, channel_id, length))
 

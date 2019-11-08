@@ -2,7 +2,6 @@ from auth_register_test         import auth_register
 from channels_create_test       import channels_create
 from channel_join_test          import channel_join
 from channel_addowner_test      import channel_addowner
-from error                      import AccessError
 import datetime
 import pytest
 
@@ -37,10 +36,10 @@ def is_in_past(time_sent):
 ######################## GLOBAL VARIABLES SETUP ######################
 
 ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-owner_token = ownderDict['token']
+owner_token = ownerDict['token']
 owner_id = ownerDict['u_id']
 
-userDict = auth_register("person1@gmail.com", "password", "person", "one")
+userDict1 = auth_register("person1@gmail.com", "password", "person", "one")
 u_token = userDict1['token']
 u_id = userDict1['u_id']
 

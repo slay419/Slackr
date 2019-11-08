@@ -232,27 +232,21 @@ def user_join(u_id, channel_id):
     #validate users pemission before joining as member/owner
     if user['permission_id'] != 3:
         channel['owner_members'].append({
-            'u_id' : u_id,
-            'name_first' : user['name_first'],
-            'name_last' : user['name_last']
+            'u_id' : u_id
         })
         channel['all_members'].append({
-            'u_id' : u_id,
-            'name_first' : user['name_first'],
-            'name_last' : user['name_last']
+            'u_id' : u_id
         })
     elif user['permission_id'] == 3 and channel['is_public'] == True:
         channel['all_members'].append({
-            'u_id' : u_id,
-            'name_first' : user['name_first'],
-            'name_last' : user['name_last']
+            'u_id' : u_id
         })
     else:
         raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
 
-def generate_dict(list):
-    trans_list = []
-    for u_id in list:
+def generate_dict(dict):
+    list = []
+    for u_id in dict.values():
         user = user_dict(u_id)
         name_dict = {
             'u_id' : u_id, 
@@ -260,5 +254,5 @@ def generate_dict(list):
             'name_last' : user['name_last'], 
             'profile_img_url' : user['profile_img_url']
         }
-        trans_list.append(name_dict)
-    return trans_list
+        list.append(name_dict)
+    return list

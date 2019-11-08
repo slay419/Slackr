@@ -255,10 +255,10 @@ def generate_dict(list):
     for u_id in list:
         user = user_dict(u_id)
         name_dict = {
-            u_id, 
-            user['name_first'], 
-            user['name_last'], 
-            user['profile_img_url']
+            'u_id' : u_id, 
+            'name_first' : user['name_first'], 
+            'name_last' : user['name_last'], 
+            'profile_img_url' : user['profile_img_url']
         }
         trans_list.append(name_dict)
     return trans_list

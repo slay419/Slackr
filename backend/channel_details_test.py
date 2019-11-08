@@ -18,8 +18,8 @@ def test_channel_details_1():
 
     assert(channel_details(token1, channel_id1) == {
         'name' : 'someChannel',
-        'owner_members' : [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin'}],
-        'all_members' :  [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin'}]
+        'owner_members' : [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin', 'profile_img_url' : None}],
+        'all_members' :  [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin', 'profile_img_url' : None}]
     })
 
 #user invites someone then views details of channel he created
@@ -40,8 +40,8 @@ def test_channel_details_2():
 
     assert(channel_details(token1, channel_id1) == {
         'name' : 'someChannel',
-        'owner_members' : [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin'}],
-        'all_members' :  [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin'}, {'u_id' : u_id2, 'name_first' : 'Peter' , 'name_last' : 'Steven'}]
+        'owner_members' : [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin', 'profile_img_url' : None}],
+        'all_members' :  [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin', 'profile_img_url' : None}, {'u_id' : u_id2, 'name_first' : 'Peter' , 'name_last' : 'Steven', 'profile_img_url' : None}]
     })
 
 #user invites someone then invitee views channel just joined
@@ -63,8 +63,8 @@ def test_channel_details_3():
 
     assert(channel_details(token2, channel_id1) == {
         'name' : 'someChannel',
-        'owner_members' : [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin'}],
-        'all_members' :  [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin'}, {'u_id' : u_id2, 'name_first' : 'Peter' , 'name_last' : 'Steven'}]
+        'owner_members' : [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin', 'profile_img_url' : None}],
+        'all_members' :  [{'u_id' : u_id1, 'name_first' : 'Yasin' , 'name_last' : 'Kevin', 'profile_img_url' : None}, {'u_id' : u_id2, 'name_first' : 'Peter' , 'name_last' : 'Steven', 'profile_img_url' : None}]
     })
 
 #user invites someone to his channel. Owner then levaes. Invitee views.
@@ -88,7 +88,7 @@ def test_channel_details_4():
     assert(channel_details(token2, channel_id1) == {
         'name' : 'someChannel',
         'owner_members' : [],
-        'all_members' :  [{'u_id' : u_id2, 'name_first' : 'Peter' , 'name_last' : 'Steven'}]
+        'all_members' :  [{'u_id' : u_id2, 'name_first' : 'Peter' , 'name_last' : 'Steven', 'profile_img_url' : None}]
     })
 
 

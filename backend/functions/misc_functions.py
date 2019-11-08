@@ -89,13 +89,18 @@ def standup_active(token, channel_id):
 
 	channelHandler = channel_dict(channel_id)
 
+	NowTime = datetime.now()
+	NowTimeStr = NowTime.strftime("%H:%M:%S")
+	if NowTime < channelHandlerp['standup_end']
 	if channelHandler['standup_active'] is False:
+		channelHandler['standup_active'] = True
 		return {
-			'is_active': False,
+			'is_active': True,
 			'time_finish': channelHandler['standup_end']
 		}
 	else:
+		channelHandler['standup_active'] = False
 		return {
-			'is_active': True,
+			'is_active': False,
 			'time_finish': channelHandler['standup_end']
 		}

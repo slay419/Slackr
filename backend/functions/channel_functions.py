@@ -53,13 +53,9 @@ def channels_create(token, name, is_public):
         'name': name,
         'owner_members': [{
             'u_id': owner_id,
-            'name_first': get_first_name(owner_id),
-            'name_last': get_last_name(owner_id)
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': get_first_name(owner_id),
-            'name_last': get_last_name(owner_id)
         }],
         'is_public': is_public,
         'messages': [],
@@ -144,8 +140,6 @@ def channel_addowner(token, channel_id, u_id):
     # append user to list of owners
     channel['owner_members'].append({
         'u_id' : u_id,
-        'name_first' : name_first,
-        'name_last' : name_last
     })
 
     return {}
@@ -199,7 +193,7 @@ def channel_details(token, channel_id):
         raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
 
     #transform list into dictionary with relevant information for output
-    owner_details = generate_dict(channel['owner_members'])   
+    owner_details = generate_dict(channel['owner_members'])
     all_details = generate_dict(channel['all_members'])
 
     details = {
@@ -210,7 +204,7 @@ def channel_details(token, channel_id):
     return details
 
 def get_user_name(u_id):
-    
+
     data = get_data()
     for user in data['users']:
         if u_id == user['u_id']:
@@ -244,15 +238,27 @@ def user_join(u_id, channel_id):
     else:
         raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
 
-def generate_dict(dict):
+def generate_dict(member_list):
     list = []
-    for u_id in dict.values():
-        user = user_dict(u_id)
+
+    for dict in member_list:
+        user = user_dict(dict['u_id'])      # extract u_id from list of dictionaries
         name_dict = {
-            'u_id' : u_id, 
-            'name_first' : user['name_first'], 
-            'name_last' : user['name_last'], 
+            'u_id' : user['u_id'],
+            'name_first' : user['name_first'],
+            'name_last' : user['name_last'],
             'profile_img_url' : user['profile_img_url']
         }
         list.append(name_dict)
+    '''
+    for u_id in dict.values():
+        user = user_dict(u_id)
+        name_dict = {
+            'u_id' : u_id,
+            'name_first' : user['name_first'],
+            'name_last' : user['name_last'],
+            'profile_img_url' : user['profile_img_url']
+        }
+        list.append(name_dict)
+    '''
     return list

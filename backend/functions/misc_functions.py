@@ -53,7 +53,7 @@ def standup_start(token, channel_id, length):
 		print(EndTimeStr)
 		timestamp = EndTime.replace(tzinfo=timezone.utc).timestamp()
 		channelHandler['standup_end'] = timestamp
-		return timestamp
+		return {'time_finish': timestamp}
 	else:
 		raise ValueError(f"Standup already running on this channel ID: {channel_id}")
 

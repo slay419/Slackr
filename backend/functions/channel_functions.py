@@ -209,6 +209,7 @@ def channel_details(token, channel_id):
     return details
 
 def get_user_name(u_id):
+    
     data = get_data()
     for user in data['users']:
         if u_id == user['u_id']:

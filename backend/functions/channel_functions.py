@@ -174,37 +174,60 @@ def channel_removeowner(token, channel_id, u_id):
 
 def channel_invite(token, channel_id, u_id):
     inviter_u_id = decode_token(token)
-    user = user_dict(u_id)
-    if user == None:
-        raise ValueError(f"User: {u_id} does not exist")
+
     if u_id == inviter_u_id:
         raise ValueError(f"User: {u_id} cannot invite self")
 
-    channel = channel_dict(channel_id)
-    if channel == None:
-        raise ValueError(f"Channel ID: {channel_id} does not exist")
-
-    for member in channel['all_members']:
-        if member['u_id'] == u_id:
-            raise AccessError(f"User: {u_id} already part of channel: {channel_id}")
-
-    invitee_token = user['tokens'][0]
-    channel_join(invitee_token, channel_id)
-
+    user_join(u_id, channel_id)
     return {}
 
 
 def channel_join(token, channel_id):
     u_id = decode_token(token)
+    user_join(u_id, channel_id)
+    return {}
+
+def channel_details(token, channel_id):
+
     channel = channel_dict(channel_id)
-    user = user_dict(u_id)
-    if is_member(u_id, channel_id):
-        raise ValueError(f"User: {u_id} has already joined channel: {channel_id}")
-    if user == None:
-        raise ValueError(f"User ID: {u_id} does not exist")
-    elif  channel == None:
+    if channel == None:
         raise ValueError(f"Channel ID: {channel_id} does not exist")
 
+    u_id = decode_token(token)
+    if is_member(u_id, channel_id) == False:
+        raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
+
+    #transform list into dictionary with relevant information for output
+    owner_details = generate_dict(channel['owner_members'])   
+    all_details = generate_dict(channel['all_members'])
+
+    details = {
+        'name' : channel['name'],
+        'owner_members' : owner_details,
+        'all_members' : all_details
+    }
+    return details
+
+def get_user_name(u_id):
+    data = get_data()
+    for user in data['users']:
+        if u_id == user['u_id']:
+            return {user['name_first'], user['name_last']}
+    return None
+
+def join_user(u_id, channel_id):
+    user = user_dict(u_id)
+    channel = channel_dict(channel_id)
+
+    if user == None: #check user exists
+        raise ValueError(f"User ID: {u_id} does not exist")
+    if channel == None: #check channel exists
+        raise ValueError(f"Channel ID: {channel_id} does not exist")
+
+    if is_member(u_id, channel_id): #verify user not already part of channel
+        raise ValueError(f"User: {u_id} has already joined channel: {channel_id}")
+
+    #validate users pemission before joining as member/owner
     if user['permission_id'] != 3:
         channel['owner_members'].append({
             'u_id' : u_id,
@@ -224,27 +247,16 @@ def channel_join(token, channel_id):
         })
     else:
         raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
-    return {}
 
-def channel_details(token, channel_id):
-    channel = channel_dict(channel_id)
-    if channel == None:
-        raise ValueError(f"Channel ID: {channel_id} does not exist")
-
-    u_id = decode_token(token)
-    if is_member(u_id, channel_id) is False:
-        raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
-
-    details = {
-        'name' : channel['name'],
-        'owner_members' : channel['owner_members'],
-        'all_members' : channel['all_members']
-    }
-    return details
-
-def get_user_name(u_id):
-    data = get_data()
-    for user in data['users']:
-        if u_id == user['u_id']:
-            return {user['name_first'], user['name_last']}
-    return None
+def generate_dict(list):
+    trans_list = []
+    for u_id in list:
+        user = user_dict(u_id)
+        name_dict = {
+            u_id, 
+            user['name_first'], 
+            user['name_last'], 
+            user['profile_img_url']
+        }
+        trans_list.append(name_dict)
+    return trans_list

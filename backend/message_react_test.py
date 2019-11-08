@@ -42,7 +42,7 @@ def test_message_react_1():
     assert message_react(user1,1,1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
-            assert messagedict['reacts'][0] == 1
+            assert messagedict['reacts'][0] == {'react_id': 1, 'u_ids': [101], 'is_this_user_reacted': True}
 
 #Testing user reacting to own message with invalid react (React_id 2)
 def test_message_react_2():
@@ -60,8 +60,18 @@ def test_message_react_3():
 #Testing 2 users reacting to same message with the same reacts (1,1)
 def test_message_react_4():
     reset_messages()
+    message_send(user1,channel1,'reacting to self twice')
+    message_react(user1,1,1)
+    with pytest.raises(ValueError):
+	    message_react(user1,1,1)
+
+#Testing 2 users reacting to same message with the same reacts (1,1)
+def test_message_react_5():
+    reset_messages()
     message_send(user1,channel1,'okay try using the same react as me')
     message_send(user2,channel1,'okay here I go again')
     message_react(user1,1,1)
-    with pytest.raises(ValueError):
-	    message_react(user2,1,1)
+    message_react(user2,1,1)
+    for messagedict in data['messages']:
+        if messagedict['message_id'] == 1:
+            assert messagedict['reacts'][0] == {'react_id': 1, 'u_ids': [101, 102], 'is_this_user_reacted': True}

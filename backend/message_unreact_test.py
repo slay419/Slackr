@@ -44,7 +44,7 @@ def test_message_unreact_1():
     assert message_unreact(user1,1,1) == {}
     for messagedict in data['messages']:
         if messagedict['message_id'] == 1:
-            assert len(messagedict['reacts']) == 0
+            assert len(messagedict['reacts'][0]['u_ids']) == 0
 
 
 #Testing user unreacting to a message with invalid react_id (1,2)

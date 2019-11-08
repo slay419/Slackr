@@ -137,6 +137,7 @@ def message_react(token, message_id, react_id):
                 message['reacts'].append(dict)
             #if the dict does already exist, append the u_id to it
             else:
+                print('Hello world')
                 for react_dict in message['reacts']:
                     if react_dict['react_id'] == react_id:
                         if u_id not in react_dict['u_ids']:

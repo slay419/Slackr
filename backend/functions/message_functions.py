@@ -18,7 +18,10 @@ def message_sendlater(token, channel_id, message, time_sent):
     if(is_member(u_id, channel_id) == False):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
     dt = datetime.now()
-    timestamp = dt.replace(tzinfo=timezone.utc).timestamp()
+    timestamp = dt.timestamp()
+    print(dt)
+    print('time sent = ' + str(time_sent))
+    print('time stamp = ' + str(timestamp))
     if time_sent < timestamp:
         raise ValueError('Time sent is a time in the past')
     message_dict = {
@@ -52,7 +55,7 @@ def message_send(token, channel_id, message):
     if(is_member(u_id, channel_id) == False):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
     dt = datetime.now()
-    timestamp = dt.replace(tzinfo=timezone.utc).timestamp()
+    timestamp = dt.timestamp()
     message_dict = {
         'message_id': message_id,
         'u_id': u_id,

@@ -29,7 +29,8 @@ def channel_messages(token, channel_id, start):
         endindex = end
     for i in range(start,endindex):
         dt = datetime.now()
-        timestamp = dt.replace(tzinfo=timezone.utc).timestamp()
+        timestamp = dt.timestamp()
+        print(timestamp)
         if timestamp > newchannel['messages'][i]['time_created']:
             messages.append(newchannel['messages'][i])
     newchannel['messages'].sort(key = lambda i: i['time_created'],reverse=True)

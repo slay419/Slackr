@@ -216,7 +216,7 @@ def get_user_name(u_id):
             return {user['name_first'], user['name_last']}
     return None
 
-def join_user(u_id, channel_id):
+def user_join(u_id, channel_id):
     user = user_dict(u_id)
     channel = channel_dict(channel_id)
 

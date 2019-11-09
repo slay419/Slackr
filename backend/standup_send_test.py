@@ -36,7 +36,7 @@ def test_standup_send_1():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	with pytest.raises(ValueError):
 		standup_send(owner_token, channel_id1 + 1, "Hey Lets start the standup")
 
@@ -45,7 +45,7 @@ def test_standup_send_2():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	with pytest.raises(ValueError):
 		standup_send(owner_token, channel_id1, 1001*"A")
 
@@ -54,7 +54,7 @@ def test_standup_send_3():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	standup_send(owner_token, channel_id1, 1000*"A")
 
 # Test for a message with 999 characters
@@ -62,7 +62,7 @@ def test_standup_send_4():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	standup_send(owner_token, channel_id1, 999*"A")
 
 # Test for an empty message
@@ -70,7 +70,7 @@ def test_standup_send_5():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	with pytest.raises(ValueError):
 		standup_send(owner_token, channel_id1, "")
 
@@ -79,7 +79,7 @@ def test_standup_send_6():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	with pytest.raises(AccessError):
 		standup_send(u_token, channel_id1, "Hey Lets start the standup")
 
@@ -113,5 +113,5 @@ def test_standup_send_10():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	standup_send(owner_token, channel_id1, "Hey Lets start the standup")

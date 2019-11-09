@@ -82,18 +82,15 @@ def test_channels_create_5():
         'name': "nameOfChannelIs20xxx",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': True,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing channel name that is exactly 20 characters long and Private
@@ -116,18 +113,15 @@ def test_channels_create_6():
         'name': "nameOfChannelIs20xxx",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': False,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing channel name that is exactly 19 characters long and Public
@@ -150,18 +144,15 @@ def test_channels_create_7():
         'name': "nameOfChannelIs19xx",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': True,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing channel name that is exactly 19 characters long and Private
@@ -184,18 +175,15 @@ def test_channels_create_8():
         'name': "nameOfChannelIs19xx",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': False,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing numbers count as a character
@@ -218,18 +206,15 @@ def test_channels_create_8():
         'name': "123456789",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': True,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing too many numbers will raise an error
@@ -264,18 +249,15 @@ def test_channels_create_10():
         'name': "~!@#$%^&*()_-+=",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': False,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 def test_channels_create_11():
@@ -286,7 +268,7 @@ def test_channels_create_11():
     owner_id = ownerDict['u_id']
     ##########################    END SETUP   ########################
 
-    new_channel = channels_create(owner_token, "[]{}\|;:',./<>?", False)
+    new_channel = channels_create(owner_token, r"[]{}\|;:',./<>?", False)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert(new_channel == {
@@ -294,21 +276,18 @@ def test_channels_create_11():
     })
     assert(channel == {
         'channel_id': channel_id,
-        'name': "[]{}\|;:',./<>?",
+        'name': r"[]{}\|;:',./<>?",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': False,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing space bar counts as a character
@@ -331,18 +310,15 @@ def test_channels_create_12():
         'name': "        ",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': True,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing too many symbols will create an error
@@ -377,18 +353,15 @@ def test_channels_create_14():
         'name': "name123!@#",
         'owner_members': [{
             'u_id': decode_token(owner_token),
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'all_members': [{
             'u_id': owner_id,
-            'name_first': "owner",
-            'name_last': "privileges"
         }],
         'is_public': True,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing a long string of letters and symbols
@@ -425,18 +398,15 @@ def test_channels_create_16():
         'name': "Name123!@#",
         'owner_members': [{
             'u_id': userDict['u_id'],
-            'name_first': "person",
-            'name_last': "one"
         }],
         'all_members': [{
             'u_id': userDict['u_id'],
-            'name_first': "person",
-            'name_last': "one"
         }],
         'is_public': False,
         'messages': [],
         'standup_queue': [],
-        'standup_active': False
+        'standup_active': False,
+        'standup_end' : 0
     })
 
 # Testing long name with a different token

@@ -168,13 +168,6 @@ def channel_messages(token, channel_id, start):
 
 ######################  HELPER FUNCTIONS  ########################
 
-def get_user_name(u_id):
-    data = get_data()
-    for user in data['users']:
-        if u_id == user['u_id']:
-            return {user['name_first'], user['name_last']}
-    return None
-
 def user_join(u_id, channel_id):
     user = user_dict(u_id)
     channel = channel_dict(channel_id)

@@ -135,19 +135,8 @@ def test_message_sendlater_7():
         'is_pinned': False,
     }]
 
-# Testing sending a message with too many numbers
-def test_message_sendlater_8():
-    reset_messages()
-    reset_channels()
-    future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
-    channel_id = channel['channel_id']
-    channel_join(u_token, channel_id)
-    with pytest.raises(ValueError):
-        message_sendlater(u_token, channel_id, 1000 * "12345", future_time)
-
 # Testing sending a message with various symbols should not raise an error
-def test_message_sendlater_9():
+def test_message_sendlater_8():
     reset_messages()
     reset_channels()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
@@ -168,7 +157,7 @@ def test_message_sendlater_9():
     }]
 
 # Testing sending a message with too many symbols
-def test_message_sendlater_8():
+def test_message_sendlater_9():
     reset_messages()
     reset_channels()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
@@ -179,7 +168,7 @@ def test_message_sendlater_8():
         message_sendlater(u_token, channel_id, 1000 * "!@#$%", future_time)
 
 # Testing sending a message immediately still raises error since it's not in future
-def test_message_sendlater_9():
+def test_message_sendlater_10():
     reset_messages()
     reset_channels()
     now_time = datetime.datetime.now().timestamp()
@@ -190,7 +179,7 @@ def test_message_sendlater_9():
         message_sendlater(u_token, channel_id, "Message", now_time)
 
 # Testing sending a message a year in the past
-def test_message_sendlater_10():
+def test_message_sendlater_11():
     reset_messages()
     reset_channels()
     past_time = datetime.datetime(2018, 1, 1).timestamp()
@@ -199,17 +188,6 @@ def test_message_sendlater_10():
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
         message_sendlater(u_token, channel_id, "Message", past_time)
-
-# Testing sending a message with accuracy to up to a second
-def test_message_sendlater_11():
-    reset_messages()
-    reset_channels()
-    accurate_time = datetime.datetime(2018, 12, 25, 1, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
-    channel_id = channel['channel_id']
-    channel_join(u_token, channel_id)
-    with pytest.raises(ValueError):
-        message_sendlater(u_token, channel_id, "Message", accurate_time)
 
 # Testing sending a message one second into the past
 def test_message_sendlater_12():

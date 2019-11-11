@@ -80,7 +80,18 @@ def test_message_sendlater_5():
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
-    message_sendlater(u_token, channel_id, 1000 * "a", future_time)
+    assert message_sendlater(u_token, channel_id, 1000 * "a", future_time) == {
+        'message_id': 1
+    }
+    assert get_data()['messages'] == [{
+        'message_id': 1,
+        'u_id': u_id,
+        'message': 1000 * "a",
+        'time_created': future_time,
+        'is_unread': True,
+        'reacts': [],
+        'is_pinned': False,
+    }]
 
 # Testing sending a message less than 1000 characters long
 def test_message_sendlater_6():
@@ -90,7 +101,18 @@ def test_message_sendlater_6():
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
-    message_sendlater(u_token, channel_id, 999 * "a", future_time)
+    assert message_sendlater(u_token, channel_id, 999 * "a", future_time) == {
+        'message_id': 1
+    }
+    assert get_data()['messages'] == [{
+        'message_id': 1,
+        'u_id': u_id,
+        'message': 999 * "a",
+        'time_created': future_time,
+        'is_unread': True,
+        'reacts': [],
+        'is_pinned': False,
+    }]
 
 # Testing sending a message with numbers should not raise an error
 def test_message_sendlater_7():
@@ -100,7 +122,18 @@ def test_message_sendlater_7():
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
-    message_sendlater(u_token, channel_id, "1234567890", future_time)
+    assert message_sendlater(u_token, channel_id, "1234567890", future_time) == {
+        'message_id': 1
+    }
+    assert get_data()['messages'] == [{
+        'message_id': 1,
+        'u_id': u_id,
+        'message': "1234567890",
+        'time_created': future_time,
+        'is_unread': True,
+        'reacts': [],
+        'is_pinned': False,
+    }]
 
 # Testing sending a message with too many numbers
 def test_message_sendlater_8():
@@ -121,7 +154,18 @@ def test_message_sendlater_9():
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
-    message_sendlater(u_token, channel_id, "~!@#$%^&*()_+[]{}\|;:'',.<>/?", future_time)
+    assert message_sendlater(u_token, channel_id, r"~!@#$%^&*()_+[]{}\|;:'',.<>/?", future_time) == {
+        'message_id': 1
+    }
+    assert get_data()['messages'] == [{
+        'message_id': 1,
+        'u_id': u_id,
+        'message': r"~!@#$%^&*()_+[]{}\|;:'',.<>/?",
+        'time_created': future_time,
+        'is_unread': True,
+        'reacts': [],
+        'is_pinned': False,
+    }]
 
 # Testing sending a message with too many symbols
 def test_message_sendlater_8():

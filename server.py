@@ -12,6 +12,7 @@ import re
 import copy
 import time
 
+from backend.functions.exceptions import *
 from backend.functions.data import *
 from backend.functions.auth_functions import *
 from backend.functions.channel_functions import *

@@ -39,8 +39,6 @@ def channel_messages(token, channel_id, start):
     #given start return end which is start + 50 or -1 if theres no more messages
 
 def channels_create(token, name, is_public):
-    #if not is_logged_in(token):
-    #    return f"User: {decode_token(token)} not logged in"
     if len(name) > 20:
         raise ValueError("Name of channel is longer than 20 characters")
     data = get_data()
@@ -70,8 +68,6 @@ def channels_create(token, name, is_public):
 
 # Provide a list of all channels (and their associated details)
 def channels_listall(token):
-    #if not is_logged_in(token):
-    #    return f"User: {decode_token(token)} is not logged in"
     data = get_data()
     channels_list = []
     for channels in data['channels']:
@@ -85,9 +81,6 @@ def channels_listall(token):
 
 # Return a list of channels the user has already joined or is a owner of
 def channels_list(token):
-    #if not is_logged_in(token):
-    #    return f"User: {decode_token(token)} is not logged in"
-
     data = get_data()
     u_id = decode_token(token)
     channels_list = []
@@ -101,8 +94,6 @@ def channels_list(token):
 
 
 def channel_leave(token, channel_id):
-    #if not is_logged_in(token):
-    #    return f"User: {decode_token(token)} is not logged in"
     if not is_member(decode_token(token), channel_id):
         raise ValueError(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
     if not is_valid_channel(channel_id):
@@ -121,10 +112,6 @@ def channel_leave(token, channel_id):
     return {}
 
 def channel_addowner(token, channel_id, u_id):
-    #if not is_logged_in(token):
-    #    raise ValueError(f"User: {decode_token(token)} is not logged in")
-    #if not is_logged_in(generate_token(u_id)):
-    #    return ff"User: {u_id} is not logged in"
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
     if is_owner(u_id, channel_id):
@@ -135,8 +122,6 @@ def channel_addowner(token, channel_id, u_id):
         raise ValueError(f"User {u_id} has not joined channel: {channel_id} yet")
 
     channel = channel_dict(channel_id)
-    name_first = get_first_name(u_id)
-    name_last = get_last_name(u_id)
     # append user to list of owners
     channel['owner_members'].append({
         'u_id' : u_id,
@@ -146,10 +131,6 @@ def channel_addowner(token, channel_id, u_id):
 
 
 def channel_removeowner(token, channel_id, u_id):
-    #if not is_logged_in(token):
-    #    return f"User: {decode_token(token)} is not logged in"
-    #if not is_logged_in(generate_token(u_id)):
-    #    return ff"User: {u_id} is not logged in"
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
     if not is_owner(u_id, channel_id):
@@ -158,7 +139,6 @@ def channel_removeowner(token, channel_id, u_id):
         raise AccessError(f"User: {decode_token(token)} does not have privileges to demote others")
 
     channel = channel_dict(channel_id)
-
     # remove user from list of owners
     for member in channel['owner_members']:
         if u_id == member['u_id']:
@@ -183,7 +163,6 @@ def channel_join(token, channel_id):
     return {}
 
 def channel_details(token, channel_id):
-
     channel = channel_dict(channel_id)
     if channel == None:
         raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -202,6 +181,9 @@ def channel_details(token, channel_id):
         'all_members' : all_details
     }
     return details
+
+
+######################  HELPER FUNCTIONS  ########################
 
 def get_user_name(u_id):
 
@@ -240,7 +222,6 @@ def user_join(u_id, channel_id):
 
 def generate_dict(member_list):
     list = []
-
     for dict in member_list:
         user = user_dict(dict['u_id'])      # extract u_id from list of dictionaries
         name_dict = {
@@ -250,15 +231,4 @@ def generate_dict(member_list):
             'profile_img_url' : user['profile_img_url']
         }
         list.append(name_dict)
-    '''
-    for u_id in dict.values():
-        user = user_dict(u_id)
-        name_dict = {
-            'u_id' : u_id,
-            'name_first' : user['name_first'],
-            'name_last' : user['name_last'],
-            'profile_img_url' : user['profile_img_url']
-        }
-        list.append(name_dict)
-    '''
     return list

@@ -56,10 +56,10 @@ def channels_list(token):
 
 # Remove user data from both owner and member lists
 def channel_leave(token, channel_id):
-    if not is_member(decode_token(token), channel_id):
-        raise ValueError(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
+    if not is_member(decode_token(token), channel_id):
+        raise ValueError(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
 
     u_id = decode_token(token)
     remove_from_list(u_id, channel_id, 'owner_members')

@@ -13,64 +13,41 @@ The channel ID will increase in number if created late
 e.g. channel_id1 created first will be lower than the channel_id2 created last
 '''
 
+######################## GLOBAL VARIABLES SETUP ######################
+reset_data()
+ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+owner_token = ownerDict['token']
+owner_id = ownerDict['u_id']
+##########################    END SETUP   ########################
+
 
 # Testing channel name that is exactly 21 characters long and is public
 def test_channels_create_1():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "nameOfChannelIs21Long", True)
 
 # Testing channel name that is exactly 21 characters long and isprivate
 def test_channels_create_2():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "nameOfChannelIs21Long", False)
 
 # Testing channel name that is significantly longer than 20 and public
 def test_channels_create_3():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "nameOfChannelThatIsDefinitelyTooLong", True)
 
 # Testing channel name that is significantly longer than 20 and private
 def test_channels_create_4():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "nameOfChannelThatIsDefinitelyTooLong", False)
 
 # Testing channel name that is exactly 20 characters long and Public
 def test_channels_create_5():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     new_channel = channels_create(owner_token, "nameOfChannelIs20xxx", True)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -95,13 +72,7 @@ def test_channels_create_5():
 
 # Testing channel name that is exactly 20 characters long and Private
 def test_channels_create_6():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     new_channel = channels_create(owner_token, "nameOfChannelIs20xxx", False)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -126,13 +97,7 @@ def test_channels_create_6():
 
 # Testing channel name that is exactly 19 characters long and Public
 def test_channels_create_7():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     new_channel = channels_create(owner_token, "nameOfChannelIs19xx", True)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -157,13 +122,7 @@ def test_channels_create_7():
 
 # Testing channel name that is exactly 19 characters long and Private
 def test_channels_create_8():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+    reset_channels()
     new_channel = channels_create(owner_token, "nameOfChannelIs19xx", False)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -187,14 +146,8 @@ def test_channels_create_8():
     })
 
 # Testing numbers count as a character
-def test_channels_create_8():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_9():
+    reset_channels()
     new_channel = channels_create(owner_token, "123456789", True)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -218,26 +171,14 @@ def test_channels_create_8():
     })
 
 # Testing too many numbers will raise an error
-def test_channels_create_9():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_10():
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "1234567890123456789012345", True)
 
 #T Testing symbols will count as a character
-def test_channels_create_10():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_11():
+    reset_channels()
     new_channel = channels_create(owner_token, "~!@#$%^&*()_-+=", False)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -260,14 +201,8 @@ def test_channels_create_10():
         'standup_end' : 0
     })
 
-def test_channels_create_11():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_12():
+    reset_channels()
     new_channel = channels_create(owner_token, r"[]{}\|;:',./<>?", False)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -291,14 +226,8 @@ def test_channels_create_11():
     })
 
 # Testing space bar counts as a character
-def test_channels_create_12():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_13():
+    reset_channels()
     new_channel = channels_create(owner_token, "        ", True)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -322,26 +251,14 @@ def test_channels_create_12():
     })
 
 # Testing too many symbols will create an error
-def test_channels_create_13():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_14():
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", False)
 
 # Testing a mix of letters and symbols
-def test_channels_create_14():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_15():
+    reset_channels()
     new_channel = channels_create(owner_token, "name123!@#", True)
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
@@ -365,27 +282,15 @@ def test_channels_create_14():
     })
 
 # Testing a long string of letters and symbols
-def test_channels_create_15():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_16():
+    reset_channels()
     with pytest.raises(ValueError):
         new_channel = channels_create(owner_token, "VeryLongName123456!@#$%^@!#", True)
 
 # Testing expected previous behaviour with a different token
-def test_channels_create_16():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
+def test_channels_create_17():
+    reset_channels()
+    userDict = auth_register("person_one@gmail.com", "password", "person", "one")
     different_token = userDict['token']
     new_channel = channels_create(different_token, "Name123!@#", False)
     channel_id = new_channel['channel_id']
@@ -410,28 +315,16 @@ def test_channels_create_16():
     })
 
 # Testing long name with a different token
-def test_channels_create_17():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
-    userDict = auth_register("person2@gmail.com", "password", "person", "one")
+def test_channels_create_18():
+    reset_channels()
+    userDict = auth_register("person_two@gmail.com", "password", "person", "one")
     different_token = userDict['token']
     with pytest.raises(ValueError):
         new_channel = channels_create(different_token, "VeryLongName123456!@#$^$", False)
 
 # Testing creating multiple public channels - channel_id should be increasing order
-def test_channels_create_18():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_19():
+    reset_channels()
     new_channel1 = channels_create(owner_token, "Channel 1", True)
     new_channel2 = channels_create(owner_token, "Channel 2", True)
     new_channel3 = channels_create(owner_token, "Channel 3", True)
@@ -446,14 +339,8 @@ def test_channels_create_18():
     })
 
 # Testing creating multiple private channels - channel_id should be increasing order
-def test_channels_create_19():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_20():
+    reset_channels()
     new_channel1 = channels_create(owner_token, "Channel 1", False)
     new_channel2 = channels_create(owner_token, "Channel 2", False)
     new_channel3 = channels_create(owner_token, "Channel 3", False)
@@ -468,14 +355,8 @@ def test_channels_create_19():
     })
 
 # Testing creating multiple public & private channels - channel_id should be increasing order
-def test_channels_create_20():
-    ######################## GLOBAL VARIABLES SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-    ##########################    END SETUP   ########################
-
+def test_channels_create_21():
+    reset_channels()
     new_channel1 = channels_create(owner_token, "Channel 1", True)
     new_channel2 = channels_create(owner_token, "Channel 2", False)
     new_channel3 = channels_create(owner_token, "Channel 3", True)

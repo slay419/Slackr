@@ -264,7 +264,7 @@ def retrieveProf():
 
     return send(user_profile(token, u_id))
 
-@APP.route('/user/profile/uploadphoto', methods = ['POST'])
+@APP.route('/user/profiles/uploadphoto', methods = ['POST'])
 def uploadPhoto():
     token = request.form.get('token')
     img_url = str(request.form.get('img_url'))

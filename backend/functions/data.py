@@ -51,6 +51,18 @@ def decode_token(token):
     decoded = jwt.decode(token.encode('utf-8'), SECRET, algorithms=['HS256'])
     return decoded['string']
 
+#obtains channel_id from message_id
+def get_channel_id(message_id):
+    data = get_data()
+    channels = data['channels']
+    for channeldict in channels:
+        messagelist = channeldict['messages']
+        for messagedict in messagelist:
+            if messagedict['message_id'] == message_id:
+                channel_id = channeldict['channel_id']
+                return channel_id
+    return None
+                
 #generates hash for string
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -85,6 +97,21 @@ def message_dict(message_id):
     for messages in data['messages']:
         if message_id == messages['message_id']:
             return messages
+    return None
+
+#Removing message from the channel specific message dict
+def remove_channel_message_dict(message_id):
+    data = get_data()
+    channels = data['channels']
+    #Obtain the channeldict
+    for channeldict in channels:
+        #Searches every channeldicts in channel list
+        messagelist = channeldict['messages']
+        #Searches every messagedict in the messagelist of the channeldict
+        for messagedict in messagelist:
+            #Find a matching message_id and removes the messagedict from the message list
+            if messagedict['message_id'] == message_id:
+                messagelist.remove(messagedict)
     return None
 
 #DONT USE BAD CODE

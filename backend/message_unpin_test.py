@@ -55,9 +55,9 @@ def test_message_unpin_1():
     message_send(admin1, channel1, 'testing 123')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
-    for messagedict in data['messages']:
-        if messagedict['message_id'] == 1:
-            assert messagedict['is_pinned'] == False
+    message_id = 1
+    messagedict = message_dict(message_id)
+    assert messagedict['is_pinned'] == False
 
 #Testing admin pinning and unpinning message for a user
 def test_message_unpin_2():
@@ -100,9 +100,9 @@ def test_message_unpin_2():
     message_send(user1, channel1, 'could an admin pin and unpin this message, it is very important')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
-    for messagedict in data['messages']:
-        if messagedict['message_id'] == 1:
-            assert messagedict['is_pinned'] == False
+    message_id = 1
+    messagedict = message_dict(message_id)
+    assert messagedict['is_pinned'] == False
 
 #Testing admin2 unpinning a message that admin1 pinned
 def test_message_unpin_3():
@@ -278,13 +278,11 @@ def test_message_unpin_6():
     message_send(admin1, channel1, 'I wonder what happens if I unpin my own message twice')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
-    for messagedict in data['messages']:
-        if messagedict['message_id'] == 1:
-            assert messagedict['is_pinned'] == False
+    message_id = 1
+    messagedict = message_dict(message_id)
+    assert messagedict['is_pinned'] == False
     assert message_pin(admin1, 1) == {}
-    for messagedict in data['messages']:
-        if messagedict['message_id'] == 1:
-            assert messagedict['is_pinned'] == True
+    assert messagedict['is_pinned'] == True
 
 #Testing unpinning message that doesn't exist
 def test_message_unpin_7():

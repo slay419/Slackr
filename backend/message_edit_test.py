@@ -48,9 +48,9 @@ def test_message_edit_1():
 
     message_send(admin1, channel1, 'testing 123')
     assert message_edit(admin1, 1, 'new message') == {}
-    for messagedict in data['messages']:
-        if messagedict['message_id'] == 1:
-            assert messagedict['message'] == 'new message'
+    message_id = 1
+    messagedict = message_dict(message_id)
+    assert messagedict['message'] == 'new message'
 
 #Testing user attempting to edit other peoples messages
 def test_message_edit_2():

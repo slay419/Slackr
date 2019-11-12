@@ -1,5 +1,6 @@
 from .data import *
 from datetime import datetime, timedelta, timezone
+from .message_functions import message_send
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
@@ -89,6 +90,7 @@ def standup_send(token, channel_id, message):
 	FullMessage += str(get_first_name(u_id))
 	FullMessage += ": "
 	FullMessage += str(message)
+	FullMessage += "\n"
 
 	channelHandler['standup_queue'].append(FullMessage)
 	return{}
@@ -116,9 +118,8 @@ def standup_active(token, channel_id):
 		# If the standup just finishes, return a list of messages
 		if channelHandler['standup_active'] == True:
 			newMessage = ""
-			for message in channelHandler['standup_queue']:
-				newMessage += 
-
+			for messageSummary in channelHandler['standup_queue']:
+				newMessage += messageSummary
 			message_send(token, channel_id, newMessage)
 		# Set the flag to false and return
 		channelHandler['standup_active'] = False

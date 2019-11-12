@@ -34,7 +34,7 @@ def channel_messages(token, channel_id, start):
         if timestamp > newchannel['messages'][i]['time_created']:
             messages.append(newchannel['messages'][i])
     newchannel['messages'].sort(key = lambda i: i['time_created'],reverse=True)
-    return {'messages': messages, 'start': start, 'end': end,}
+    return {'messages': messages, 'start': start, 'end': end}
 
     #given start return end which is start + 50 or -1 if theres no more messages
 

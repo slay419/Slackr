@@ -46,33 +46,33 @@ def test_search_1():
 	message_id1 = message1['message_id']
 	floor_message_time(message_id1)
 	now = datetime.now()
-	m1_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m1_time = math.floor(now.replace().timestamp())
 
 	message2 = message_send(owner_token, channel_id, "message12")
 	message_id2 = message2['message_id']
 	floor_message_time(message_id2)
 	now = datetime.now()
-	m2_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m2_time = math.floor(now.replace().timestamp())
 
 	message3 = message_send(owner_token, channel_id, "message3")
 	message_id3 = message3['message_id']
 	floor_message_time(message_id3)
 	now = datetime.now()
-	m3_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m3_time = math.floor(now.replace().timestamp())
 
 	message4 = message_send(owner_token, channel_id, "message4")
 	message_id4 = message4['message_id']
 	floor_message_time(message_id4)
 	now = datetime.now()
-	m4_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m4_time = math.floor(now.replace().timestamp())
 
 	message5 = message_send(u_token, channel_id2, "message32")
 	message_id5 = message5['message_id']
 	floor_message_time(message_id5)
 	now = datetime.now()
-	m5_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m5_time = math.floor(now.replace().timestamp())
 	##########################    END SETUP   ########################
-	
+
 	assert (search(owner_token,"message12") ==  {
 		'messages': [
 			{
@@ -112,33 +112,33 @@ def test_search_2():
 	message_id1 = message1['message_id']
 	floor_message_time(message_id1)
 	now = datetime.now()
-	m1_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m1_time = math.floor(now.replace().timestamp())
 
 	message2 = message_send(owner_token, channel_id, "message12")
 	message_id2 = message2['message_id']
 	floor_message_time(message_id2)
 	now = datetime.now()
-	m2_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m2_time = math.floor(now.replace().timestamp())
 
 	message3 = message_send(owner_token, channel_id, "message3")
 	message_id3 = message3['message_id']
 	floor_message_time(message_id3)
 	now = datetime.now()
-	m3_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m3_time = math.floor(now.replace().timestamp())
 
 	message4 = message_send(owner_token, channel_id, "message4")
 	message_id4 = message4['message_id']
 	floor_message_time(message_id4)
 	now = datetime.now()
-	m4_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m4_time = math.floor(now.replace().timestamp())
 
 	message5 = message_send(u_token, channel_id2, "message32")
 	message_id5 = message5['message_id']
 	floor_message_time(message_id5)
 	now = datetime.now()
-	m5_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m5_time = math.floor(now.replace().timestamp())
 	##########################    END SETUP   ########################
-	
+
 	assert (search(owner_token, "message") ==  {
 		'messages': [
 			{
@@ -214,33 +214,33 @@ def test_search_3():
 	message_id1 = message1['message_id']
 	floor_message_time(message_id1)
 	now = datetime.now()
-	m1_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m1_time = math.floor(now.replace().timestamp())
 
 	message2 = message_send(owner_token, channel_id, "message12")
 	message_id2 = message2['message_id']
 	floor_message_time(message_id2)
 	now = datetime.now()
-	m2_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m2_time = math.floor(now.replace().timestamp())
 
 	message3 = message_send(owner_token, channel_id, "message3")
 	message_id3 = message3['message_id']
 	floor_message_time(message_id3)
 	now = datetime.now()
-	m3_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m3_time = math.floor(now.replace().timestamp())
 
 	message4 = message_send(owner_token, channel_id, "message4")
 	message_id4 = message4['message_id']
 	floor_message_time(message_id4)
 	now = datetime.now()
-	m4_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m4_time = math.floor(now.replace().timestamp())
 
 	message5 = message_send(u_token, channel_id2, "message32")
 	message_id5 = message5['message_id']
 	floor_message_time(message_id5)
 	now = datetime.now()
-	m5_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m5_time = math.floor(now.replace().timestamp())
 	##########################    END SETUP   ########################
-	
+
 	assert (search(owner_token, "message1") ==  {
 		'messages': [
 			{
@@ -289,33 +289,33 @@ def test_search_4():
 	message_id1 = message1['message_id']
 	floor_message_time(message_id1)
 	now = datetime.now()
-	m1_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m1_time = math.floor(now.replace().timestamp())
 
 	message2 = message_send(owner_token, channel_id, "message12")
 	message_id2 = message2['message_id']
 	floor_message_time(message_id2)
 	now = datetime.now()
-	m2_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m2_time = math.floor(now.replace().timestamp())
 
 	message3 = message_send(owner_token, channel_id, "message3")
 	message_id3 = message3['message_id']
 	floor_message_time(message_id3)
 	now = datetime.now()
-	m3_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m3_time = math.floor(now.replace().timestamp())
 
 	message4 = message_send(owner_token, channel_id, "message4")
 	message_id4 = message4['message_id']
 	floor_message_time(message_id4)
 	now = datetime.now()
-	m4_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m4_time = math.floor(now.replace().timestamp())
 
 	message5 = message_send(u_token, channel_id2, "message32")
 	message_id5 = message5['message_id']
 	floor_message_time(message_id5)
 	now = datetime.now()
-	m5_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m5_time = math.floor(now.replace().timestamp())
 	##########################    END SETUP   ########################
-	
+
 	assert (search(owner_token,"no match") ==  {
 		'messages': []
 	})
@@ -345,33 +345,33 @@ def test_search_5():
 	message_id1 = message1['message_id']
 	floor_message_time(message_id1)
 	now = datetime.now()
-	m1_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m1_time = math.floor(now.replace().timestamp())
 
 	message2 = message_send(owner_token, channel_id, "message12")
 	message_id2 = message2['message_id']
 	floor_message_time(message_id2)
 	now = datetime.now()
-	m2_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m2_time = math.floor(now.replace().timestamp())
 
 	message3 = message_send(owner_token, channel_id, "message3")
 	message_id3 = message3['message_id']
 	floor_message_time(message_id3)
 	now = datetime.now()
-	m3_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m3_time = math.floor(now.replace().timestamp())
 
 	message4 = message_send(owner_token, channel_id, "message4")
 	message_id4 = message4['message_id']
 	floor_message_time(message_id4)
 	now = datetime.now()
-	m4_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m4_time = math.floor(now.replace().timestamp())
 
 	message5 = message_send(u_token, channel_id2, "message32")
 	message_id5 = message5['message_id']
 	floor_message_time(message_id5)
 	now = datetime.now()
-	m5_time = math.floor(now.replace(tzinfo=timezone.utc).timestamp())
+	m5_time = math.floor(now.replace().timestamp())
 	##########################    END SETUP   ########################
-	
+
 	assert (search(owner_token,"") ==  {
 		'messages': [
 			{

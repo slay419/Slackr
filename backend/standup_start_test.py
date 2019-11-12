@@ -34,7 +34,7 @@ def test_standup_start_1():
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(ValueError):
-		standup_start(owner_token, channel_id1 + 1)
+		standup_start(owner_token, channel_id1 + 1, 10)
 
 # Testing a channel id that the user is not part
 def test_standup_start_2():
@@ -42,7 +42,7 @@ def test_standup_start_2():
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(AccessError):
-		standup_start(u_token, channel_id1)
+		standup_start(u_token, channel_id1, 10)
 
 # Testing a channel id that the user is not part
 def test_standup_start_3():
@@ -50,7 +50,7 @@ def test_standup_start_3():
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(AccessError):
-		standup_start(u_token, channel_id1)
+		standup_start(u_token, channel_id1, 10)
 
 # Testing a channel id that the user is part of
 def test_standup_start_4():
@@ -58,13 +58,13 @@ def test_standup_start_4():
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	endTime = datetime.now() + timedelta(minutes=15)
-	assert(standup_start(owner_token, channel_id1))
+	assert(standup_start(owner_token, channel_id1, 10))
 
 # Testing starting a standup that is already runnign
 def test_standup_start_5():
 	reset_channels()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
-	standup_start(owner_token, channel_id1)
+	standup_start(owner_token, channel_id1, 10)
 	with pytest.raises(ValueError):
-		standup_start(owner_token, channel_id1)
+		standup_start(owner_token, channel_id1, 10)

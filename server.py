@@ -12,6 +12,7 @@ import re
 import copy
 import time
 
+from backend.functions.exceptions import *
 from backend.functions.data import *
 from backend.functions.auth_functions import *
 from backend.functions.channel_functions import *
@@ -263,7 +264,7 @@ def retrieveProf():
 
     return send(user_profile(token, u_id))
 
-@APP.route('/user/profile/uploadphoto', methods = ['POST'])
+@APP.route('/user/profiles/uploadphoto', methods = ['POST'])
 def uploadPhoto():
     token = request.form.get('token')
     img_url = str(request.form.get('img_url'))

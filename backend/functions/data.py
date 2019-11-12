@@ -133,6 +133,13 @@ def is_member(u_id, channel_id):
             return True
     return False
 
+def get_user_name(u_id):
+    data = get_data()
+    for user in data['users']:
+        if u_id == user['u_id']:
+            return {user['name_first'], user['name_last']}
+    return None
+
 def get_first_name(u_id):
     user = user_dict(u_id)
     for user in data['users']:

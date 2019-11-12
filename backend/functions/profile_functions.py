@@ -2,16 +2,17 @@ from .data import *
 
 def user_profile_setemail(token, email):
 	data = get_data()
+	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
-
+	# Raise errors if the user and email are not valid
 	if userData == None:
 		raise ValueError(f"User ID: {u_id} does not exist")
 	if valid_email(email) is False:
 		raise ValueError(f"Email: {email} entered is not a valid email")
 	if is_email_free(email) == 0:
 		raise ValueError(f"Email: {email} is already in use")
-	# At this point, the email is valid and untaken
+	# At this point, the email is valid and untaken, so replace the old one
 
 	userData['email'] = email
 	print("Successfully updated user's email")
@@ -21,16 +22,17 @@ def user_profile_setemail(token, email):
 
 def user_profile_sethandle(token, handle_str):
 	data = get_data()
+	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
-
+	# Raise errors if the user and handle are not valid
 	if userData == None:
 		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(handle_str) > 20:
 		raise ValueError(f"Handle: {handle_str} is larger than 20 characters")
 	if len(handle_str) < 1:
 		raise ValueError("Handle cannot be empty")
-
+	# At this point, the handle is valid, so replace the old one
 	userData['handle'] = handle_str
 	print("Successfully updated user's handle")
 
@@ -38,9 +40,10 @@ def user_profile_sethandle(token, handle_str):
 
 def user_profile_setname(token, name_first, name_last):
 	data = get_data()
+	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
-
+	# Raise errors if the user and names are not valid
 	if userData == None:
 		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(name_first) > 50:
@@ -51,7 +54,7 @@ def user_profile_setname(token, name_first, name_last):
 		raise ValueError(f"Last name: {name_last} is longer than 50 characters")
 	if len(name_last) < 1:
 		raise ValueError(f"Last name: {name_last} cannot be empty")
-
+	# At this point, the names are valid, so replace the old one
 	userData['name_first'] = name_first
 	userData['name_last'] = name_last
 	print("Successfully updated user's first and last name")
@@ -60,18 +63,21 @@ def user_profile_setname(token, name_first, name_last):
 
 def user_profile(token,u_id):
 	data = get_data()
+	# Using helper functions, return data
 	userData = user_dict(u_id)
+	# Raise errors if the user and names are not valid
 	if userData == None:
 		raise ValueError(f"User ID: {u_id} does not exist")
-
+	# Return the user dictionary of information
 	new_dict = {
         'email': userData['email'],
         'name_first': userData['name_first'],
         'name_last': userData['name_last'],
         'handle_str': userData["handle"]
     }
+	# Returns dict containing {email,name_first,name_last,handle_str}
 	print("Successfully found and located user's information")
-	return new_dict	#returns dict containing {email,name_first,name_last,handle_str}
+	return new_dict	
 
 def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	# Append img_url to user data
@@ -83,7 +89,7 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	userCounter += 1
 	urllib.request.urlretrieve(img_url,filePath)
 	print("Successfully saved the user image")
-	# Crop picture
+	# Crop picture and save it
 	data = get_data()
 	imageObject = Image.open(filePath)
 	cropped = imageObject.crop((x_start,y_start,x_end,y_end))
@@ -95,7 +101,7 @@ def users_listall(token):
 	data = get_data()
 	user_list = []
 	for user_dict in data['users']:
-		# Extract the relevant info into a dictionary and append to a list
+		# Extract the relevant info into a dictionary and append to a list to return
 		dict = {
 			'u_id': user_dict['u_id'],
 			'email': user_dict['email'],

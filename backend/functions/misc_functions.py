@@ -114,7 +114,7 @@ def standup_active(token, channel_id):
 		}
 	else:
 		# If the standup just finishes, return a list of messages
-		if CompareTime == channelHandler['standup_end']:
+		if channelHandler['standup_active'] == True:
 			newMessage = ""
 			for message in channelHandler['standup_queue']:
 				newMessage += 

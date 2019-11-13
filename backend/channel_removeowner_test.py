@@ -19,21 +19,23 @@ Owners are the first person to create the channel
 Owner privileges cover ONLY their channel created
 '''
 
-######################## GLOBAL VARIABLES SETUP ######################
-reset_data()
-# Assume owner_id is an admin since he is the first person to sign up
-ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-owner_token = ownerDict['token']
-owner_id = ownerDict['u_id']
+######################## BEGIN SETUP ######################
+def setup():
+    reset_data()
+    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = ownerDict['token']
+    owner_id = ownerDict['u_id']
 
-userDict = auth_register("person1@gmail.com", "password", "person", "one")
-u_token = userDict['token']
-u_id = userDict['u_id']
+    userDict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = userDict['token']
+    u_id = userDict['u_id']
+
+    return owner_token, owner_id, u_token, u_id
 ##########################    END SETUP   ########################
 
 # Testing demoting an owner from a wrong channel id
 def test_channel_removeowner_1():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -44,7 +46,7 @@ def test_channel_removeowner_1():
 
 # Testing demoting a member that has not joined the channel yet
 def test_channel_removeowner_2():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
@@ -52,7 +54,7 @@ def test_channel_removeowner_2():
 
 # Testing demoting a member in a channel they have joined
 def test_channel_removeowner_3():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -61,7 +63,7 @@ def test_channel_removeowner_3():
 
 # Testing demoting a member in a channel they have been demoted before
 def test_channel_removeowner_4():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -72,7 +74,7 @@ def test_channel_removeowner_4():
 
 # Testing a member attempting to demote himself - has no authority
 def test_channel_removeowner_5():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -81,7 +83,7 @@ def test_channel_removeowner_5():
 
 # Testing a member attempting to demote an owner
 def test_channel_removeowner_7():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -90,7 +92,7 @@ def test_channel_removeowner_7():
 
 # Testing a member attempting to demote another member - has no authority
 def test_channel_removeowner_8():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channels Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -105,7 +107,7 @@ def test_channel_removeowner_8():
 
 # Testing an owner demoting another owner under the right conditions
 def test_channel_removeowner_9():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -116,7 +118,7 @@ def test_channel_removeowner_9():
 
 # Testing an owner can be demoted multiple times after being promoted again
 def test_channel_removeowner_10():
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)

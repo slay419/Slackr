@@ -18,10 +18,9 @@ Owners are the first person to create the channel
 Owner privileges cover ONLY their channel created
 '''
 
-# Testing promoting a user to a channel that has not been created yet
-def test_channel_addowner_1():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
+
+######################## BEGIN SETUP ######################
+def setup():
     reset_data()
     ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
     owner_token = ownerDict['token']
@@ -34,29 +33,20 @@ def test_channel_addowner_1():
     memberDict = auth_register("person2@gmail.com", "password", "person", "two")
     member_token = memberDict['token']
     member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+
+    return owner_token, owner_id, u_token, u_id, member_token, member_id
+##########################    END SETUP   ########################
+
+
+# Testing promoting a user to a channel that has not been created yet
+def test_channel_addowner_1():
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     with pytest.raises(ValueError):
         channel_addowner(owner_token, 1234, u_id)
 
 # Testing promoting a user to the wrong channel id
 def test_channel_addowner_2():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -66,22 +56,7 @@ def test_channel_addowner_2():
 
 # Testing promoting a user in a channel id they have not joined yet
 def test_channel_addowner_3():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
@@ -90,22 +65,7 @@ def test_channel_addowner_3():
 
 # Testing promoting the original owner of the channel
 def test_channel_addowner_4():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
@@ -113,22 +73,7 @@ def test_channel_addowner_4():
 
 # Testing promoting a member of the channel who has already been promoted before
 def test_channel_addowner_5():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -139,22 +84,7 @@ def test_channel_addowner_5():
 # Testing promoting a member if the person conducting the action does not have authority
 # e.g. promoting themself
 def test_channel_addowner_6():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     with pytest.raises(AccessError):
@@ -163,22 +93,7 @@ def test_channel_addowner_6():
 # Testing promoting a member if the person conducting the action does not have authority
 # e.g. member promoting another member
 def test_channel_addowner_7():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -189,22 +104,7 @@ def test_channel_addowner_7():
 
 # Testing promoting a member to owner under correct conditions
 def test_channel_addowner_8():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -216,22 +116,7 @@ def test_channel_addowner_8():
 
 # Testing a user promoted by another owner can promote others too
 def test_channel_addowner_9():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -244,22 +129,7 @@ def test_channel_addowner_9():
 
 # Testing a user can be promoted to owner again after being demoted
 def test_channel_addowner_10():
-    reset_channels()
-    ########################  BEGIN SETUP ######################
-    reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
-
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
-
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_token = memberDict['token']
-    member_id = memberDict['u_id']
-    ##########################    END SETUP   ########################
-    
+    owner_token, owner_id, u_token, u_id, member_token, member_id  = setup()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)

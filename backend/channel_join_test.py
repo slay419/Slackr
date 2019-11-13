@@ -20,8 +20,8 @@ Owners are the first person to create the channel
 Owner privileges cover ONLY their channel created
 
 '''
+######################## BEGIN SETUP ######################
 def setup():
-    ######################## BEGIN SETUP ######################
     reset_data()
     ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
     owner_token = ownerDict['token']
@@ -36,21 +36,13 @@ def setup():
 
 # Testing joining a channel that hasn't been created yet
 def test_channel_join_1():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     with pytest.raises(ValueError):
         channel_join(u_token, 1234)
 
 # Testing joining a channel with a different id to one that has been created
 def test_channel_join_2():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel = channels_create(owner_token, "Name", True)
     channel_id = channel['channel_id']
     invalid_channel_id = channel_id + 1
@@ -59,12 +51,7 @@ def test_channel_join_2():
 
 # Testing joining a channel you have already joined
 def test_channel_join_3():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-    #print("##########################################")
-
     channel = channels_create(owner_token, "Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -73,11 +60,7 @@ def test_channel_join_3():
 
 # Testing joining a different channel id to a list of already created channels
 def test_channel_join_4():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)
@@ -90,11 +73,7 @@ def test_channel_join_4():
 
 # Testing joining a channel already joined in a list of channels
 def test_channel_join_5():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)
@@ -109,11 +88,7 @@ def test_channel_join_5():
 
 # Testing joining a single channel already created
 def test_channel_join_6():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel = channels_create(owner_token, "Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -125,11 +100,7 @@ def test_channel_join_6():
 
 # Testing joining only one channel out of a list of channels
 def test_channel_join_7():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)
@@ -146,11 +117,7 @@ def test_channel_join_7():
 
 # Testing joining multiple channels
 def test_channel_join_8():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)
@@ -167,11 +134,7 @@ def test_channel_join_8():
 
 # Testing joining all available channels
 def test_channel_join_9():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)
@@ -191,11 +154,7 @@ def test_channel_join_9():
 
 # Testing joining a private channel with no admin privileges
 def test_channel_join_10():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel = channels_create(owner_token, "Private Channel", False)
     channel_id = channel['channel_id']
     with pytest.raises(AccessError):
@@ -203,11 +162,7 @@ def test_channel_join_10():
 
 # Testing joining a private channel with admin privileges
 def test_channel_join_11():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel = channels_create(owner_token, "Private Channel", False)
     channel_id = channel['channel_id']
     admin_userpermission_change(owner_token, u_id, 2)
@@ -220,11 +175,7 @@ def test_channel_join_11():
 
 # Testing joining a private channel after already joined
 def test_channel_join_12():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel = channels_create(owner_token, "Private Channel", False)
     channel_id = channel['channel_id']
     c = channel_dict(channel_id)
@@ -238,11 +189,7 @@ def test_channel_join_12():
 
 # Testing joining a few different channels as an admin
 def test_channel_join_13():
-
     owner_token, owner_id, u_token, u_id = setup()
-    reset_channels()
-
-
     channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)

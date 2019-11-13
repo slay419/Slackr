@@ -1,4 +1,4 @@
-Reflection
+**Reflection**
 
 The master branch team has maintained a high level of team integration through sustained communication in group meetings and asynchronous stand-ups. Formal meetings involved a 1-2 hour discord call scheduled once a week. In these sessions members reported on their progression of the current agenda, discussed any challenges or important issues that require attention, evaluate and reflect on peer work and finally progress onto the next set of goals. 
 

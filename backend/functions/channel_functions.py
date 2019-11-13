@@ -30,7 +30,7 @@ def channels_create(token, name, is_public):
     data['channels'].append(dict)
     return {'channel_id': new_channel_id}
 
-# Provide a list of all channels (and their associated details)
+# Provide a list of all channels
 def channels_listall(token):
     data = get_data()
     channels_list = []
@@ -41,7 +41,7 @@ def channels_listall(token):
         })
     return {'channels': channels_list}
 
-# Return a list of channels the user has already joined or is a owner of
+# Provide a list of all channels the user has curently joined
 def channels_list(token):
     data = get_data()
     u_id = decode_token(token)
@@ -66,8 +66,7 @@ def channel_leave(token, channel_id):
     remove_from_list(u_id, channel_id, 'all_members')
     return {}
 
-
-
+# Add user data to a database of channel owners
 def channel_addowner(token, channel_id, u_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
@@ -86,7 +85,7 @@ def channel_addowner(token, channel_id, u_id):
 
     return {}
 
-# Remove channel owner by removeing user data from a list of owners
+# Remove user data from a database of channel owners
 def channel_removeowner(token, channel_id, u_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
@@ -98,6 +97,7 @@ def channel_removeowner(token, channel_id, u_id):
     remove_from_list(u_id, channel_id, 'owner_members')
     return {}
 
+# Invite another user to the current channel
 def channel_invite(token, channel_id, u_id):
     inviter_u_id = decode_token(token)
     if u_id == inviter_u_id:
@@ -106,12 +106,13 @@ def channel_invite(token, channel_id, u_id):
     user_join(u_id, channel_id)
     return {}
 
-
+# Join a channel by adding their user data to the channel database
 def channel_join(token, channel_id):
     u_id = decode_token(token)
     user_join(u_id, channel_id)
     return {}
 
+# Provide info on channel name, and who has joined the channel
 def channel_details(token, channel_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -130,8 +131,7 @@ def channel_details(token, channel_id):
     }
     return details
 
-#input: token, channelid, start
-#user must be a member of the channel
+# Display messages sent to the channel
 def channel_messages(token, channel_id, start):
     data = get_data()
     end = start + 50
@@ -168,6 +168,7 @@ def channel_messages(token, channel_id, start):
 
 ######################  HELPER FUNCTIONS  ########################
 
+# Add user info to the global data base
 def user_join(u_id, channel_id):
     user = user_dict(u_id)
     channel = channel_dict(channel_id)
@@ -195,6 +196,7 @@ def user_join(u_id, channel_id):
     else:
         raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
 
+# Create a dictionary from a list of members containing information on their profile
 def generate_dict(member_list):
     list = []
     for dict in member_list:
@@ -208,7 +210,7 @@ def generate_dict(member_list):
         list.append(name_dict)
     return list
 
-# Helper function used in channel leave
+# Helper function used in channel leave and removeowner
 # Loops through data list and removes users from the owner or member list
 def remove_from_list(u_id, channel_id, member_type):
     channel = channel_dict(channel_id)

@@ -1,5 +1,6 @@
 from .data import *
 from datetime import datetime, timedelta, timezone
+from .message_functions import message_send
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
@@ -68,6 +69,7 @@ def standup_start(token, channel_id, length):
 def standup_send(token, channel_id, message):
 
 	data = get_data()
+	u_id = decode_token(token)
 	# Retrieve data
 	channelHandler = channel_dict(channel_id)
 	# Check if the channel exists
@@ -79,12 +81,18 @@ def standup_send(token, channel_id, message):
 	if len(message) < 1:
 		raise ValueError ("Message cannot be empty")
 	# Check if the user is a member, and if there is a standup active
-	if is_member(decode_token(token) ,channel_id) is False:
-		raise AccessError(f"Authorised User: {decode_token(token)} is not a member of the channel")
+	if is_member(u_id ,channel_id) is False:
+		raise AccessError(f"Authorised User: {u_id} is not a member of the channel")
 	if channelHandler['standup_active'] is False:
 		raise ValueError (f"There is no standup running in channel ID: {channel_id}")
+	# Modify the message to accomodate more info
+	FullMessage = ""
+	FullMessage += str(get_first_name(u_id))
+	FullMessage += ": "
+	FullMessage += str(message)
+	FullMessage += "\n"
 
-	channelHandler['standup_queue'].append(message)
+	channelHandler['standup_queue'].append(FullMessage)
 	return{}
 
 def standup_active(token, channel_id):
@@ -108,10 +116,10 @@ def standup_active(token, channel_id):
 		}
 	else:
 		# If the standup just finishes, return a list of messages
-		if CompareTime == channelHandler['standup_end']:
+		if channelHandler['standup_active'] == True:
 			newMessage = ""
-			newMessage.join(channelHandler['standup_queue'])
-
+			for messageSummary in channelHandler['standup_queue']:
+				newMessage += messageSummary
 			message_send(token, channel_id, newMessage)
 		# Set the flag to false and return
 		channelHandler['standup_active'] = False

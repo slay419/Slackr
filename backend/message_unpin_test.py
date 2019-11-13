@@ -366,4 +366,4 @@ def test_message_unpin_8():
     message_send(admin1, channel1, 'Test message')
     message_pin(admin1, 1)
     with pytest.raises(AccessError):
-        message_pin(admin3, 1)
+        message_unpin(admin3, 1)

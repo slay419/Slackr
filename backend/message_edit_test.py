@@ -274,3 +274,39 @@ def test_message_edit_7():
     message_send(admin1, channel1, 'testing')
     with pytest.raises(AccessError):
 	    message_edit(user1, 1, 'hello world')
+
+#Testing a user editing a message to a length > 1000
+def test_message_edit_8():
+    ######################## BEGIN SETUP ######################
+    reset_data()
+    userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
+    user1 = userDict1['token']
+    user_id1 = userDict1['u_id']
+    user = user_dict(user_id1)
+    user['permission_id'] = 3
+
+    adminDict1 = auth_register('adminsteven@gmail.com','adminhello123','adminSteven','Lay')
+    admin1 = adminDict1['token']
+    admin_id1 = adminDict1['u_id']
+    admin = user_dict(admin_id1)
+    admin['permission_id'] = 2
+
+    adminDict2 = auth_register('admin2steven@gmail.com','adminhello123','adminSteven','Lay')
+    admin2 = adminDict2['token']
+    admin_id2 = adminDict2['u_id']
+    admin_2 = user_dict(admin_id2)
+    admin_2['permission_id'] = 2
+
+    channelDict1 = channels_create(admin1, 'chat1', True)
+    channel1 = channelDict1['channel_id']
+
+    channelDict2 = channels_create(user1, 'chat2', True)
+    channel2 = channelDict2['channel_id']
+
+    channel_join(user1,channel1)
+    channel_join(admin2,channel1)
+    ##########################    END SETUP   ########################
+
+    message_send(admin1, channel1, 'testing')
+    with pytest.raises(ValueError):
+	    message_edit(admin1, 1, 1001*'a')

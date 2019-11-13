@@ -17,28 +17,30 @@ All test assume that reacts exist from react_id 0 -> react_id 50
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-reset_data()
-userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
-user1 = userDict1['token']
-user_id1 = userDict1['u_id']
+def setup():
+    reset_data()
+    userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
+    user1 = userDict1['token']
+    user_id1 = userDict1['u_id']
 
-userDict2 = auth_register('steven2@gmail.com','hello123','Steven2','Lay')
-user2 = userDict2['token']
-user_id2 = userDict2['u_id']
+    userDict2 = auth_register('steven2@gmail.com','hello123','Steven2','Lay')
+    user2 = userDict2['token']
+    user_id2 = userDict2['u_id']
 
-channelDict1 = channels_create(user1, 'chat1', True)
-channel1 = channelDict1['channel_id']
+    channelDict1 = channels_create(user1, 'chat1', True)
+    channel1 = channelDict1['channel_id']
 
-channelDict2 = channels_create(user1, 'chat2', True)
-channel2 = channelDict2['channel_id']
+    channelDict2 = channels_create(user1, 'chat2', True)
+    channel2 = channelDict2['channel_id']
 
-channel_join(user2,channel1)
+    channel_join(user2,channel1)
 
+    return user1, user_id1, user2, user_id2, channel1, channel2
 ##########################    END SETUP   ########################
 
 #Testing user unreacting to a message he reacted to with same react_id (1,1)
 def test_message_unreact_1():
-    reset_messages()
+    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     message_send(user1,channel1,'Testing ureacts on slackr')
     message_react(user1,1,1)
     assert message_unreact(user1,1,1) == {}
@@ -49,7 +51,7 @@ def test_message_unreact_1():
 
 #Testing user unreacting to a message with invalid react_id (1,2)
 def test_message_unreact_2():
-    reset_messages()
+    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     message_send(user1,channel1,'Unreacting with reacts that do not exist')
     message_react(user1,1,1)
     with pytest.raises(ValueError):
@@ -57,13 +59,13 @@ def test_message_unreact_2():
 
 #Testing user unreacting to message that doesn't exist
 def test_message_unreact_3():
-    reset_messages()
+    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     with pytest.raises(ValueError):
 	    message_unreact(user1,1,1)
 
 #Testing user2 unreacting message from user1 that doesn't contain a react
 def test_message_unreact_4():
-    reset_messages()
+    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     message_send(user1,channel1,'how about if you do not have a react')
     message_send(user2,channel1,'let me try again')
     with pytest.raises(ValueError):

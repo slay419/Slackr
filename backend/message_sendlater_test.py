@@ -20,29 +20,29 @@ i.e. exactly the same as message_send()
 
 
 ######################## GLOBAL VARIABLES SETUP ######################
-reset_data()
-ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-owner_token = ownerDict['token']
-owner_id = ownerDict['u_id']
+def setup():
+    reset_data()
+    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = ownerDict['token']
+    owner_id = ownerDict['u_id']
 
-userDict1 = auth_register("person1@gmail.com", "password", "person", "one")
-u_token = userDict1['token']
-u_id = userDict1['u_id']
+    userDict1 = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = userDict1['token']
+    u_id = userDict1['u_id']
 
+    return owner_token, owner_id, u_token, u_id
 ##########################    END SETUP   ########################
 
 # Testing sending a message in a channel which hasn't been created yet
 def test_message_sendlater_1():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     with pytest.raises(ValueError):
         message_sendlater(u_token, 1234, "message", future_time)
 
 # Testing sending a message to an incorrect channel id
 def test_message_sendlater_2():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -53,8 +53,7 @@ def test_message_sendlater_2():
 
 # Testing sending a message to a channel that hasn't been joined yet
 def test_message_sendlater_3():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -63,8 +62,7 @@ def test_message_sendlater_3():
 
 # Testing sending a message that is more than 1000 characters long
 def test_message_sendlater_4():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -74,8 +72,7 @@ def test_message_sendlater_4():
 
 # Testing sending a message exactly 1000 characters long should not raise an error
 def test_message_sendlater_5():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -95,8 +92,7 @@ def test_message_sendlater_5():
 
 # Testing sending a message less than 1000 characters long
 def test_message_sendlater_6():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -116,8 +112,7 @@ def test_message_sendlater_6():
 
 # Testing sending a message with numbers should not raise an error
 def test_message_sendlater_7():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -137,8 +132,7 @@ def test_message_sendlater_7():
 
 # Testing sending a message with various symbols should not raise an error
 def test_message_sendlater_8():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -158,8 +152,7 @@ def test_message_sendlater_8():
 
 # Testing sending a message with too many symbols
 def test_message_sendlater_9():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -169,8 +162,7 @@ def test_message_sendlater_9():
 
 # Testing sending a message immediately still raises error since it's not in future
 def test_message_sendlater_10():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now_time = datetime.datetime.now().timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -180,8 +172,7 @@ def test_message_sendlater_10():
 
 # Testing sending a message a year in the past
 def test_message_sendlater_11():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     past_time = datetime.datetime(2018, 1, 1).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
@@ -191,8 +182,7 @@ def test_message_sendlater_11():
 
 # Testing sending a message one second into the past
 def test_message_sendlater_12():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_second_ago = (now - datetime.timedelta(seconds = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
@@ -203,8 +193,7 @@ def test_message_sendlater_12():
 
 # Testing sending a message an hour into the past
 def test_message_sendlater_13():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_ago = (now - datetime.timedelta(hours = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
@@ -215,8 +204,7 @@ def test_message_sendlater_13():
 
 # Testing under correct conditions - sending a test message one hour in the future
 def test_message_sendlater_14():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
@@ -237,8 +225,7 @@ def test_message_sendlater_14():
 
 # Testing sending a test message one second in the future
 def test_message_sendlater_15():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_second_later = (now + datetime.timedelta(seconds = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
@@ -259,8 +246,7 @@ def test_message_sendlater_15():
 
 # Testing sending multiple messages into the future
 def test_message_sendlater_16():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
     two_hours_later = (now + datetime.timedelta(hours = 2)).timestamp()
@@ -296,8 +282,7 @@ def test_message_sendlater_16():
 
 # Testing sending message into the future after sending one immediately
 def test_message_sendlater_17():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
@@ -322,8 +307,7 @@ def test_message_sendlater_17():
 
 # Testing sending message into the future before sending one immediately
 def test_message_sendlater_18():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
@@ -348,8 +332,7 @@ def test_message_sendlater_18():
 
 # Testing sending multiple messages immediately and in the future
 def test_message_sendlater_19():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
     two_hours_later = (now + datetime.timedelta(hours = 2)).timestamp()
@@ -389,8 +372,7 @@ def test_message_sendlater_19():
 
 # Testing sending two messages into the future at the exact same time
 def test_message_sendlater_20():
-    reset_messages()
-    reset_channels()
+    owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)

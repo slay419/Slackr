@@ -81,3 +81,9 @@ def test_message_send_9():
     reset_messages()
     with pytest.raises(AccessError):
 	    message_send(user2, channel2, 'hello')
+	    
+#Messaging invalid channel
+def test_message_send_10():
+    reset_messages()
+    with pytest.raises(ValueError):
+        message_send(user1, 42, 'hello')

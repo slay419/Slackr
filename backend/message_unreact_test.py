@@ -61,17 +61,8 @@ def test_message_unreact_3():
     with pytest.raises(ValueError):
 	    message_unreact(user1,1,1)
 
-#Testing two users, one reacting to a message and the other unreacting with same
-#react_id (1,1)
-def test_message_unreact_4():
-    reset_messages()
-    message_send(user1,channel1,'so apparently you can remove other peoples reacts')
-    message_send(user2,channel1,'really? let me try it now')
-    message_react(user1,1,1)
-    message_unreact(user2,1,1)
-
 #Testing user2 unreacting message from user1 that doesn't contain a react
-def test_message_unreact_5():
+def test_message_unreact_4():
     reset_messages()
     message_send(user1,channel1,'how about if you do not have a react')
     message_send(user2,channel1,'let me try again')

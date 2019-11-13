@@ -19,7 +19,7 @@ Assume the search message is not case sensetive because it is not possible at th
 '''
 
 ######################## BEGIN SETUP ######################
-def setup():
+def setup_users():
 	reset_data()
 	ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
 	owner_token = ownerDict['token']
@@ -38,53 +38,42 @@ def setup():
 	second_channel = channels_create(u_token, "second channel", True)
 	channel_id2 = second_channel['channel_id']
 
+	return owner_token, owner_id, u_token, u_id, channel_id, channel_id2
+
+def setup_messages():
+	owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = setup_users()
 	message1 = message_send(owner_token, channel_id, "message1")
-	message_id1 = message1['message_id']
-	floor_message_time(message_id1)
-	now = datetime.now()
-	m1_time = math.floor(now.replace().timestamp())
-
 	message2 = message_send(owner_token, channel_id, "message12")
-	message_id2 = message2['message_id']
-	floor_message_time(message_id2)
-	now = datetime.now()
-	m2_time = math.floor(now.replace().timestamp())
-
 	message3 = message_send(owner_token, channel_id, "message3")
-	message_id3 = message3['message_id']
-	floor_message_time(message_id3)
-	now = datetime.now()
-	m3_time = math.floor(now.replace().timestamp())
-
 	message4 = message_send(owner_token, channel_id, "message4")
-	message_id4 = message4['message_id']
-	floor_message_time(message_id4)
-	now = datetime.now()
-	m4_time = math.floor(now.replace().timestamp())
-
 	message5 = message_send(u_token, channel_id2, "message32")
-	message_id5 = message5['message_id']
-	floor_message_time(message_id5)
-	now = datetime.now()
-	m5_time = math.floor(now.replace().timestamp())
+	floor_all_message_times()
 
-	return owner_token, owner_id, u_token, u_id, channel, second_channel
-##########################    END SETUP   ########################
+	return message1, message2, message3, message4, message5
 
 def floor_message_time(message_id):
 	message = message_dict(message_id)
 	message['time_created'] = math.floor(message['time_created'])
 
+def floor_all_message_times():
+	for message_dict in get_data()['messages']:
+		floor_message_time(message_dict['message_id'])
+		
+##########################    END SETUP   ########################
+
 #Testing for exact match
 def test_search_1():
-	owner_token, owner_id, u_token, u_id, channel, second_channel = setup()
+	owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = setup_users()
+	message1, message2, message3, message4, message5 = setup_messages()
+	message_time = math.floor(datetime.now().replace().timestamp())
+	message_id2 = message2['message_id']
 	assert (search(owner_token, "message12") ==  {
 		'messages': [
 			{
 				'message_id': message_id2,
 		        'u_id': owner_id,
 		        'message': "message12",
-		        'time_created': m2_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -94,14 +83,21 @@ def test_search_1():
 
 #Test find-in-word search and also across other channels
 def test_search_2():
-	owner_token, owner_id, u_token, u_id, channel, second_channel = setup()
+	owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = setup_users()
+	message1, message2, message3, message4, message5 = setup_messages()
+	message_time = math.floor(datetime.now().replace().timestamp())
+	message_id1 = message1['message_id']
+	message_id2 = message2['message_id']
+	message_id3 = message3['message_id']
+	message_id4 = message4['message_id']
+	message_id5 = message5['message_id']
 	assert (search(owner_token, "message") ==  {
 		'messages': [
 			{
 				'message_id': message_id1,
 		        'u_id': owner_id,
 		        'message': "message1",
-		        'time_created': m1_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -110,7 +106,7 @@ def test_search_2():
 				'message_id': message_id2,
 		        'u_id': owner_id,
 		        'message': "message12",
-		        'time_created': m2_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -119,7 +115,7 @@ def test_search_2():
 				'message_id': message_id3,
 		        'u_id': owner_id,
 		        'message': "message3",
-		        'time_created': m3_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -128,7 +124,7 @@ def test_search_2():
 				'message_id': message_id4,
 		        'u_id': owner_id,
 		        'message': "message4",
-		        'time_created': m4_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -137,7 +133,7 @@ def test_search_2():
 				'message_id': message_id5,
 		        'u_id': u_id,
 		        'message': "message32",
-		        'time_created': m5_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -147,14 +143,18 @@ def test_search_2():
 
 #Test find-in-word search
 def test_search_3():
-	owner_token, owner_id, u_token, u_id, channel, second_channel = setup()
+	owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = setup_users()
+	message1, message2, message3, message4, message5 = setup_messages()
+	message_time = math.floor(datetime.now().replace().timestamp())
+	message_id1 = message1['message_id']
+	message_id2 = message2['message_id']
 	assert (search(owner_token, "message1") ==  {
 		'messages': [
 			{
 				'message_id': message_id1,
 				'u_id': owner_id,
 				'message': "message1",
-				'time_created': m1_time,
+				'time_created': message_time,
 				'is_unread': True,
 				'reacts': [],
 				'is_pinned': False,
@@ -163,7 +163,7 @@ def test_search_3():
 				'message_id': message_id2,
 				'u_id': owner_id,
 				'message': "message12",
-				'time_created': m2_time,
+				'time_created': message_time,
 				'is_unread': True,
 				'reacts': [],
 				'is_pinned': False,
@@ -173,21 +173,30 @@ def test_search_3():
 
 #Test no match
 def test_search_4():
-	owner_token, owner_id, u_token, u_id, channel, second_channel = setup()
+	owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = setup_users()
+	message1, message2, message3, message4, message5 = setup_messages()
+	message_time = math.floor(datetime.now().replace().timestamp())
 	assert (search(owner_token,"no match") ==  {
 		'messages': []
 	})
 
 # Testing for empty string returns everything
 def test_search_5():
-	owner_token, owner_id, u_token, u_id, channel, second_channel = setup()
+	owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = setup_users()
+	message1, message2, message3, message4, message5 = setup_messages()
+	message_time = math.floor(datetime.now().replace().timestamp())
+	message_id1 = message1['message_id']
+	message_id2 = message2['message_id']
+	message_id3 = message3['message_id']
+	message_id4 = message4['message_id']
+	message_id5 = message5['message_id']
 	assert (search(owner_token,"") ==  {
 		'messages': [
 			{
 				'message_id': message_id1,
 		        'u_id': owner_id,
 		        'message': "message1",
-		        'time_created': m1_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -196,7 +205,7 @@ def test_search_5():
 				'message_id': message_id2,
 		        'u_id': owner_id,
 		        'message': "message12",
-		        'time_created': m2_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -205,7 +214,7 @@ def test_search_5():
 				'message_id': message_id3,
 		        'u_id': owner_id,
 		        'message': "message3",
-		        'time_created': m3_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -214,7 +223,7 @@ def test_search_5():
 				'message_id': message_id4,
 		        'u_id': owner_id,
 		        'message': "message4",
-		        'time_created': m4_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,
@@ -223,7 +232,7 @@ def test_search_5():
 				'message_id': message_id5,
 		        'u_id': u_id,
 		        'message': "message32",
-		        'time_created': m5_time,
+		        'time_created': message_time,
 		        'is_unread': True,
 		        'reacts': [],
 		        'is_pinned': False,

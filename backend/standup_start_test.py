@@ -17,20 +17,23 @@ Assume you cannot have two standups running at the same time on the same channel
 '''
 
 ######################## GLOBAL VARIABLES SETUP ######################
-reset_data()
-# First user
-ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-owner_token = ownerDict['token']
+def setup():
+	reset_data()
+	# First user
+	ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	owner_token = ownerDict['token']
 
-# Second user
-userDict = auth_register("person2@gmail.com", "password123", "firstname", "lastname")
-u_token = userDict['token']
+	# Second user
+	userDict = auth_register("person2@gmail.com", "password123", "firstname", "lastname")
+	u_token = userDict['token']
+
+	return owner_token, u_token
 ##########################    END SETUP   ########################
 
 
 # Testing a invalid channel_id
 def test_standup_start_1():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(ValueError):
@@ -38,7 +41,7 @@ def test_standup_start_1():
 
 # Testing a channel id that the user is not part
 def test_standup_start_2():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(AccessError):
@@ -46,7 +49,7 @@ def test_standup_start_2():
 
 # Testing a channel id that the user is not part
 def test_standup_start_3():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(AccessError):
@@ -54,7 +57,7 @@ def test_standup_start_3():
 
 # Testing a channel id that the user is part of
 def test_standup_start_4():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	endTime = datetime.now() + timedelta(minutes=15)
@@ -62,7 +65,7 @@ def test_standup_start_4():
 
 # Testing starting a standup that is already runnign
 def test_standup_start_5():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)

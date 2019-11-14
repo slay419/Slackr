@@ -1,12 +1,13 @@
-from functions.auth_functions import auth_register
-from functions.channel_functions import channels_create, channel_join
-from functions.message_functions import message_send, message_remove, message_pin, message_sendlater
-from functions.misc_functions import admin_userpermission_change
-from functions.data import *
-
-from numpy.testing import assert_allclose
 import datetime
 import pytest
+
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join
+from functions.message_functions import message_send, message_sendlater
+from functions.data import reset_data, get_data, message_dict
+
+from functions.exceptions import ValueError, AccessError
+
 
 '''
 ####################### ASSUMPTIONS ######################
@@ -22,13 +23,13 @@ i.e. exactly the same as message_send()
 ######################## GLOBAL VARIABLES SETUP ######################
 def setup():
     reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
-    userDict1 = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict1['token']
-    u_id = userDict1['u_id']
+    user_dict1 = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict1['token']
+    u_id = user_dict1['u_id']
 
     return owner_token, owner_id, u_token, u_id
 ##########################    END SETUP   ########################
@@ -184,7 +185,7 @@ def test_message_sendlater_11():
 def test_message_sendlater_12():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_second_ago = (now - datetime.timedelta(seconds = 1)).timestamp()
+    one_second_ago = (now - datetime.timedelta(seconds=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -195,7 +196,7 @@ def test_message_sendlater_12():
 def test_message_sendlater_13():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_ago = (now - datetime.timedelta(hours = 1)).timestamp()
+    one_hour_ago = (now - datetime.timedelta(hours=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -206,7 +207,7 @@ def test_message_sendlater_13():
 def test_message_sendlater_14():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -227,7 +228,7 @@ def test_message_sendlater_14():
 def test_message_sendlater_15():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_second_later = (now + datetime.timedelta(seconds = 1)).timestamp()
+    one_second_later = (now + datetime.timedelta(seconds=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -248,8 +249,8 @@ def test_message_sendlater_15():
 def test_message_sendlater_16():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
-    two_hours_later = (now + datetime.timedelta(hours = 2)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
+    two_hours_later = (now + datetime.timedelta(hours=2)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -284,7 +285,7 @@ def test_message_sendlater_16():
 def test_message_sendlater_17():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -309,7 +310,7 @@ def test_message_sendlater_17():
 def test_message_sendlater_18():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -334,8 +335,8 @@ def test_message_sendlater_18():
 def test_message_sendlater_19():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
-    two_hours_later = (now + datetime.timedelta(hours = 2)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
+    two_hours_later = (now + datetime.timedelta(hours=2)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
@@ -374,7 +375,7 @@ def test_message_sendlater_19():
 def test_message_sendlater_20():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
     channel = channels_create(owner_token, "Channel Name", True)
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)

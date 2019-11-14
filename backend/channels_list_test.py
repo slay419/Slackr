@@ -1,9 +1,7 @@
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channels_list
 
-from functions.data import *
-
-import pytest
+from functions.data import reset_data
 
 '''
 ####################### ASSUMPTIONS #####################
@@ -16,17 +14,17 @@ Assume the person creating the channel is already an owner and joined the channe
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
-    ownerDict2 = auth_register("owner2@gmail.com", "password", "owner2", "privileges")
-    owner_token2 = ownerDict['token']
-    owner_id2 = ownerDict['u_id']
+    owner_dict2 = auth_register("owner2@gmail.com", "password", "owner2", "privileges")
+    owner_token2 = owner_dict2['token']
+    owner_id2 = owner_dict2['u_id']
 
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
+    user_dict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict['token']
+    u_id = user_dict['u_id']
 
     return owner_token, owner_id, owner_token2, owner_id2, u_token, u_id
 ##########################    END SETUP   ########################

@@ -47,7 +47,7 @@ def channels_list(token):
     u_id = decode_token(token)
     channels_list = []
     for channels in data['channels']:
-        if is_member(u_id, channels['channel_id']) or is_owner(u_id, channels['channel_id']):
+        if is_member(u_id, channels['channel_id']) or is_owner(u_id, channels['channel_id']):   #### GET RID OF THIS???
             channels_list.append({
                 'channel_id': channels['channel_id'],
                 'name': channels['name']
@@ -61,7 +61,7 @@ def channel_leave(token, channel_id):
     if not is_member(decode_token(token), channel_id):
         raise ValueError(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
 
-    u_id = decode_token(token)
+    u_id = decode_token(token)      # change this?
     remove_from_list(u_id, channel_id, 'owner_members')
     remove_from_list(u_id, channel_id, 'all_members')
     return {}
@@ -70,7 +70,7 @@ def channel_leave(token, channel_id):
 def channel_addowner(token, channel_id, u_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
-    if is_owner(u_id, channel_id):
+    if is_owner(u_id, channel_id):                                                           # comment
         raise ValueError(f"User: {u_id} is already an owner")
     if not is_owner(decode_token(token), channel_id):
         raise AccessError(f"User: {decode_token(token)} does not have privileges to promote others")
@@ -79,10 +79,7 @@ def channel_addowner(token, channel_id, u_id):
 
     channel = channel_dict(channel_id)
     # append user to list of owners
-    channel['owner_members'].append({
-        'u_id' : u_id,
-    })
-
+    channel['owner_members'].append({'u_id' : u_id})
     return {}
 
 # Remove user data from a database of channel owners

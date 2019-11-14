@@ -98,7 +98,6 @@ def standup_send(token, channel_id, message):
 def standup_active(token, channel_id):
 	data = get_data()
 	# Check if the channel exists and if the user is a valid member
-	channelHandler = channel_dict(channel_id)
 	if channel_dict(channel_id) is None:
 		raise ValueError(f"Channel ID: {channel_id} does not exist")
 	if is_member(decode_token(token), channel_id) is False:

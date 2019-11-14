@@ -1,7 +1,6 @@
 from .data import *
 
 def user_profile_setemail(token, email):
-	data = get_data()
 	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
@@ -19,7 +18,6 @@ def user_profile_setemail(token, email):
 
 
 def user_profile_sethandle(token, handle_str):
-	data = get_data()
 	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
@@ -35,7 +33,6 @@ def user_profile_sethandle(token, handle_str):
 	return {}
 
 def user_profile_setname(token, name_first, name_last):
-	data = get_data()
 	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
@@ -56,7 +53,6 @@ def user_profile_setname(token, name_first, name_last):
 	return {}
 
 def user_profile(token,u_id):
-	data = get_data()
 	# Using helper functions, return data
 	userData = user_dict(u_id)
 	# Raise errors if the user and names are not valid
@@ -84,9 +80,8 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	urllib.request.urlretrieve(img_url,filePath)
 	print("Successfully saved the user image")
 	# Crop picture and save it
-	data = get_data()
 	imageObject = Image.open(filePath)
-	cropped = imageObject.crop((x_start,y_start,x_end,y_end))
+	cropped = imageObject.crop((x_start, y_start, x_end, y_end))
 	cropped.save(filePath)
 	print("Successfully cropped the user image")
 	return{}
@@ -108,14 +103,3 @@ def user_listall(token):
 
 	return {'users': user_list}
 	
-
-################	HELPER FUNCTIONS 	##################
-
-## Returns 1 if the email is free to use
-## Returns 0 if the email is being used
-
-def is_email_free(email):
-	for user in data['users']:
-		if user['email'] == email:
-			return 0
-	return 1

@@ -23,7 +23,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 	caller_id = decode_token(token)
 	caller_user = user_dict(caller_id)
 	secondary_user = user_dict(u_id)
-	# Check if the user
+	# Check if the user being called is valid
 	if secondary_user == None:
 		raise ValueError(f"User ID: {u_id} does not refer to a valid user")
 

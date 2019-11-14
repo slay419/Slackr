@@ -59,4 +59,16 @@ def test_standup_active_4():
 	channel_id1 = channel1['channel_id']
 	assert(standup_active(owner_token,channel_id1)['is_active'] == False)
 
+# Testing starting a standup that just finished
+def test_standup_active_5():
+	owner_token, u_token = setup()
+	channel1 = channels_create(owner_token, 'SERVER1', True)
+	channel_id1 = channel1['channel_id']
 
+	channel1['standup_queue'] = ["Peter: List", "Peter: Of", "Peter: Messages"]
+
+	EndTime = datetime.now()
+	timestamp = EndTime.replace().timestamp()
+	channel1['standup_end'] = timestamp
+	
+	assert(standup_active(owner_token,channel_id1)['is_active'] == False)

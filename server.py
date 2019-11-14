@@ -278,7 +278,7 @@ def uploadPhoto():
 @APP.route('/users/all', methods = ['GET'])
 def users_all():
     token = request.args.get('token')
-    return send(users_listall(token))
+    return send(user_listall(token))
 #########################  MISC. FUNCTIONS  ###########################
 
 # STANDUP START

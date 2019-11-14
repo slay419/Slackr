@@ -6,8 +6,6 @@ def user_profile_setemail(token, email):
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
 	# Raise errors if the user and email are not valid
-	if userData == None:
-		raise ValueError(f"User ID: {u_id} does not exist")
 	if valid_email(email) is False:
 		raise ValueError(f"Email: {email} entered is not a valid email")
 	if is_email_free(email) == 0:
@@ -26,8 +24,6 @@ def user_profile_sethandle(token, handle_str):
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
 	# Raise errors if the user and handle are not valid
-	if userData == None:
-		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(handle_str) > 20:
 		raise ValueError(f"Handle: {handle_str} is larger than 20 characters")
 	if len(handle_str) < 1:
@@ -44,8 +40,6 @@ def user_profile_setname(token, name_first, name_last):
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
 	# Raise errors if the user and names are not valid
-	if userData == None:
-		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(name_first) > 50:
 		raise ValueError(f"First name: {name_first} is longer than 50 characters")
 	if len(name_first) < 1:
@@ -97,7 +91,7 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	print("Successfully cropped the user image")
 	return{}
 
-def users_listall(token):
+def user_listall(token):
 	data = get_data()
 	user_list = []
 	for user_dict in data['users']:

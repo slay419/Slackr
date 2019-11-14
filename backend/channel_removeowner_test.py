@@ -1,10 +1,11 @@
-from functions.auth_functions import auth_register
-from functions.channel_functions import channels_create, channel_join, channels_list, channel_addowner, channel_removeowner
-
-from functions.data import *
-from functions.exceptions import *
-
 import pytest
+
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join, \
+    channel_addowner, channel_removeowner
+
+from functions.data import reset_data, is_owner
+from functions.exceptions import ValueError, AccessError
 
 '''
 ####################### ASSUMPTIONS ######################
@@ -22,13 +23,13 @@ Owner privileges cover ONLY their channel created
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
+    user_dict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict['token']
+    u_id = user_dict['u_id']
 
     return owner_token, owner_id, u_token, u_id
 ##########################    END SETUP   ########################
@@ -97,9 +98,9 @@ def test_channel_removeowner_8():
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     # Creating a new member
-    memberDict = auth_register("person2@gmail.com", "password", "person", "two")
-    member_id = memberDict['u_id']
-    member_token = memberDict['token']
+    member_dict = auth_register("person2@gmail.com", "password", "person", "two")
+    member_id = member_dict['u_id']
+    member_token = member_dict['token']
     # End member setup
     channel_join(member_token, channel_id)
     with pytest.raises(ValueError):
@@ -113,8 +114,8 @@ def test_channel_removeowner_9():
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
     channel_removeowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id, channel_id) == 0)
-    assert(is_owner(owner_id, channel_id) == 1)     # Checking the owner has not been demoted as well
+    assert is_owner(u_id, channel_id) == 0
+    assert is_owner(owner_id, channel_id) == 1     # Checking the owner has not been demoted as well
 
 # Testing an owner can be demoted multiple times after being promoted again
 def test_channel_removeowner_10():
@@ -123,10 +124,10 @@ def test_channel_removeowner_10():
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id, channel_id))
+    assert is_owner(u_id, channel_id)
     channel_removeowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id, channel_id) == 0)
+    assert is_owner(u_id, channel_id) == 0
     channel_addowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id, channel_id))
+    assert is_owner(u_id, channel_id)
     channel_removeowner(owner_token, channel_id, u_id)
-    assert(is_owner(u_id, channel_id) == 0)
+    assert is_owner(u_id, channel_id) == 0

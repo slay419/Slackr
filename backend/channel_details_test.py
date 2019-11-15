@@ -3,6 +3,8 @@ from functions.auth_functions import auth_register, auth_logout
 from functions.channel_functions import channels_create, channel_invite, channel_leave, channel_details
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()

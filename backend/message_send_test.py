@@ -3,6 +3,8 @@ from functions.channel_functions import channels_create, channel_join
 from functions.message_functions import message_send
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 '''
 ####################### ASSUMPTIONS #####################
@@ -15,6 +17,7 @@ It is assumed that messages sent must be atleast one character long
 ######################## GLOBAL VARIABLES SETUP ######################
 def setup():
     reset_data()
+    data = get_data()
     userDict1 = auth_register('steven@gmail.com','hello123','Steven','Lay')
     user1 = userDict1['token']
     user_id1 = userDict1['u_id']

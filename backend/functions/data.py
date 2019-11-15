@@ -1,3 +1,4 @@
+#pylint: disable=missing-docstring
 from json import dumps
 from flask import Flask, request, jsonify
 from flask_mail import Mail, Message
@@ -10,7 +11,7 @@ import jwt
 #from random import randint
 #from werkzeug.exceptions import HTTPException
 #from PIL import Image
-from .exceptions import *
+from .exceptions import ValueError, AccessError, defaultHandler
 
 #GLOBAL VARIABLES
 REGEX = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
@@ -25,10 +26,7 @@ DATA = {
 
 # Check if email is valid
 def valid_email(email):
-    if re.search(REGEX, email):
-        return True
-    else:
-        return False
+    return bool(re.search(REGEX, email))
 
 # Abstraction for returning global data
 def get_data():

@@ -3,6 +3,8 @@ from functions.channel_functions import channels_create, channel_join
 from functions.message_functions import message_send, message_remove, message_react, message_unreact
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 '''

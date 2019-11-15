@@ -2,6 +2,8 @@ import pytest
 from functions.auth_functions import auth_register, auth_logout, auth_login
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 #Assumptions: Email validation function is already implemented in auth_login.
 #The database of registered users is empty.
 

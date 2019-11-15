@@ -4,6 +4,8 @@ from functions.message_functions import message_send, message_remove, message_pi
 from functions.misc_functions import admin_userpermission_change
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 '''

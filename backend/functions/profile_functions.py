@@ -1,4 +1,4 @@
-from backend.functions.exceptions import ValueError, AccessError
+from .exceptions import ValueError, AccessError
 from .data import decode_token, valid_email, is_email_free, user_dict, channel_dict, get_data
 import sys
 from PIL import Image

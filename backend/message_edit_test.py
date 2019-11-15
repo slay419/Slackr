@@ -3,6 +3,8 @@ from functions.channel_functions import channels_create, channel_join
 from functions.message_functions import message_send, message_remove, message_edit
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 '''
@@ -66,6 +68,7 @@ def test_message_edit_2():
 
 #Testing admin trying to edit another persons message (in this case an admins)
 def test_message_edit_3():
+    data = get_data()
     user1, user_id1, admin1, admin_id1, admin2, admin_id2, channel1, channel2 = setup()
     message_send(admin1, channel1, "hey admin 2, apparently we can edit each others messages")
     message_send(admin2, channel1, 'that sounds pretty standard to me')
@@ -76,6 +79,7 @@ def test_message_edit_3():
 
 #Testing admin trying to edit another persons message (in this case a users)
 def test_message_edit_4():
+    data = get_data()
     user1, user_id1, admin1, admin_id1, admin2, admin_id2, channel1, channel2 = setup()
     message_send(user1, channel1, "hey admin, did you hear you can edit other people messages")
     message_send(admin1, channel1, 'yep, let me show you my admin rights')

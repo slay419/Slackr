@@ -1,5 +1,5 @@
 from backend.functions.exceptions import ValueError, AccessError
-from .data import decode_token, valid_email, is_email_free, user_dict, channel_dict
+from .data import decode_token, valid_email, is_email_free, user_dict, channel_dict, get_data
 
 def user_profile_setemail(token, email):
 	# Using helper functions, return data

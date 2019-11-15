@@ -102,7 +102,7 @@ def message_dict(message_id):
     return None
 
 # Inserts a message into the global message list and channel specific message list
-def message_insert(channel_id, message_id):
+def message_insert(channel_id, message_dict):
     data = get_data()
     channel = channel_dict(channel_id)
     channel['messages'].insert(0, message_dict)

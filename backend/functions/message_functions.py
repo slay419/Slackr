@@ -1,5 +1,5 @@
 from .exceptions import ValueError, AccessError
-from .data import get_data, get_channel_id, is_valid_channel, is_valid_message, decode_token, is_member, channel_dict, user_dict, message_dict, remove_channel_message_dict
+from .data import get_data, get_channel_id, is_valid_channel, is_valid_message, decode_token, is_member, channel_dict, user_dict, message_dict, remove_channel_message_dict, message_insert
 from datetime import datetime
 from datetime import timezone
 
@@ -35,7 +35,7 @@ def message_sendlater(token, channel_id, message, time_sent):
         'is_pinned': False,
     }
     #Inserting message into the channel specific message list and into the global message list
-    message_insert(channel_id, message_id)
+    message_insert(channel_id, message_dict)
     return {'message_id': message_id}
 
 def message_send(token, channel_id, message):
@@ -66,7 +66,7 @@ def message_send(token, channel_id, message):
         'is_pinned': False,
     }
     #Inserting message into the channel specific message list and into the global message list
-    message_insert(channel_id, message_id)
+    message_insert(channel_id, message_dict)
     return {'message_id': message_id}
 
 def message_remove(token, message_id):

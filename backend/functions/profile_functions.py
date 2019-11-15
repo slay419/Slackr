@@ -1,5 +1,10 @@
 from .exceptions import ValueError, AccessError
 from .data import decode_token, valid_email, is_email_free, user_dict, channel_dict, get_data
+import sys
+from PIL import Image
+import urllib.request
+
+
 
 def user_profile_setemail(token, email):
 	# Using helper functions, return data
@@ -76,7 +81,7 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	user['profile_img_url'] = img_url
 	# Extract the image from the URL and store at 'filePath' location
 	userCounter = 1
-	filePath = "./pictures/profilepic" + str(userCounter) + ".jpg"
+	filePath = "profilepic" + str(userCounter) + ".jpg"
 	userCounter += 1
 	urllib.request.urlretrieve(img_url,filePath)
 	print("Successfully saved the user image")

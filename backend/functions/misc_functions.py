@@ -117,6 +117,7 @@ def standup_active(token, channel_id):
 		if channelHandler['standup_active'] == True:
 			newMessage = standup_string_messages(channel_id)
 			message_send(token, channel_id, newMessage)
+			channelHandler['standup_queue'].clear()
 		# Set the flag to false and return
 		channelHandler['standup_active'] = False
 		return {

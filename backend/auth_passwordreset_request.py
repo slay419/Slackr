@@ -4,7 +4,7 @@ from flask import Flask, request
 from functions.auth_functions import auth_register
 from functions.data import *
 
-from backend.functions.exceptions import ValueError, AccessError
+from functions.exceptions import ValueError, AccessError
 
 #MANUAL TESTING HAS BEEN DONE ON THE SERVER SIDE. Since auth_password_request()
 # requires configuration set up on the flask server that is established when running server.py

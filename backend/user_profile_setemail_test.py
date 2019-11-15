@@ -5,6 +5,8 @@ from functions.profile_functions import user_profile, user_profile_sethandle, us
 
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 ###SIDE NOTE: Web resources were used in order to create the basic algorithm to determine

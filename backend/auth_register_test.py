@@ -2,6 +2,8 @@ import pytest
 from functions.auth_functions import auth_register
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 #Database of registered users is empty.
 
 #All details are valid

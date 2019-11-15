@@ -1,10 +1,11 @@
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channels_list, channel_messages
-from functions.message_functions import message_send
+from functions.message_functions import message_send, message_sendlater
 from functions.misc_functions import admin_userpermission_change
 
 from functions.data import *
 
+import datetime
 import pytest
 
 #Assuming there are 80 messages in the chat, since there is no function that
@@ -531,3 +532,51 @@ def test_channel_messages_6():
         list1.append(messagelist[i])
     with pytest.raises(AccessError):
         channel_messages(u_token, 2, 0)
+        
+#Testing sendlater messages
+def test_channel_messages_7():
+    ######################## BEGIN SETUP ######################
+    reset_data()
+    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = ownerDict['token']
+    owner_id = ownerDict['u_id']
+
+    userDict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = userDict['token']
+    u_id = userDict['u_id']
+
+    channel_dict = channels_create(owner_token, 'channel name', True)
+    channel_id = channel_dict['channel_id']
+
+    channel_dict2 = channels_create(owner_token, 'channel 2', True)
+    channel_id2 = channel_dict['channel_id']
+
+    channel_join(u_token, channel_id)
+    
+    now = datetime.datetime.now()
+    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
+    
+    m1 = message_send(owner_token, channel_id, "message1")
+    m2 = message_send(owner_token, channel_id, "message2")
+    m3 = message_send(owner_token, channel_id, "message3")
+    m4 = message_send(owner_token, channel_id, "message4")
+    m5 = message_sendlater(owner_token, channel_id, "message5 (future)", one_hour_later)
+    m6 = message_send(owner_token, channel_id, "message6")
+
+    messagelist = data['messages']
+    messagelist.sort(key = lambda i: i['time_created'],reverse=True)
+    ##########################    END SETUP   ########################
+    
+    list1 = []
+    start = 0
+    end = 6
+    timestamp = datetime.datetime.now().timestamp()
+    for i in range(start, end):
+        if timestamp > messagelist[i]['time_created']:
+            list1.append(messagelist[i])
+    assert (channel_messages(owner_token, channel_id, 0) == {
+        'messages': list1,
+        'start': 0,
+        'end': -1
+    })
+        

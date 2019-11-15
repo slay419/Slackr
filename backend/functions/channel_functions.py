@@ -147,6 +147,12 @@ def channel_messages(token, channel_id, start):
     if(start > len(newchannel['messages'])):
         raise ValueError(f"Start index: {start} is greater than the amount of messages")
     u_id = decode_token(token)
+    for message in data['messages']:
+        for react in message['reacts']:
+            if u_id not in react['u_ids']:
+                react['is_this_user_reacted'] = False
+            else:
+               react['is_this_user_reacted'] = True
     #Checking if user is authorised in correct channel
     if(is_member(u_id, channel_id) == False):
         raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
@@ -156,8 +162,7 @@ def channel_messages(token, channel_id, start):
     else:
         endindex = end
     for i in range(start,endindex):
-        dt = datetime.now()
-        timestamp = dt.timestamp()
+        timestamp = datetime.now().timestamp()
         print(timestamp)
         if timestamp > newchannel['messages'][i]['time_created']:
             messages.append(newchannel['messages'][i])

@@ -6,21 +6,21 @@ from datetime import timezone
 def message_sendlater(token, channel_id, message, time_sent):
     #Initialising data from input
     data = get_data()
-    #The message_id will be 1 + length of messages
-    message_id = 1 + len(data['messages'])
     #Valid channel error
     if not is_valid_channel(channel_id):
         raise ValueError('Channel ID is not a valid channel')
     #Message length error
-    if(len(message) > 1000):
+    max_message_len = 1000
+    if len(message) > max_message_len:
         raise ValueError('Message is more than 1000 characters')
     #Unauthorised user error
     u_id = decode_token(token)
     if(is_member(u_id, channel_id) == False):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
+    #The message_id will be 1 + length of messages
+    message_id = 1 + len(data['messages'])
     #Past time error
-    dt = datetime.now()
-    currentTime = dt.timestamp()
+    currentTime = datetime.now().timestamp()
     if time_sent < currentTime:
         raise ValueError('Time sent is a time in the past')
     #Message sendlater functionality
@@ -42,21 +42,21 @@ def message_sendlater(token, channel_id, message, time_sent):
 def message_send(token, channel_id, message):
     #Initialising all data from input
     data = get_data()
-    #The message_id will be 1 + length of messages
-    message_id = 1 + len(data['messages'])
     #Valid channel error
     if not is_valid_channel(channel_id):
         raise ValueError('Channel ID is not a valid channel')
     #Message length error
-    if(len(message) > 1000):
+    max_message_len = 1000
+    if len(message) > max_message_len:
         raise ValueError('Message is more than 1000 characters')
     #Unauthorised user error
     u_id = decode_token(token)
     if(is_member(u_id, channel_id) == False):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
+    #The message_id will be 1 + length of messages
+    message_id = 1 + len(data['messages'])
     #Message send functionality
-    dt = datetime.now()
-    currentTime = dt.timestamp()
+    currentTime = datetime.now().timestamp()
     message_dict = {
         'message_id': message_id,
         'u_id': u_id,
@@ -75,13 +75,13 @@ def message_send(token, channel_id, message):
 def message_remove(token, message_id):
     #Initialising all data from input
     data = get_data()
+    #Valid message error
+    if not is_valid_message(message_id):
+        raise ValueError('Message (based on ID) no longer exists')
     #Function setup: obtaining userdict and messagedict
     u_id = decode_token(token)
     userdict = user_dict(u_id)
     messagedict = message_dict(message_id)
-    #Valid message error
-    if not is_valid_message(message_id):
-        raise ValueError('Message (based on ID) no longer exists')
     #Removing message from the global message list
     #User may remove their own message (u_id match) or admin/owners can remove
     #any message (permission != 3)
@@ -96,16 +96,17 @@ def message_remove(token, message_id):
 def message_edit(token, message_id, message):
     #Initialising all data from input
     data = get_data()
-    #Function setup: obtaining userdict and messagedict
-    u_id = decode_token(token)
-    userdict = user_dict(u_id)
-    messagedict = message_dict(message_id)
     #Message length error
-    if(len(message) > 1000):
+    max_message_len = 1000
+    if len(message) > max_message_len:
         raise ValueError('message is more than 1000 characters')
     #Valid message error
     if not is_valid_message(message_id):
         raise ValueError('Message (based on ID) no longer exists')
+    #Function setup: obtaining userdict and messagedict
+    u_id = decode_token(token)
+    userdict = user_dict(u_id)
+    messagedict = message_dict(message_id)
     #User may edit their own message (u_id match) or admin/owners can remove
     #any message (permission != 3)
     if messagedict['u_id'] == u_id or userdict['permission_id'] != 3:
@@ -125,12 +126,7 @@ def message_react(token, message_id, react_id):
     if react_id != 1:
         raise ValueError('react_id is not a valid React ID.')
     #First set is_this_user_reacted to false if not contained in u_id
-    for message in data['messages']:
-        for react in message['reacts']:
-            if u_id not in react['u_ids']:
-                react['is_this_user_reacted'] = False
-            else:
-               react['is_this_user_reacted'] = True
+
     #Check if the message has react_dict already
     for message in data['messages']:
         if message['message_id'] == message_id:
@@ -144,7 +140,6 @@ def message_react(token, message_id, react_id):
                 message['reacts'].append(dict)
             #if the dict does already exist, append the u_id to it
             else:
-                print('Hello world')
                 for react_dict in message['reacts']:
                     if react_dict['react_id'] == react_id:
                         if u_id not in react_dict['u_ids']:
@@ -195,11 +190,11 @@ def message_pin(token, message_id):
         raise ValueError('user is not an admin')
     #Cycle through message list until id match and check wether it is already
     #pinned, if not pin it
-    message = message_dict(message_id)
+    messagedict = message_dict(message_id)
     if not is_member(u_id, channel_id):
         raise AccessError('Authorised user has not joined the channel they are trying to pin to')
-    if message['is_pinned'] == False:
-        message['is_pinned'] = True
+    if messagedict['is_pinned'] == False:
+        messagedict['is_pinned'] = True
     else:
         raise ValueError('message is already pinned')
     return {}

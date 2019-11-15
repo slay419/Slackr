@@ -1,10 +1,15 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+import pytest
+
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channels_list
 from functions.misc_functions import admin_userpermission_change
 
-from functions.data import *
+from functions.data import reset_data
 
-import pytest
+from functions.exceptions import ValueError, AccessError
+
 
 
 '''
@@ -18,18 +23,18 @@ Admins are the very first person to sign up to slackr
 Admin privileges cover all of slackr
 Owners are the first person to create the channel
 Owner privileges cover ONLY their channel created
-
 '''
+
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
+    user_dict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict['token']
+    u_id = user_dict['u_id']
 
     return owner_token, owner_id, u_token, u_id
 ##########################    END SETUP   ########################
@@ -178,13 +183,9 @@ def test_channel_join_12():
     owner_token, owner_id, u_token, u_id = setup()
     channel = channels_create(owner_token, "Private Channel", False)
     channel_id = channel['channel_id']
-    c = channel_dict(channel_id)
-    print(c['all_members'])
     admin_userpermission_change(owner_token, u_id, 2)
     channel_join(u_token, channel_id)
-    print(c['all_members'])
     with pytest.raises(ValueError):
-        print(c['all_members'])
         channel_join(u_token, channel_id)
 
 # Testing joining a few different channels as an admin

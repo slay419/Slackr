@@ -1,4 +1,10 @@
-from .data import *
+from .exceptions import ValueError, AccessError
+from .data import decode_token, valid_email, is_email_free, user_dict, channel_dict, get_data
+import sys
+from PIL import Image
+import urllib.request
+
+
 
 def user_profile_setemail(token, email):
 	# Using helper functions, return data
@@ -67,19 +73,21 @@ def user_profile(token,u_id):
     }
 	# Returns dict containing {email,name_first,name_last,handle_str}
 	print("Successfully found and located user's information")
-	return new_dict	
+	return new_dict
 
 def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	# Append img_url to user data
 	user = user_dict(decode_token(token))
 	user['profile_img_url'] = img_url
 	# Extract the image from the URL and store at 'filePath' location
+
 	userCounter = 1
-	filePath = "./pictures/profilepic" + str(userCounter) + ".jpg"
+	filePath = "backend/functions/pictures/profile_pic" + str(userCounter) + ".jpg"
 	userCounter += 1
 	urllib.request.urlretrieve(img_url,filePath)
 	print("Successfully saved the user image")
 	# Crop picture and save it
+
 	imageObject = Image.open(filePath)
 	cropped = imageObject.crop((x_start, y_start, x_end, y_end))
 	cropped.save(filePath)
@@ -102,4 +110,3 @@ def user_listall(token):
 		user_list.append(dict)
 
 	return {'users': user_list}
-	

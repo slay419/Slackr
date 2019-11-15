@@ -6,6 +6,8 @@ from functions.misc_functions import admin_userpermission_change
 from functions.data import *
 
 import datetime
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 #Assuming there are 80 messages in the chat, since there is no function that
@@ -15,6 +17,7 @@ import pytest
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
+    data = get_data()
     ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
     owner_token = ownerDict['token']
     owner_id = ownerDict['u_id']

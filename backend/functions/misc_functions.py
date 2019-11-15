@@ -1,11 +1,12 @@
-from .data import *
+from .exceptions import ValueError, AccessError
+from .data import get_data, decode_token, user_dict, channel_dict, is_member, format_message, standup_string_messages
 from datetime import datetime, timedelta, timezone
 from .message_functions import message_send
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
 def search(token, query_str):
-
+	data = get_data()
 	messages = []
 	# Loop through each message and find the sub-string
 	for message_dict in data['messages']:
@@ -41,7 +42,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 def standup_start(token, channel_id, length):
 
-	
+
 	# Check if the channel exists and if the user is part of the channel
 	if channel_dict(channel_id) is None:
 		raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -52,7 +53,7 @@ def standup_start(token, channel_id, length):
 	# If no standup is running, start a standup and calculate the end time
 	if channelHandler['standup_active'] is False:
 		channelHandler['standup_active'] = True
-		# Using datetime, fetch the current time and calculate the end time		
+		# Using datetime, fetch the current time and calculate the end time
 		EndTime = datetime.now() + timedelta(seconds=length)
 		EndTimeStr = EndTime.strftime("%H:%M:%S")
 		# Print the time for debugging
@@ -68,7 +69,7 @@ def standup_start(token, channel_id, length):
 
 def standup_send(token, channel_id, message):
 
-	
+
 	u_id = decode_token(token)
 	# Retrieve data
 	channelHandler = channel_dict(channel_id)
@@ -93,7 +94,7 @@ def standup_send(token, channel_id, message):
 	return{}
 
 def standup_active(token, channel_id):
-	
+
 	# Check if the channel exists and if the user is a valid member
 	if channel_dict(channel_id) is None:
 		raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -114,8 +115,9 @@ def standup_active(token, channel_id):
 	else:
 		# If the standup just finishes, return a list of messages
 		if channelHandler['standup_active'] == True:
-			newMessage = standup_string_messages
+			newMessage = standup_string_messages(channel_id)
 			message_send(token, channel_id, newMessage)
+			channelHandler['standup_queue'].clear()
 		# Set the flag to false and return
 		channelHandler['standup_active'] = False
 		return {

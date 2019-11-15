@@ -4,8 +4,10 @@ from flask import Flask, request
 from functions.auth_functions import auth_register
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 #MANUAL TESTING HAS BEEN DONE ON THE SERVER SIDE. Since auth_password_request()
-# requires configuration set up on the flask server that is established when running server.py 
+# requires configuration set up on the flask server that is established when running server.py
 
 #i.e lines 25-31 (server.py)
 
@@ -74,5 +76,3 @@ def test_auth_passwordreset_request_1():
 
     #exit()
     pass
-
-

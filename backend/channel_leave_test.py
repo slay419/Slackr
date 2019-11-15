@@ -1,10 +1,14 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+import pytest
+
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channels_list, channel_leave
-from functions.misc_functions import admin_userpermission_change
 
-from functions.data import *
+from functions.data import reset_data
 
-import pytest
+from functions.exceptions import ValueError
+
 
 '''
 ####################### ASSUMPTIONS ######################
@@ -16,13 +20,13 @@ channel_id hasn't been created yet
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
+    user_dict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict['token']
+    u_id = user_dict['u_id']
 
     return owner_token, owner_id, u_token, u_id
 ##########################    END SETUP   ########################
@@ -113,7 +117,7 @@ def test_channel_leave_7():
 # Leaving a channel out of 4 already joined
 def test_channel_leave_8():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1= channels_create(owner_token, "Channel Name", True)
+    channel1 = channels_create(owner_token, "Channel Name", True)
     channel2 = channels_create(owner_token, "Second Channel", True)
     channel3 = channels_create(owner_token, "Third Channel", True)
     channel4 = channels_create(owner_token, "Fourth Channel", True)

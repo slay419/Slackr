@@ -4,6 +4,8 @@ from functions.profile_functions import user_profile, user_profile_sethandle, us
 
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 '''
@@ -41,7 +43,7 @@ def test_user_listall_2():
     userDict2 = auth_register("person2@gmail.com", "password2", "person2", "two")
     u_token2 = userDict2['token']
     u_id2 = userDict2['u_id']
-    
+
     assert(user_listall(u_token) == {'users': [{'email': 'person1@gmail.com',
                         'handle_str': 'personone',
                         'name_first': 'person',
@@ -68,7 +70,7 @@ def test_user_listall_3():
     userDict3 = auth_register("person3@gmail.com", "password3", "person3", "three")
     u_token3 = userDict3['token']
     u_id3 = userDict3['u_id']
-    
+
     assert(user_listall(u_token) == {'users': [{'email': 'person1@gmail.com',
                         'handle_str': 'personone',
                         'name_first': 'person',

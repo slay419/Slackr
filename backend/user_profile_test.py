@@ -5,6 +5,8 @@ from functions.profile_functions import user_profile, user_profile_sethandle
 
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 '''
 ####################### ASSUMPTIONS #####################

@@ -1,6 +1,8 @@
-from .data import *
+'''Implementation of channel functions used for the backend of Slackr Web Server'''
+
 from datetime import datetime
-from datetime import timezone
+from .data import get_data, user_dict, channel_dict, decode_token, is_member, is_owner, is_valid_channel
+from .exceptions import ValueError, AccessError
 
 # Create a channel by generating a new dictionary with all the neccessary info
 # to be edited later by other functions
@@ -12,7 +14,7 @@ def channels_create(token, name, is_public):
     # Give the channel an ID which corresponds to the number created e.g. 1st channel is ID1 ...
     new_channel_id = len(data['channels']) + 1
     # Create a dictionary with all the relevant info and append to data
-    dict = {
+    info_dict = {
         'channel_id': new_channel_id,
         'name': name,
         'owner_members': [{
@@ -27,77 +29,74 @@ def channels_create(token, name, is_public):
         'standup_active': False,
         'standup_end' : 0
     }
-    data['channels'].append(dict)
+    data['channels'].append(info_dict)
     return {'channel_id': new_channel_id}
 
-# Provide a list of all channels (and their associated details)
+# Provide a list of all channels
 def channels_listall(token):
     data = get_data()
-    channels_list = []
+    channel_list = []
     for channels in data['channels']:
-        channels_list.append({
+        channel_list.append({
             'channel_id': channels['channel_id'],
             'name': channels['name']
         })
-    return {'channels': channels_list}
+    return {'channels': channel_list}
 
-# Return a list of channels the user has already joined or is a owner of
+# Provide a list of all channels the user has curently joined
 def channels_list(token):
     data = get_data()
     u_id = decode_token(token)
-    channels_list = []
+    channel_list = []
     for channels in data['channels']:
-        if is_member(u_id, channels['channel_id']) or is_owner(u_id, channels['channel_id']):
-            channels_list.append({
+        if is_member(u_id, channels['channel_id']):
+            channel_list.append({
                 'channel_id': channels['channel_id'],
                 'name': channels['name']
             })
-    return  {'channels': channels_list}
+    return  {'channels': channel_list}
 
 # Remove user data from both owner and member lists
 def channel_leave(token, channel_id):
+    u_id = decode_token(token)
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
-    if not is_member(decode_token(token), channel_id):
-        raise ValueError(f"User: {decode_token(token)} has not joined channel: {channel_id} yet")
+    if not is_member(u_id, channel_id):
+        raise ValueError(f"User: {u_id} has not joined channel: {channel_id} yet")
 
-    u_id = decode_token(token)
     remove_from_list(u_id, channel_id, 'owner_members')
     remove_from_list(u_id, channel_id, 'all_members')
     return {}
 
-
-
+# Add user data to a database of channel owners
 def channel_addowner(token, channel_id, u_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
-    if is_owner(u_id, channel_id):
+    if is_owner(u_id, channel_id):                         # Check if user getting promoted is owner
         raise ValueError(f"User: {u_id} is already an owner")
-    if not is_owner(decode_token(token), channel_id):
+    if not is_owner(decode_token(token), channel_id):      # Check if user promoting is not an owner
         raise AccessError(f"User: {decode_token(token)} does not have privileges to promote others")
     if not is_member(u_id, channel_id):
         raise ValueError(f"User {u_id} has not joined channel: {channel_id} yet")
 
     channel = channel_dict(channel_id)
     # append user to list of owners
-    channel['owner_members'].append({
-        'u_id' : u_id,
-    })
-
+    channel['owner_members'].append({'u_id' : u_id})
     return {}
 
-# Remove channel owner by removeing user data from a list of owners
+# Remove user data from a database of channel owners
 def channel_removeowner(token, channel_id, u_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} is invalid")
-    if not is_owner(u_id, channel_id):
+    if not is_owner(u_id, channel_id):               # Check if user getting demoted is not an owner
         raise ValueError(f"User: {u_id} is not an owner")
-    if not is_owner(decode_token(token), channel_id):
+    if not is_owner(decode_token(token), channel_id):      # Check if user promoting is not an owner
         raise AccessError(f"User: {decode_token(token)} does not have privileges to demote others")
 
     remove_from_list(u_id, channel_id, 'owner_members')
     return {}
 
+# Invite another user to the current channel
 def channel_invite(token, channel_id, u_id):
     inviter_u_id = decode_token(token)
     if u_id == inviter_u_id:
@@ -106,12 +105,13 @@ def channel_invite(token, channel_id, u_id):
     user_join(u_id, channel_id)
     return {}
 
-
+# Join a channel by adding their user data to the channel database
 def channel_join(token, channel_id):
     u_id = decode_token(token)
     user_join(u_id, channel_id)
     return {}
 
+# Provide info on channel name, and who has joined the channel
 def channel_details(token, channel_id):
     if not is_valid_channel(channel_id):
         raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -130,8 +130,7 @@ def channel_details(token, channel_id):
     }
     return details
 
-#input: token, channelid, start
-#user must be a member of the channel
+# Display messages sent to the channel
 def channel_messages(token, channel_id, start):
     data = get_data()
     end = start + 50
@@ -173,6 +172,7 @@ def channel_messages(token, channel_id, start):
 
 ######################  HELPER FUNCTIONS  ########################
 
+# Add user info to the global data base
 def user_join(u_id, channel_id):
     user = user_dict(u_id)
     channel = channel_dict(channel_id)
@@ -200,6 +200,7 @@ def user_join(u_id, channel_id):
     else:
         raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
 
+# Create a dictionary from a list of members containing information on their profile
 def generate_dict(member_list):
     list = []
     for dict in member_list:
@@ -213,7 +214,7 @@ def generate_dict(member_list):
         list.append(name_dict)
     return list
 
-# Helper function used in channel leave
+# Helper function used in channel leave and removeowner
 # Loops through data list and removes users from the owner or member list
 def remove_from_list(u_id, channel_id, member_type):
     channel = channel_dict(channel_id)

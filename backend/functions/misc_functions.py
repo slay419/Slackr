@@ -5,7 +5,7 @@ from .message_functions import message_send
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
 def search(token, query_str):
-	data = get_data()
+
 	messages = []
 	# Loop through each message and find the sub-string
 	for message_dict in data['messages']:
@@ -23,7 +23,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 	caller_id = decode_token(token)
 	caller_user = user_dict(caller_id)
 	secondary_user = user_dict(u_id)
-	# Check if the user
+	# Check if the user being called is valid
 	if secondary_user == None:
 		raise ValueError(f"User ID: {u_id} does not refer to a valid user")
 
@@ -41,7 +41,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 def standup_start(token, channel_id, length):
 
-	data = get_data()
+	
 	# Check if the channel exists and if the user is part of the channel
 	if channel_dict(channel_id) is None:
 		raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -68,7 +68,7 @@ def standup_start(token, channel_id, length):
 
 def standup_send(token, channel_id, message):
 
-	data = get_data()
+	
 	u_id = decode_token(token)
 	# Retrieve data
 	channelHandler = channel_dict(channel_id)
@@ -85,18 +85,15 @@ def standup_send(token, channel_id, message):
 		raise AccessError(f"Authorised User: {u_id} is not a member of the channel")
 	if channelHandler['standup_active'] is False:
 		raise ValueError (f"There is no standup running in channel ID: {channel_id}")
-	# Modify the message to accomodate more info
-	FullMessage = ""
-	FullMessage += str(get_first_name(u_id))
-	FullMessage += ": "
-	FullMessage += str(message)
-	FullMessage += "\n"
+
+	# Format message in the style of a standup as required
+	FullMessage = format_message(u_id,message)
 
 	channelHandler['standup_queue'].append(FullMessage)
 	return{}
 
 def standup_active(token, channel_id):
-	data = get_data()
+	
 	# Check if the channel exists and if the user is a valid member
 	if channel_dict(channel_id) is None:
 		raise ValueError(f"Channel ID: {channel_id} does not exist")
@@ -117,9 +114,7 @@ def standup_active(token, channel_id):
 	else:
 		# If the standup just finishes, return a list of messages
 		if channelHandler['standup_active'] == True:
-			newMessage = ""
-			for messageSummary in channelHandler['standup_queue']:
-				newMessage += messageSummary
+			newMessage = standup_string_messages
 			message_send(token, channel_id, newMessage)
 		# Set the flag to false and return
 		channelHandler['standup_active'] = False

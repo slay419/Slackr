@@ -20,20 +20,22 @@ Assume "time_left" can retrieve the date_time object from standup_start
 '''
 
 ######################## GLOBAL VARIABLES SETUP ######################
-reset_data()
-# First user
-ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-owner_token = ownerDict['token']
+def setup():
+	reset_data()
+	# First user
+	ownerDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	owner_token = ownerDict['token']
 
-# Second user
-userDict = auth_register("person2@gmail.com", "password123", "firstname", "lastname")
-u_token = userDict['token']
+	# Second user
+	userDict = auth_register("person2@gmail.com", "password123", "firstname", "lastname")
+	u_token = userDict['token']
 
+	return owner_token, u_token
 ##########################    END SETUP   ########################
 
 # Test for a channel that does not exist
 def test_standup_send_1():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)
@@ -42,7 +44,7 @@ def test_standup_send_1():
 
 # Test for a message with 1001 characters
 def test_standup_send_2():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)
@@ -51,7 +53,7 @@ def test_standup_send_2():
 
 # Test for a message with 1000 characters
 def test_standup_send_3():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)
@@ -59,7 +61,7 @@ def test_standup_send_3():
 
 # Test for a message with 999 characters
 def test_standup_send_4():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)
@@ -67,7 +69,7 @@ def test_standup_send_4():
 
 # Test for an empty message
 def test_standup_send_5():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)
@@ -76,7 +78,7 @@ def test_standup_send_5():
 
 # Test for starting a standup on a channel the user is not part of
 def test_standup_send_6():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)
@@ -85,7 +87,7 @@ def test_standup_send_6():
 
 # Test for starting a standup on a channel the user is not part of
 def test_standup_send_7():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(AccessError):
@@ -94,7 +96,7 @@ def test_standup_send_7():
 
 # Test for sending a message when the standup has ended
 def test_standup_send_8():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(ValueError):
@@ -102,7 +104,7 @@ def test_standup_send_8():
 
 # Test for sending a message when there is no standup
 def test_standup_send_9():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	with pytest.raises(ValueError):
@@ -110,7 +112,7 @@ def test_standup_send_9():
 
 # Test for a normal message
 def test_standup_send_10():
-	reset_channels()
+	owner_token, u_token = setup()
 	channel1 = channels_create(owner_token, 'SERVER1', True)
 	channel_id1 = channel1['channel_id']
 	standup_start(owner_token, channel_id1, 10)

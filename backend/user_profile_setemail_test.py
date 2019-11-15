@@ -65,7 +65,8 @@ def test_user_profile_setemail_4():
 # Testing a email that is being used
 def test_user_profile_setemail_5():
 	reset_users()
+	userDict = auth_register("person1@gmail.com", "password", "person", "one")
 	userDict2 = auth_register("person2@gmail.com", "password", "person2", "two")
 	u_token2 = userDict2['token']
 	with pytest.raises(ValueError):
-		user_profile_setemail(u_token2, 'person2@gmail@gmail.com')
+		user_profile_setemail(u_token2, 'person1@gmail.com')

@@ -1,13 +1,10 @@
 from .data import *
 
 def user_profile_setemail(token, email):
-	data = get_data()
 	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
 	# Raise errors if the user and email are not valid
-	if userData == None:
-		raise ValueError(f"User ID: {u_id} does not exist")
 	if valid_email(email) is False:
 		raise ValueError(f"Email: {email} entered is not a valid email")
 	if is_email_free(email) == 0:
@@ -21,13 +18,10 @@ def user_profile_setemail(token, email):
 
 
 def user_profile_sethandle(token, handle_str):
-	data = get_data()
 	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
 	# Raise errors if the user and handle are not valid
-	if userData == None:
-		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(handle_str) > 20:
 		raise ValueError(f"Handle: {handle_str} is larger than 20 characters")
 	if len(handle_str) < 1:
@@ -39,13 +33,10 @@ def user_profile_sethandle(token, handle_str):
 	return {}
 
 def user_profile_setname(token, name_first, name_last):
-	data = get_data()
 	# Using helper functions, return data
 	u_id = decode_token(token)
 	userData = user_dict(u_id)
 	# Raise errors if the user and names are not valid
-	if userData == None:
-		raise ValueError(f"User ID: {u_id} does not exist")
 	if len(name_first) > 50:
 		raise ValueError(f"First name: {name_first} is longer than 50 characters")
 	if len(name_first) < 1:
@@ -62,7 +53,6 @@ def user_profile_setname(token, name_first, name_last):
 	return {}
 
 def user_profile(token,u_id):
-	data = get_data()
 	# Using helper functions, return data
 	userData = user_dict(u_id)
 	# Raise errors if the user and names are not valid
@@ -90,14 +80,13 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	urllib.request.urlretrieve(img_url,filePath)
 	print("Successfully saved the user image")
 	# Crop picture and save it
-	data = get_data()
 	imageObject = Image.open(filePath)
-	cropped = imageObject.crop((x_start,y_start,x_end,y_end))
+	cropped = imageObject.crop((x_start, y_start, x_end, y_end))
 	cropped.save(filePath)
 	print("Successfully cropped the user image")
 	return{}
 
-def users_listall(token):
+def user_listall(token):
 	data = get_data()
 	user_list = []
 	for user_dict in data['users']:
@@ -114,14 +103,3 @@ def users_listall(token):
 
 	return {'users': user_list}
 	
-
-################	HELPER FUNCTIONS 	##################
-
-## Returns 1 if the email is free to use
-## Returns 0 if the email is being used
-
-def is_email_free(email):
-	for user in data['users']:
-		if user['email'] == email:
-			return 0
-	return 1

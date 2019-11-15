@@ -1,9 +1,7 @@
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channels_listall
 
-from functions.data import *
-
-import pytest
+from functions.data import reset_data
 
 '''
 ####################### ASSUMPTIONS #####################
@@ -11,37 +9,34 @@ Assume the order of the list of dictionaries is in ascending order of channel_id
 i.e. order of channel_id created
 '''
 
+######################## BEGIN SETUP ######################
+def setup():
+    reset_data()
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
+    owner_dict2 = auth_register("owner2@gmail.com", "password", "owner2", "privileges")
+    owner_token2 = owner_dict2['token']
+    owner_id2 = owner_dict2['u_id']
 
-######################## GLOBAL VARIABLES SETUP ######################
-reset_data()
-ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-owner_token = ownerDict['token']
-owner_id = ownerDict['u_id']
+    user_dict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict['token']
+    u_id = user_dict['u_id']
 
-
-ownerDict2 = auth_register("owner2@gmail.com", "password", "owner2", "privileges")
-owner_token2 = ownerDict['token']
-owner_id2 = ownerDict['u_id']
-
-
-userDict = auth_register("person1@gmail.com", "password", "person", "one")
-u_token = userDict['token']
-u_id = userDict['u_id']
-
-
+    return owner_token, owner_id, owner_token2, owner_id2, u_token, u_id
 ##########################    END SETUP   ########################
 
 # Empty list of channels if none have been created yet
 def test_channels_listall_1():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     assert(channels_listall(u_token) == {
         'channels': []
     })
 
 # List with one dictionary only if only one channel has been created
 def test_channels_listall_2():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     channel1 = channels_create(owner_token, "Name", True)
     channel_id1 = channel1['channel_id']
     assert(channels_listall(u_token) == {
@@ -52,7 +47,7 @@ def test_channels_listall_2():
 
 # List of dictionaries with 2 channels created assuming order of channel id
 def test_channels_listall_3():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel_id1 = channel1['channel_id']
@@ -66,7 +61,7 @@ def test_channels_listall_3():
 
 # List of dictionaries with 3 channels created assuming order of channel id
 def test_channels_listall_4():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
@@ -84,7 +79,7 @@ def test_channels_listall_4():
 # Testing the owner of the channel should also have the same list_all output as
 # a member
 def test_channels_listall_5():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
@@ -101,7 +96,7 @@ def test_channels_listall_5():
 
 # Testing list should still be the same after joining a few
 def test_channels_listall_6():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token, "Name3", True)
@@ -122,7 +117,7 @@ def test_channels_listall_6():
 # Testing function lists all the channels created by different owners and are
 # the same for different users
 def test_channels_listall_7():
-    reset_channels()
+    owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
     channel1 = channels_create(owner_token, "Name1", True)
     channel2 = channels_create(owner_token, "Name2", True)
     channel3 = channels_create(owner_token2, "Name3", True)
@@ -139,5 +134,5 @@ def test_channels_listall_7():
             {'channel_id': channel_id4, 'name': "Name4"}
         ]
     })
-    assert(channels_listall(owner_token) == channels_listall(owner_token2))
-    assert(channels_listall(owner_token) == channels_listall(u_token))
+    assert channels_listall(owner_token) == channels_listall(owner_token2)
+    assert channels_listall(owner_token) == channels_listall(u_token)

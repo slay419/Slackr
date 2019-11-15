@@ -197,25 +197,25 @@ def get_reset_code(u_id):
 
 # Returns true if email is not being used, false elsewise
 def is_email_free(email):
-	for user in data['users']:
-		if user['email'] == email:
-			return False
-	return True
+    for user in data['users']:
+        if user['email'] == email:
+            return False
+    return True
 
 # Formats a message to be sent via standups
 def format_message(u_id,message):
     FullMessage = ""
-	FullMessage += str(get_first_name(u_id))
-	FullMessage += ": "
-	FullMessage += str(message)
-	FullMessage += "\n"
+    FullMessage += str(get_first_name(u_id))
+    FullMessage += ": "
+    FullMessage += str(message)
+    FullMessage += "\n"
     return FullMessage
 
 # Add all the messages into a singe message and send
 def standup_string_messages():
     newMessage = ""
-	for messageSummary in channelHandler['standup_queue']:
-		newMessage += messageSummary
+    for messageSummary in channelHandler['standup_queue']:
+        newMessage += messageSummary
     return newMessage
 ###################     PYTEST HELPER FUNCTIONS     ###################
 

@@ -4,6 +4,8 @@ from functions.misc_functions import admin_userpermission_change
 
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 

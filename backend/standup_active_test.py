@@ -5,6 +5,8 @@ from functions.profile_functions import user_profile, user_profile_sethandle, us
 
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 from datetime import datetime, timedelta, timezone
 import pytest
 
@@ -70,5 +72,5 @@ def test_standup_active_5():
 	EndTime = datetime.now()
 	timestamp = EndTime.replace().timestamp()
 	channel1['standup_end'] = timestamp
-	
+
 	assert(standup_active(owner_token,channel_id1)['is_active'] == False)

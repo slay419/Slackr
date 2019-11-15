@@ -3,6 +3,8 @@ from functions.auth_functions import auth_register, auth_logout
 from functions.channel_functions import channels_create, channel_invite
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 #The only channels and users that exist are those created from
 #this test. When you create a channel you join it.
 ######################## BEGIN SETUP ######################

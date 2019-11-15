@@ -2,7 +2,7 @@ import pytest
 from functions.auth_functions import auth_register, auth_login, auth_logout
 from functions.data import *
 
-from backend.functions.exceptions import ValueError, AccessError
+from functions.exceptions import ValueError, AccessError
 
 #register user then log out
 def test_auth_logout_1():

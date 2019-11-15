@@ -5,6 +5,8 @@ from functions.misc_functions import admin_userpermission_change
 
 from functions.data import *
 
+from functions.exceptions import ValueError, AccessError
+
 import pytest
 
 #Assuming there are 80 messages in the chat, since there is no function that

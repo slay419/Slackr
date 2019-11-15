@@ -21,6 +21,7 @@ All test assume that reacts exist from react_id 0 -> react_id 50
 ######################## GLOBAL VARIABLES SETUP ######################
 def setup():
     reset_data()
+    data = get_data()
     userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
     user1 = userDict1['token']
     user_id1 = userDict1['u_id']
@@ -37,12 +38,12 @@ def setup():
 
     channel_join(user2,channel1)
 
-    return user1, user_id1, user2, user_id2, channel1, channel2
+    return data, user1, user_id1, user2, user_id2, channel1, channel2
 ##########################    END SETUP   ########################
 
 #Testing user unreacting to a message he reacted to with same react_id (1,1)
 def test_message_unreact_1():
-    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
+    data, user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     message_send(user1,channel1,'Testing ureacts on slackr')
     message_react(user1,1,1)
     assert message_unreact(user1,1,1) == {}
@@ -53,7 +54,7 @@ def test_message_unreact_1():
 
 #Testing user unreacting to a message with invalid react_id (1,2)
 def test_message_unreact_2():
-    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
+    data, user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     message_send(user1,channel1,'Unreacting with reacts that do not exist')
     message_react(user1,1,1)
     with pytest.raises(ValueError):
@@ -61,13 +62,13 @@ def test_message_unreact_2():
 
 #Testing user unreacting to message that doesn't exist
 def test_message_unreact_3():
-    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
+    data, user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     with pytest.raises(ValueError):
 	    message_unreact(user1,1,1)
 
 #Testing user2 unreacting message from user1 that doesn't contain a react
 def test_message_unreact_4():
-    user1, user_id1, user2, user_id2, channel1, channel2 = setup()
+    data, user1, user_id1, user2, user_id2, channel1, channel2 = setup()
     message_send(user1,channel1,'how about if you do not have a react')
     message_send(user2,channel1,'let me try again')
     with pytest.raises(ValueError):

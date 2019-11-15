@@ -16,7 +16,7 @@ def message_sendlater(token, channel_id, message, time_sent):
         raise ValueError('Message is more than 1000 characters')
     #Unauthorised user error
     u_id = decode_token(token)
-    if(is_member(u_id, channel_id) == False):
+    if not is_member(u_id, channel_id):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
     #The message_id will be 1 + length of messages
     message_id = 1 + len(data['messages'])
@@ -52,7 +52,7 @@ def message_send(token, channel_id, message):
         raise ValueError('Message is more than 1000 characters')
     #Unauthorised user error
     u_id = decode_token(token)
-    if(is_member(u_id, channel_id) == False):
+    if not is_member(u_id, channel_id):
         raise AccessError('Authorised user has not joined the channel they are trying to post to')
     #The message_id will be 1 + length of messages
     message_id = 1 + len(data['messages'])
@@ -126,8 +126,6 @@ def message_react(token, message_id, react_id):
     #Invalid react_id error
     if react_id != 1:
         raise ValueError('react_id is not a valid React ID.')
-    #First set is_this_user_reacted to false if not contained in u_id
-
     #Check if the message has react_dict already
     for message in data['messages']:
         if message['message_id'] == message_id:
@@ -148,9 +146,6 @@ def message_react(token, message_id, react_id):
                             react_dict['is_this_user_reacted'] = True
                         else:
                             raise ValueError('user has already reacted to this message')
-    for message in data['messages']:
-        if message['message_id'] == message_id:
-            print(message['reacts'])
     return {}
 
 def message_unreact(token, message_id, react_id):
@@ -172,9 +167,6 @@ def message_unreact(token, message_id, react_id):
                     if react_dict['react_id'] == react_id:
                         react_dict['u_ids'].remove(u_id)
                         react_dict['is_this_user_reacted'] = False
-    for message in data['messages']:
-        if message['message_id'] == message_id:
-            print(message['reacts'])
     return {}
 
 def message_pin(token, message_id):

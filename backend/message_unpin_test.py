@@ -19,6 +19,7 @@ other users from different locations
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
+    data = get_data()
     userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
     user1 = userDict1['token']
     user_id1 = userDict1['u_id']
@@ -52,13 +53,13 @@ def setup():
     channel_join(user1, channel1)
     channel_join(admin2, channel1)
 
-    return user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2
+    return data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2
 ##########################    END SETUP   ########################
 
 
 #Testing admin unpinning own pinned message
 def test_message_unpin_1():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(admin1, channel1, 'testing 123')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
@@ -68,7 +69,7 @@ def test_message_unpin_1():
 
 #Testing admin pinning and unpinning message for a user
 def test_message_unpin_2():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(user1, channel1, 'could an admin pin and unpin this message, it is very important')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
@@ -78,7 +79,7 @@ def test_message_unpin_2():
 
 #Testing admin2 unpinning a message that admin1 pinned
 def test_message_unpin_3():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(admin1, channel1, 'apparently we can unpin each others messages')
     message_send(admin2, channel1, 'let me try that')
     message_pin(admin1, 1)
@@ -89,7 +90,7 @@ def test_message_unpin_3():
 
 #Testing user unpinning a pinned message
 def test_message_unpin_4():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(admin1, channel1, 'could a user try unpinning this message for test purposes')
     message_pin(admin1, 1)
     with pytest.raises(ValueError):
@@ -97,7 +98,7 @@ def test_message_unpin_4():
 
 #Testing admin unpinning an unpinned message (unpinning twice)
 def test_message_unpin_5():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(admin1, channel1, 'I wonder what happens if I unpin my own message twice')
     message_pin(admin1, 1)
     message_unpin(admin1, 1)
@@ -106,7 +107,7 @@ def test_message_unpin_5():
 
 #Testing admin pinning an unpinned message
 def test_message_unpin_6():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(admin1, channel1, 'I wonder what happens if I unpin my own message twice')
     message_pin(admin1, 1)
     assert message_unpin(admin1, 1) == {}
@@ -118,13 +119,13 @@ def test_message_unpin_6():
 
 #Testing unpinning message that doesn't exist
 def test_message_unpin_7():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     with pytest.raises(ValueError):
 	    message_unpin(admin1, 1)
 
 #Member is not a part of channel
 def test_message_unpin_8():
-    user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
+    data, user1, user_id1, admin1, admin_id1, admin2, admin_id2, admin3, admin_id3, channel1, channel2 = setup()
     message_send(admin1, channel1, 'Test message')
     message_pin(admin1, 1)
     with pytest.raises(AccessError):

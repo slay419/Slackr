@@ -1,4 +1,4 @@
-from backend.functions.exceptions import ValueError, AccessError
+from .exceptions import ValueError, AccessError
 from .data import get_data, decode_token, user_dict, channel_dict, is_member, format_message, standup_string_messages
 from datetime import datetime, timedelta, timezone
 from .message_functions import message_send

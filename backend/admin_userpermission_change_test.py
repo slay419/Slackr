@@ -61,7 +61,7 @@ def test_admin_userpermission_change_4():
 	with pytest.raises(AccessError):
 		admin_userpermission_change(member_token, member_id, 3)
 
-# Test if the user has permission 
+# Test if the user has permission
 def test_admin_userpermission_change_5():
 	reset_users()
 	adminDict = auth_register("admin@gmail.com", "password", "admin", "privileges")
@@ -93,10 +93,9 @@ def test_admin_userpermission_change_7():
 
 	#admin changes member to owner (permission_id 3 --> 2)
 	admin_userpermission_change(admin_token, member_id, 2)
-	owner_token = member_token 
+	owner_token = member_token
 	owner_id = member_id
 
 	#owner tries to change admin's permission (LOL)
 	with pytest.raises(AccessError):
 		admin_userpermission_change(owner_token, admin_id, 2)
-

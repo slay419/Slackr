@@ -2,6 +2,8 @@ import pytest
 from functions.auth_functions import auth_register, auth_login, auth_logout
 from functions.data import *
 
+from backend.functions.exceptions import ValueError, AccessError
+
 #register user then log out
 def test_auth_logout_1():
     reset_data()
@@ -30,7 +32,7 @@ def test_auth_logout_3():
     reset_data()
     dict1 = auth_register('myemail@gmail.com', 'mypassword', 'Kevin', 'Yasin')
     token1 = dict1['token']
-    
+
     dict2 = auth_login("myemail@gmail.com", "mypassword")
     token2 = dict2['token']
 
@@ -46,7 +48,7 @@ def test_auth_logout_4():
     reset_data()
     dict1 = auth_register('myemail@gmail.com', 'mypassword', 'Kevin', 'Yasin')
     token1 = dict1['token']
-    
+
     dict2 = auth_login("myemail@gmail.com", "mypassword")
     token2 = dict2['token']
 
@@ -98,4 +100,3 @@ def test_auth_logout_6():
     dict5 = auth_logout(token2)
     assert(dict5['is_success'] == False)
     assert(is_logged_in(token2) == False)
-

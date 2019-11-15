@@ -1,3 +1,4 @@
+from backend.functions.exceptions import ValueError, AccessError
 from .data import *
 
 def user_profile_setemail(token, email):
@@ -67,7 +68,7 @@ def user_profile(token,u_id):
     }
 	# Returns dict containing {email,name_first,name_last,handle_str}
 	print("Successfully found and located user's information")
-	return new_dict	
+	return new_dict
 
 def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 	# Append img_url to user data
@@ -102,4 +103,3 @@ def user_listall(token):
 		user_list.append(dict)
 
 	return {'users': user_list}
-	

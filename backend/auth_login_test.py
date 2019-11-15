@@ -66,4 +66,3 @@ def test_auth_login_8():
     auth_logout(token1)
     with pytest.raises(ValueError):
         auth_login("myemail2@gmail.com", "mypasswordwrong")
-

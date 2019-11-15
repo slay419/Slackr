@@ -217,6 +217,7 @@ def format_message(u_id, message):
 # Add all the messages into a singe message and send
 def standup_string_messages(channel_id):
     newMessage = ""
+    channelHandler = channel_dict(channel_id)
     for messageSummary in channelHandler['standup_queue']:
         newMessage += messageSummary
     return newMessage

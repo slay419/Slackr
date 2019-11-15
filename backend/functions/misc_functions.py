@@ -1,12 +1,12 @@
 from backend.functions.exceptions import ValueError, AccessError
-from .data import *
+from .data import get_data, decode_token, user_dict, channel_dict, is_member, format_message, standup_string_messages
 from datetime import datetime, timedelta, timezone
 from .message_functions import message_send
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
 def search(token, query_str):
-
+	data = get_data()
 	messages = []
 	# Loop through each message and find the sub-string
 	for message_dict in data['messages']:
@@ -115,7 +115,7 @@ def standup_active(token, channel_id):
 	else:
 		# If the standup just finishes, return a list of messages
 		if channelHandler['standup_active'] == True:
-			newMessage = standup_string_messages
+			newMessage = standup_string_messages(channel_id)
 			message_send(token, channel_id, newMessage)
 		# Set the flag to false and return
 		channelHandler['standup_active'] = False

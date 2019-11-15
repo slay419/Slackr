@@ -14,6 +14,7 @@ import pytest
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
+    data = get_data()
     ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
     owner_token = ownerDict['token']
     owner_id = ownerDict['u_id']

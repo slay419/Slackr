@@ -101,6 +101,14 @@ def message_dict(message_id):
             return messages
     return None
 
+# Inserts a message into the global message list and channel specific message list
+def message_insert(channel_id, message_id):
+    data = get_data()
+    channel = channel_dict(channel_id)
+    channel['messages'].insert(0, message_dict)
+    data['messages'].append(message_dict)'
+    return
+    
 #Removing message from the channel specific message dict
 def remove_channel_message_dict(message_id):
     data = get_data()

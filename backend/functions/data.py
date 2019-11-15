@@ -1,17 +1,17 @@
 #pylint: disable=missing-docstring
-from json import dumps
-from flask import Flask, request, jsonify
-from flask_mail import Mail, Message
 import hashlib
 import re
 import time
+from json import dumps
+#from flask import Flask, request, jsonify
+#from flask_mail import Mail, Message
 import jwt
 #import copy
 #import urllib.request
 #from random import randint
 #from werkzeug.exceptions import HTTPException
 #from PIL import Image
-from .exceptions import ValueError, AccessError, defaultHandler
+from .exceptions import ValueError, AccessError
 
 #GLOBAL VARIABLES
 REGEX = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
@@ -40,7 +40,9 @@ def send(data):
 # Encodes token given string and SECRET
 def generate_token(string):
     global SECRET
-    return jwt.encode({'string' : string, 'time' : time.time()}, SECRET, algorithm='HS256').decode('utf-8')
+    return jwt.encode(
+        {'string' : string, 'time' : time.time()},
+        SECRET, algorithm='HS256').decode('utf-8')
 
 # Decodes token given string and SECRET
 def decode_token(token):
@@ -205,20 +207,20 @@ def is_email_free(email):
 
 # Formats a message to be sent via standups
 def format_message(u_id, message):
-    FullMessage = ""
-    FullMessage += str(get_first_name(u_id))
-    FullMessage += ": "
-    FullMessage += str(message)
-    FullMessage += "\n"
-    return FullMessage
+    full_message = ""
+    full_message += str(get_first_name(u_id))
+    full_message += ": "
+    full_message += str(message)
+    full_message += "\n"
+    return full_message
 
 # Add all the messages into a singe message and send
 def standup_string_messages(channel_id):
-    newMessage = ""
-    channelHandler = channel_dict(channel_id)
-    for messageSummary in channelHandler['standup_queue']:
-        newMessage += messageSummary
-    return newMessage
+    new_message = ""
+    channel_handler = channel_dict(channel_id)
+    for message_summary in channel_handler['standup_queue']:
+        new_message += message_summary
+    return new_message
 ###################     PYTEST HELPER FUNCTIONS     ###################
 
 # Clears all data from the database

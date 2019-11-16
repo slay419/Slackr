@@ -1,14 +1,16 @@
-from functions.auth_functions import auth_register
-from functions.channel_functions import channels_create, channel_join, channels_list, channel_messages
-from functions.message_functions import message_send, message_sendlater
-from functions.misc_functions import admin_userpermission_change
-
-from functions.data import *
-
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
 import datetime
+import pytest
+
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_join, channel_messages
+from functions.message_functions import message_send, message_sendlater
+
+from functions.data import reset_data, get_data
+
 from functions.exceptions import ValueError, AccessError
 
-import pytest
 
 #Assuming there are 80 messages in the chat, since there is no function that
 #returns the number of messages in the chat
@@ -17,13 +19,13 @@ import pytest
 ######################## BEGIN SETUP ######################
 def user_setup():
     reset_data()
-    ownerDict = auth_register("owner@gmail.com", "password", "owner", "privileges")
-    owner_token = ownerDict['token']
-    owner_id = ownerDict['u_id']
+    owner_dict = auth_register("owner@gmail.com", "password", "owner", "privileges")
+    owner_token = owner_dict['token']
+    owner_id = owner_dict['u_id']
 
-    userDict = auth_register("person1@gmail.com", "password", "person", "one")
-    u_token = userDict['token']
-    u_id = userDict['u_id']
+    user_dict = auth_register("person1@gmail.com", "password", "person", "one")
+    u_token = user_dict['token']
+    u_id = user_dict['u_id']
 
     channel_dict = channels_create(owner_token, 'channel name', True)
     channel_id = channel_dict['channel_id']
@@ -38,14 +40,14 @@ def user_setup():
 def message_setup():
     data = get_data()
     owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
-    
+
     # Loop through and add 52 messages to the message list
     for i in range(52):
         message_text = "message" + str(i)
-        message = m1 = message_send(owner_token, channel_id, message_text)
+        message = m_1 = message_send(owner_token, channel_id, message_text)
 
     messagelist = data['messages']
-    messagelist.sort(key = lambda i: i['time_created'],reverse=True)
+    messagelist.sort(key=lambda i: i['time_created'], reverse=True)
 
     return messagelist
 ##########################    END SETUP   ########################
@@ -143,17 +145,17 @@ def test_channel_messages_7():
     owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
 
     now = datetime.datetime.now()
-    one_hour_later = (now + datetime.timedelta(hours = 1)).timestamp()
+    one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
 
-    m1 = message_send(owner_token, channel_id, "message1")
-    m2 = message_send(owner_token, channel_id, "message2")
-    m3 = message_send(owner_token, channel_id, "message3")
-    m4 = message_send(owner_token, channel_id, "message4")
-    m5 = message_sendlater(owner_token, channel_id, "message5 (future)", one_hour_later)
-    m6 = message_send(owner_token, channel_id, "message6")
+    m_1 = message_send(owner_token, channel_id, "message1")
+    m_2 = message_send(owner_token, channel_id, "message2")
+    m_3 = message_send(owner_token, channel_id, "message3")
+    m_4 = message_send(owner_token, channel_id, "message4")
+    m_5 = message_sendlater(owner_token, channel_id, "message5 (future)", one_hour_later)
+    m_6 = message_send(owner_token, channel_id, "message6")
 
     messagelist = data['messages']
-    messagelist.sort(key = lambda i: i['time_created'],reverse=True)
+    messagelist.sort(key=lambda i: i['time_created'], reverse=True)
     ##########################    END SETUP   ########################
 
     list1 = []

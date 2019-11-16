@@ -1,11 +1,14 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+import pytest
+
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join
 from functions.message_functions import message_send, message_remove, message_edit
-from functions.data import *
+from functions.data import reset_data, user_dict, message_dict, get_data
 
 from functions.exceptions import ValueError, AccessError
 
-import pytest
 
 '''
 ####################### ASSUMPTIONS #####################
@@ -19,32 +22,32 @@ other users from different locations
 ######################## BEGIN SETUP ######################
 def setup():
     reset_data()
-    userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
-    user1 = userDict1['token']
-    user_id1 = userDict1['u_id']
+    user_dict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
+    user1 = user_dict1['token']
+    user_id1 = user_dict1['u_id']
     user = user_dict(user_id1)
     user['permission_id'] = 3
 
-    adminDict1 = auth_register('adminsteven@gmail.com','adminhello123','adminSteven','Lay')
-    admin1 = adminDict1['token']
-    admin_id1 = adminDict1['u_id']
+    admin_dict1 = auth_register('adminsteven@gmail.com', 'adminhello123', 'adminSteven', 'Lay')
+    admin1 = admin_dict1['token']
+    admin_id1 = admin_dict1['u_id']
     admin = user_dict(admin_id1)
     admin['permission_id'] = 2
 
-    adminDict2 = auth_register('admin2steven@gmail.com','adminhello123','adminSteven','Lay')
-    admin2 = adminDict2['token']
-    admin_id2 = adminDict2['u_id']
+    admin_dict2 = auth_register('admin2steven@gmail.com', 'adminhello123', 'adminSteven', 'Lay')
+    admin2 = admin_dict2['token']
+    admin_id2 = admin_dict2['u_id']
     admin_2 = user_dict(admin_id2)
     admin_2['permission_id'] = 2
 
-    channelDict1 = channels_create(admin1, 'chat1', True)
-    channel1 = channelDict1['channel_id']
+    channel_dict1 = channels_create(admin1, 'chat1', True)
+    channel1 = channel_dict1['channel_id']
 
-    channelDict2 = channels_create(user1, 'chat2', True)
-    channel2 = channelDict2['channel_id']
+    channel_dict2 = channels_create(user1, 'chat2', True)
+    channel2 = channel_dict2['channel_id']
 
-    channel_join(user1,channel1)
-    channel_join(admin2,channel1)
+    channel_join(user1, channel1)
+    channel_join(admin2, channel1)
 
     return user1, user_id1, admin1, admin_id1, admin2, admin_id2, channel1, channel2
 ##########################    END SETUP   ########################
@@ -64,7 +67,7 @@ def test_message_edit_2():
     message_send(admin1, channel1, 'sorry guys only admins can edit other messages')
     message_send(user1, channel1, 'are you joking? let me test that')
     with pytest.raises(AccessError):
-	    message_edit(user1, 1, 'testing')
+        message_edit(user1, 1, 'testing')
 
 #Testing admin trying to edit another persons message (in this case an admins)
 def test_message_edit_3():
@@ -92,7 +95,7 @@ def test_message_edit_4():
 def test_message_edit_5():
     user1, user_id1, admin1, admin_id1, admin2, admin_id2, channel1, channel2 = setup()
     with pytest.raises(ValueError):
-	    message_edit(admin1, 1, 'hello')
+        message_edit(admin1, 1, 'hello')
 
 #Testing editing a message that has been removed
 def test_message_edit_6():
@@ -100,18 +103,18 @@ def test_message_edit_6():
     message_send(admin1, channel1, 'testing')
     message_remove(admin1, 1)
     with pytest.raises(ValueError):
-	    message_edit(admin1, 1, 'hello world')
+        message_edit(admin1, 1, 'hello world')
 
 #Testing a user editing another users message
 def test_message_edit_7():
     user1, user_id1, admin1, admin_id1, admin2, admin_id2, channel1, channel2 = setup()
     message_send(admin1, channel1, 'testing')
     with pytest.raises(AccessError):
-	    message_edit(user1, 1, 'hello world')
+        message_edit(user1, 1, 'hello world')
 
 #Testing a user editing a message to a length > 1000
 def test_message_edit_8():
     user1, user_id1, admin1, admin_id1, admin2, admin_id2, channel1, channel2 = setup()
     message_send(admin1, channel1, 'testing')
     with pytest.raises(ValueError):
-	    message_edit(admin1, 1, 1001*'a')
+        message_edit(admin1, 1, 1001*'a')

@@ -98,18 +98,19 @@ def name_check(name_first, name_last):
     MIN = 1
     if len(name_first) > MAX:
         raise ValueError(f"First name: {name_first} is longer than 50 characters")
-	if len(name_first) < MIN:
-	    raise ValueError(f"First name: {name_first} cannot be empty")
-	if len(name_last) > MAX:
-	    raise ValueError(f"Last name: {name_last} is longer than 50 characters")
-	if len(name_last) < MIN:
-	    raise ValueError(f"Last name: {name_last} cannot be empty")
+    if len(name_first) < MIN:
+        raise ValueError(f"First name: {name_first} cannot be empty")
+    if len(name_last) > MAX:
+        raise ValueError(f"Last name: {name_last} is longer than 50 characters")
+    if len(name_last) < MIN:
+        raise ValueError(f"Last name: {name_last} cannot be empty")
 
-def generate_handle(string):
+
+def generate_handle(handle):
     data = get_data()
     for user in data['users']: #generate unique handle
-    if handle == user['handle']:
-        handle += str(1 + len(data['users']))
+        if handle == user['handle']:
+            handle += str(1 + len(data['users']))
 
 def generate_permission_id():
     data = get_data()
@@ -117,3 +118,4 @@ def generate_permission_id():
         permission_id = 1
     else:
         permission_id = 3
+

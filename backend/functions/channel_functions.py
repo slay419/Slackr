@@ -1,7 +1,10 @@
 '''Implementation of channel functions used for the backend of Slackr Web Server'''
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
 
 from datetime import datetime
-from .data import get_data, user_dict, channel_dict, decode_token, is_member, is_owner, is_valid_channel
+from .data import get_data, user_dict, channel_dict, decode_token, is_member, \
+    is_owner, is_valid_channel
 from .exceptions import ValueError, AccessError
 
 # Create a channel by generating a new dictionary with all the neccessary info
@@ -132,17 +135,16 @@ def channel_details(token, channel_id):
 
 # Display messages sent to the channel
 def channel_messages(token, channel_id, start):
-    data = get_data()
     #Checking channel_id is valid
     if not is_valid_channel(channel_id):
         raise ValueError(f"Invalid channel ID: {channel_id}")
     #Checking length of messages
     channeldict = channel_dict(channel_id)
-    if(start > len(channeldict['messages'])):
+    if start > len(channeldict['messages']):
         raise ValueError(f"Start index: {start} is greater than the amount of messages")
     #Checking if user is authorised in correct channel
     u_id = decode_token(token)
-    if(is_member(u_id, channel_id) == False):
+    if not is_member(u_id, channel_id):
         raise AccessError(f"User: {u_id} is not a member of channel: {channel_id}")
     #Update React Status
     update_react_status(u_id)
@@ -156,12 +158,12 @@ def channel_messages(token, channel_id, start):
         endindex = end
     timestamp = datetime.now().timestamp()
     #Channel messages functionality
-    for message in range(start,endindex):
+    for message in range(start, endindex):
         #Check if the current time is > then the time the message is created
         if timestamp > channeldict['messages'][message]['time_created']:
             #If it is, it gets appended to a 'display list'
             display_message_list.append(channeldict['messages'][message])
-    channeldict['messages'].sort(key = lambda i: i['time_created'],reverse=True)
+    channeldict['messages'].sort(key=lambda i: i['time_created'], reverse=True)
     return {'messages': display_message_list, 'start': start, 'end': end,}
 
     #given start return end which is start + 50 or -1 if theres no more messages
@@ -173,9 +175,9 @@ def user_join(u_id, channel_id):
     user = user_dict(u_id)
     channel = channel_dict(channel_id)
 
-    if user == None: #check user exists
+    if user is None: #check user exists
         raise ValueError(f"User ID: {u_id} does not exist")
-    if channel == None: #check channel exists
+    if channel is None: #check channel exists
         raise ValueError(f"Channel ID: {channel_id} does not exist")
 
     if is_member(u_id, channel_id): #verify user not already part of channel
@@ -183,15 +185,15 @@ def user_join(u_id, channel_id):
 
 
     #validate users pemission before joining as member/owner
-    MEMBER = 3
-    if user['permission_id'] != MEMBER:
+    member = 3
+    if user['permission_id'] != member:
         channel['owner_members'].append({
             'u_id' : u_id
         })
         channel['all_members'].append({
             'u_id' : u_id
         })
-    elif user['permission_id'] == MEMBER and channel['is_public']:
+    elif user['permission_id'] == member and channel['is_public']:
         channel['all_members'].append({
             'u_id' : u_id
         })
@@ -200,17 +202,17 @@ def user_join(u_id, channel_id):
 
 # Create a dictionary from a list of members containing information on their profile
 def generate_dict(member_list):
-    list = []
-    for dict in member_list:
-        user = user_dict(dict['u_id'])      # extract u_id from list of dictionaries
+    new_list = []
+    for member_dict in member_list:
+        user = user_dict(member_dict['u_id'])      # extract u_id from list of dictionaries
         name_dict = {
             'u_id' : user['u_id'],
             'name_first' : user['name_first'],
             'name_last' : user['name_last'],
             'profile_img_url' : user['profile_img_url']
         }
-        list.append(name_dict)
-    return list
+        new_list.append(name_dict)
+    return new_list
 
 # Helper function used in channel leave and removeowner
 # Loops through data list and removes users from the owner or member list
@@ -221,7 +223,7 @@ def remove_from_list(u_id, channel_id, member_type):
             channel[member_type].remove(member)
 
 # Helper function used in channel messages
-# Loops through react dicts in message list and updates status of reacts          
+# Loops through react dicts in message list and updates status of reacts
 def update_react_status(u_id):
     data = get_data()
     for message in data['messages']:

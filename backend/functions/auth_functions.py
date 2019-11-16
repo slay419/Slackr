@@ -1,9 +1,10 @@
-from .data import *
+from .data import get_data, valid_email, hash_password, get_u_id, user_dict, generate_token, decode_token,is_logged_in
+from .exceptions import ValueError, AccessError
 
 def auth_register(email, password, name_first, name_last):
 
     data = get_data()
-    
+
     #check if email already exist
     if not valid_email(email):
         if get_u_id(email) != None:
@@ -96,13 +97,13 @@ def name_check(name_first, name_last):
     MAX = 50
     MIN = 1
     if len(name_first) > MAX:
-		raise ValueError(f"First name: {name_first} is longer than 50 characters")
+        raise ValueError(f"First name: {name_first} is longer than 50 characters")
 	if len(name_first) < MIN:
-		raise ValueError(f"First name: {name_first} cannot be empty")
+	    raise ValueError(f"First name: {name_first} cannot be empty")
 	if len(name_last) > MAX:
-		raise ValueError(f"Last name: {name_last} is longer than 50 characters")
+	    raise ValueError(f"Last name: {name_last} is longer than 50 characters")
 	if len(name_last) < MIN:
-		raise ValueError(f"Last name: {name_last} cannot be empty")
+	    raise ValueError(f"Last name: {name_last} cannot be empty")
 
 def generate_handle(string):
     data = get_data()

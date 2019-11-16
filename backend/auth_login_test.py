@@ -1,8 +1,11 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+
 import pytest
 from functions.auth_functions import auth_register, auth_logout, auth_login
 from functions.data import reset_data, is_logged_in
 
-from functions.exceptions import ValueError, AccessError
+from functions.exceptions import ValueError
 
 #Assumptions: Email validation function is already implemented in auth_login.
 #The database of registered users is empty.
@@ -15,7 +18,7 @@ def test_auth_login_1():
     auth_logout(token1)
     dict2 = auth_login("myemail@gmail.com", "mypassword")
     token2 = dict2['token']
-    assert(is_logged_in(token2))
+    assert is_logged_in(token2)
 
 #registered user, correct pass
 def test_auth_login_2():
@@ -25,7 +28,7 @@ def test_auth_login_2():
     auth_logout(token1)
     dict2 = auth_login("myemail2@gmail.com", "mypassword")
     token2 = dict2['token']
-    assert(is_logged_in(token2))
+    assert is_logged_in(token2)
 
 #registered email and incorrect pass
 def test_auth_login_3():

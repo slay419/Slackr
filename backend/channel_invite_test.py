@@ -1,9 +1,12 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+
 import pytest
-from functions.auth_functions import auth_register, auth_logout
+from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_invite
 from functions.data import reset_data, is_member
 
-from functions.exceptions import ValueError, AccessError
+from functions.exceptions import ValueError
 
 #The only channels and users that exist are those created from
 #this test. When you create a channel you join it.
@@ -32,8 +35,8 @@ def test_channel_invite_test_1():
     channel = channels_create(token1, 'someChannel', 1)
     channel_id1 = channel['channel_id']
 
-    assert(channel_invite(token1, channel_id1, u_id2) == {})
-    assert(is_member(u_id2, channel_id1))
+    assert channel_invite(token1, channel_id1, u_id2) == {}
+    assert is_member(u_id2, channel_id1)
 
 
 #invite first user(admin) to private channel created by second user(member)
@@ -42,8 +45,8 @@ def test_channel_invite_test_2():
     channel = channels_create(token2, 'someChannel', 0)
     channel_id1 = channel['channel_id']
 
-    assert(channel_invite(token2, channel_id1, u_id1) == {})
-    assert(is_member(u_id1, channel_id1))
+    assert channel_invite(token2, channel_id1, u_id1) == {}
+    assert is_member(u_id1, channel_id1)
 
 
 #invite multiple people (2 users)
@@ -52,11 +55,11 @@ def test_channel_invite_test_3():
     channel = channels_create(token1, 'someChannel', 1)
     channel_id1 = channel['channel_id']
 
-    assert(channel_invite(token1, channel_id1, u_id2) == {})
-    assert(channel_invite(token1, channel_id1, u_id3) == {})
+    assert channel_invite(token1, channel_id1, u_id2) == {}
+    assert channel_invite(token1, channel_id1, u_id3) == {}
 
-    assert(is_member(u_id2, channel_id1))
-    assert(is_member(u_id3, channel_id1))
+    assert is_member(u_id2, channel_id1)
+    assert is_member(u_id3, channel_id1)
 
 #inviting user to channel with a channel_id that does not exist i.e.
 #(channel_id1 + channel_id2)

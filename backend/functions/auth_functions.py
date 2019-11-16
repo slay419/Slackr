@@ -70,8 +70,6 @@ def auth_login(email, password):
 
     raise ValueError(f"Email: {email} does not exist or password is incorrect")
 
-
-
 def auth_logout(token):
     if is_logged_in(token): #only logout if user is already logged in
         u_id = decode_token(token)
@@ -92,6 +90,8 @@ def auth_passwordreset_reset(reset_code, new_password):
             user['password'] = new_password
             return {}
     raise ValueError(f"User does not exist")
+
+######################  HELPER FUNCTIONS  ########################
 
 def name_check(name_first, name_last):
     MAX = 50

@@ -23,3 +23,29 @@ once a unanimous decision was reached on the basis of our code style, all member
 helper functions, standardised variable names, indentation and whitespace.
 - Anticipation of change. As we were pre-emptively informed of changing specifications, we wrote the code to accomodate to future reprises. This was based off the vague definition of the specification provided, thus accomodating space for improvements. Standups are a case study, once implemented, as a team during implementation 2, we came to the conclusion that there was no certified method to determine if a standup was still running or not. As such, as a team, we made sure when a redefinition was released, we could easily intergrate the solution, through the presence of code comments on the best possible insertion point for the solution. This contingency plan was used when the addition of standup/active was announced, and there were little to no issues in modifying the code with consideration to the new changes
 - Removal of unecessary code. In order to comply with Y.A.G.N.I, re-evaluation provide valuable in the removal of unecessary code, particularly, the presence of helper functions and scaffolding code, made redundant by changing specifications. A perfect example is the alteration and removal of several standup fields inside the channel dictionary, that was present in iteration 2, due to the undefined nature of the standups at the time. As a result of a new, clear definition, obselete code and helper functions pertaining to the outdated standup model, were removed
+
+1. Used helper function: get_u_id() to check whether email is already registered in auth_register. Code is further abstracted and more clear.
+
+2. Added more comments to improve clarity of functions.
+
+3. Abstracted joining process of user to eliminate redudancy of joining in
+channel_invite and channel_join
+
+4. Added helper functions to channel_details to remove redundant code that 
+was previously in channel_create. channel_details now grabs all necessary 
+information from just u_id through helper funcs.
+
+5. Extracted code for checking name into a helper function as the same code,
+for checking constraints on name was used in other functions. Removed redudancy 
+and improved clarity
+
+6. Removed unncessary statements like "== True", and replaced "!=" with Not. 
+Improves readability
+
+7. When appropriate, attached name-tags to "magic numbers" such that is clear,
+what the numbers are used for. This was not necessary for very trivial cases, 
+where it is immediately clear to the reader the purpose of the number.
+
+8. Generate further helper functions to carry out mini-processes which 
+accomplished 1 goal. E.g. seting permissions, generating handles. This decreased,
+the size of auth_register and inturn made the function clearer.

@@ -5,7 +5,7 @@ import pytest
 
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channel_messages
-from functions.message_functions import message_send, message_sendlater
+from functions.message_functions import message_send, message_sendlater, message_react
 
 from functions.data import reset_data, get_data
 
@@ -138,9 +138,46 @@ def test_channel_messages_6():
         list1.append(messagelist[i])
     with pytest.raises(AccessError):
         channel_messages(u_token, 2, 0)
-
-#Testing sendlater messages
+        
+#Testing react updates in channelmessages is TRUE
 def test_channel_messages_7():
+    owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
+    messagelist = message_setup()
+
+    list1 = []
+    start = 25
+    end = 52
+    message_react(owner_token, 52, 1)
+    print(u_id)
+    for i in range(start, end):
+        list1.append(messagelist[i])
+    assert (channel_messages(owner_token, channel_id, 25) == {
+        'messages': list1,
+        'start': 25,
+        'end': -1
+    })
+    assert messagelist[0]['reacts'][0]['is_this_user_reacted']
+    
+#Testing react updates in channelmessages is FALSE
+def test_channel_messages_8():
+    owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
+    messagelist = message_setup()
+    
+    list1 = []
+    start = 25
+    end = 52
+    message_react(u_token, 52, 1)
+    for i in range(start, end):
+        list1.append(messagelist[i])
+    assert (channel_messages(owner_token, channel_id, 25) == {
+        'messages': list1,
+        'start': 25,
+        'end': -1
+    })
+    assert not messagelist[0]['reacts'][0]['is_this_user_reacted']
+        
+#Testing sendlater messages
+def test_channel_messages_9():
     data = get_data()
     owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
 

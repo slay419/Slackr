@@ -124,7 +124,7 @@ def test_message_unpin_6():
     messagedict = message_dict(message_id)
     assert not messagedict['is_pinned']
     assert message_pin(admin1, 1) == {}
-    assert not messagedict['is_pinned']
+    assert messagedict['is_pinned']
 
 #Testing unpinning message that doesn't exist
 def test_message_unpin_7():

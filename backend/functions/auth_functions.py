@@ -6,7 +6,7 @@ def auth_register(email, password, name_first, name_last):
     data = get_data()
 
     #check if email already exist
-    if not valid_email(email):
+    if valid_email(email):
         if get_u_id(email) != None:
             raise ValueError(f"Email: {email} is already registered")
     else:
@@ -30,7 +30,7 @@ def auth_register(email, password, name_first, name_last):
     token = generate_token(u_id)
 
     #generate appropriate permission id
-    generate_permission_id()
+    permission_id = generate_permission_id()
 
     #append all relevant information to users dictionary
     data['users'].append({
@@ -118,4 +118,4 @@ def generate_permission_id():
         permission_id = 1
     else:
         permission_id = 3
-
+    return permission_id

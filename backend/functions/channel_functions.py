@@ -181,15 +181,17 @@ def user_join(u_id, channel_id):
     if is_member(u_id, channel_id): #verify user not already part of channel
         raise ValueError(f"User: {u_id} has already joined channel: {channel_id}")
 
+
     #validate users pemission before joining as member/owner
-    if user['permission_id'] != 3:
+    MEMBER = 3
+    if user['permission_id'] != MEMBER:
         channel['owner_members'].append({
             'u_id' : u_id
         })
         channel['all_members'].append({
             'u_id' : u_id
         })
-    elif user['permission_id'] == 3 and channel['is_public'] == True:
+    elif user['permission_id'] == MEMBER and channel['is_public']:
         channel['all_members'].append({
             'u_id' : u_id
         })

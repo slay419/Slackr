@@ -1,5 +1,6 @@
 from .exceptions import ValueError, AccessError
 from .data import decode_token, valid_email, is_email_free, user_dict, channel_dict, get_data
+from auth_functions import 
 import sys
 from PIL import Image
 import urllib.request

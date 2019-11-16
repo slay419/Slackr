@@ -1,6 +1,10 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+
 import pytest
-from functions.auth_functions import auth_register, auth_logout
-from functions.channel_functions import channels_create, channel_invite, channel_leave, channel_details
+from functions.auth_functions import auth_register
+from functions.channel_functions import channels_create, channel_invite, \
+    channel_leave, channel_details
 from functions.data import reset_data
 
 from functions.exceptions import ValueError, AccessError

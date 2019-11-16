@@ -1,5 +1,6 @@
-from .data import get_data, valid_email, hash_password, get_u_id, user_dict, generate_token, decode_token,is_logged_in
-from .exceptions import ValueError, AccessError
+from .data import get_data, valid_email, hash_password, get_u_id, user_dict, \
+    generate_token, decode_token, is_logged_in
+from .exceptions import ValueError
 
 def auth_register(email, password, name_first, name_last):
 
@@ -7,14 +8,14 @@ def auth_register(email, password, name_first, name_last):
 
     #check if email already exist
     if valid_email(email):
-        if get_u_id(email) != None:
+        if get_u_id(email) is not None:
             raise ValueError(f"Email: {email} is already registered")
     else:
         raise ValueError(f"Email: {email} is invalid")
 
     #rules for length of pasword
-    MIN_LENGTH = 6
-    if len(password) < MIN_LENGTH: 
+    min_length = 6
+    if len(password) < min_length: 
         raise ValueError(f"Password Length is too short")
 
     #check first and last name is valid in accordance to specs
@@ -25,7 +26,7 @@ def auth_register(email, password, name_first, name_last):
     generate_handle(handle)
 
     #prepare u_id, token and password (hashed in db)
-    hashedPassword = hash_password(password)
+    hashed_password = hash_password(password)
     u_id = 101 + len(data['users'])
     token = generate_token(u_id)
 
@@ -35,7 +36,7 @@ def auth_register(email, password, name_first, name_last):
     #append all relevant information to users dictionary
     data['users'].append({
         'email' : email,
-        'password' : hashedPassword,
+        'password' : hashed_password,
         'name_first' : name_first,
         'name_last' : name_last,
         'u_id': u_id,
@@ -76,8 +77,7 @@ def auth_logout(token):
         user = user_dict(u_id)
         user['tokens'].remove(token)
         return {'is_success' : True}
-    else:
-        return {'is_success' : False}
+    return {'is_success' : False}
 
 
 def auth_passwordreset_reset(reset_code, new_password):
@@ -94,15 +94,15 @@ def auth_passwordreset_reset(reset_code, new_password):
 ######################  HELPER FUNCTIONS  ########################
 
 def name_check(name_first, name_last):
-    MAX = 50
-    MIN = 1
-    if len(name_first) > MAX:
+    maxlen = 50
+    minlen = 1
+    if len(name_first) > maxlen:
         raise ValueError(f"First name: {name_first} is longer than 50 characters")
-    if len(name_first) < MIN:
+    if len(name_first) < minlen:
         raise ValueError(f"First name: {name_first} cannot be empty")
-    if len(name_last) > MAX:
+    if len(name_last) > maxlen:
         raise ValueError(f"Last name: {name_last} is longer than 50 characters")
-    if len(name_last) < MIN:
+    if len(name_last) < minlen:
         raise ValueError(f"Last name: {name_last} cannot be empty")
 
 

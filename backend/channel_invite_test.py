@@ -32,7 +32,7 @@ def setup():
 #invite second user(member) to public channel created by first user(admin)
 def test_channel_invite_test_1():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel = channels_create(token1, 'someChannel', 1)
+    channel = channels_create(token1, 'someChannel', 'true')
     channel_id1 = channel['channel_id']
 
     assert channel_invite(token1, channel_id1, u_id2) == {}
@@ -42,7 +42,7 @@ def test_channel_invite_test_1():
 #invite first user(admin) to private channel created by second user(member)
 def test_channel_invite_test_2():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel = channels_create(token2, 'someChannel', 0)
+    channel = channels_create(token2, 'someChannel', 'false')
     channel_id1 = channel['channel_id']
 
     assert channel_invite(token2, channel_id1, u_id1) == {}
@@ -52,7 +52,7 @@ def test_channel_invite_test_2():
 #invite multiple people (2 users)
 def test_channel_invite_test_3():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel = channels_create(token1, 'someChannel', 1)
+    channel = channels_create(token1, 'someChannel', 'true')
     channel_id1 = channel['channel_id']
 
     assert channel_invite(token1, channel_id1, u_id2) == {}
@@ -65,10 +65,10 @@ def test_channel_invite_test_3():
 #(channel_id1 + channel_id2)
 def test_channel_invite_test_4():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel1 = channels_create(token1, 'someChannel', 1)
+    channel1 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = channel1['channel_id']
 
-    channel2 = channels_create(token1, 'someChannel2', 1)
+    channel2 = channels_create(token1, 'someChannel2', 'true')
     channel_id2 = channel2['channel_id']
 
     with pytest.raises(ValueError):
@@ -77,10 +77,10 @@ def test_channel_invite_test_4():
 #inviting user with user_id that does not exist (U_id1 + u_id2)
 def test_channel_invite_test_5():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel1 = channels_create(token1, 'someChannel', 1)
+    channel1 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = channel1['channel_id']
 
-    channel2 = channels_create(token1, 'someChannel2', 1)
+    channel2 = channels_create(token1, 'someChannel2', 'true')
     channel_id2 = channel2['channel_id']
 
     with pytest.raises(ValueError):
@@ -89,10 +89,10 @@ def test_channel_invite_test_5():
 #both user_id and channel_id do not exist
 def test_channel_invite_test_6():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel1 = channels_create(token1, 'someChannel', 1)
+    channel1 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = channel1['channel_id']
 
-    channel2 = channels_create(token1, 'someChannel2', 1)
+    channel2 = channels_create(token1, 'someChannel2', 'true')
     channel_id2 = channel2['channel_id']
 
     with pytest.raises(ValueError):
@@ -103,7 +103,7 @@ def test_channel_invite_test_6():
 #user is already in the channel so cant invite himself
 def test_channel_invite_test_7():
     token1, u_id1, token2, u_id2, token3, u_id3 = setup()
-    channel = channels_create(token1, 'someChannel', 1)
+    channel = channels_create(token1, 'someChannel', 'true')
     channel_id1 = channel['channel_id']
 
     with pytest.raises(ValueError):

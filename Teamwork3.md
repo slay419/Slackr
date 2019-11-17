@@ -40,5 +40,3 @@ Standardisation of code quality was a primary focus. Presented with changing spe
 ## Summary
 
 This iteration concludes the group project of COMP1531. Our team performance has surpassed all or our individual expectations, a truthful reminder to the capability teamwork bears. Yet, further emphasised is the exclusive learning experience that such a project offers, a priceless experience that oversteps the boundaries of software development into the real world.
-
-*Signing off*

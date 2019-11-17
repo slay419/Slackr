@@ -1,7 +1,8 @@
 > ## Reflection
+
 ## Introduction
 
-The Master Branch team has successfully completed Iteration 3, fulfilling all required objectives and outstanding tasks to an exemplary benchmark. Further yet, this iteration marks the end of COMP1531's group project, to which we present our solution. Although not unique, is developed to a standard that the team proudly supports and has worked together for many weeks to assemble and display.
+The Master Branch team has successfully completed Iteration 3, fulfilling all major objectives and outstanding tasks to an exemplary benchmark. Further yet, this iteration marks the end of COMP1531's group project, to which we present our solution. Although not unique, it was developed to a standard that the team proudly supports and has worked together for many weeks to assemble and display.
 
 ## Communication
 *Communication permits a common vision to transcend expectations and become reality*
@@ -24,6 +25,8 @@ Overall, reflecting back on our growth as a group, we are all proud of how our t
 Any good team respects the need for emergency arrangements, our team was no different. Due to its resounding effectiveness in previous iterations, we immediately and collectively decided to bring forward the due date of our iteration, to put positive stress on the importance, and to again, permit time and resources for any unforeseen and unresolved inquiry.
 This scheme was utilised by the team, due to our unaccustomed outlook on the demanding functions, for example, the stand ups and profile picture requirements, the completion rate was longer than expected, and pushed the team up until the arbitrary due date.
 Furthermore, a new challenge arose in the form of message-reacts, which required a intensive team-analysis and full-overhaul, which could be accomplished due to the surplus time of the team.
+
+During the process of refactoring our code, a big note was made to continuously check the success of our pytests, as well as the smooth connection of our backend to the frontend. This was to ensure that while moving code around, we would not accidentally 'break' anything. Overall, this process was done without many complications as we stuck to this rule and ensured everything was working as intended.
 
 ## Member Coordination
 *Teamwork IS defined as the mutual respect of one other*

@@ -1,6 +1,5 @@
 '''Implementation of channel functions used for the backend of Slackr Web Server'''
 #pylint: disable=missing-docstring
-#pylint: disable=unused-variable
 
 from datetime import datetime
 from .data import get_data, user_dict, channel_dict, decode_token, is_member, \

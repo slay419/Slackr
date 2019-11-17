@@ -1,3 +1,6 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+
 from .data import get_data, valid_email, hash_password, get_u_id, user_dict, \
     generate_token, decode_token, is_logged_in
 from .exceptions import ValueError

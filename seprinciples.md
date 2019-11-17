@@ -62,7 +62,7 @@ information from just u_id through helper funcs.
 
 9. Removed magic numbers by using nametags to help improve readability for users
 
-## Changes to `profile_functions`
+## Changes to `profile_functions` & `misc_functions`
 
 1.  Commenting was added in order to apply the K.I.S.S concept. Comments were used to describe the purpose and function of each
 module of logic, and as such, were placed as a header for readability, for each module.

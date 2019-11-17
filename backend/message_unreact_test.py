@@ -34,10 +34,10 @@ def setup():
     user2 = user_dict2['token']
     user_id2 = user_dict2['u_id']
 
-    channel_dict1 = channels_create(user1, 'chat1', True)
+    channel_dict1 = channels_create(user1, 'chat1', 'true')
     channel1 = channel_dict1['channel_id']
 
-    channel_dict2 = channels_create(user1, 'chat2', True)
+    channel_dict2 = channels_create(user1, 'chat2', 'true')
     channel2 = channel_dict2['channel_id']
 
     channel_join(user2, channel1)

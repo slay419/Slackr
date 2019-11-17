@@ -47,10 +47,10 @@ def setup():
     admin_3 = user_dict(admin_id3)
     admin_3['permission_id'] = 1
 
-    channel_dict1 = channels_create(admin1, 'chat1', True)
+    channel_dict1 = channels_create(admin1, 'chat1', 'true')
     channel1 = channel_dict1['channel_id']
 
-    channel_dict2 = channels_create(user1, 'chat2', True)
+    channel_dict2 = channels_create(user1, 'chat2', 'true')
     channel2 = channel_dict2['channel_id']
 
     channel_join(user1, channel1)

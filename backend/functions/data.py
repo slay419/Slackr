@@ -1,4 +1,5 @@
 #pylint: disable=missing-docstring
+#pylint: disable=global-statement
 #pylint: disable=anomalous-backslash-in-string
 import hashlib
 import re
@@ -96,18 +97,17 @@ def message_dict(message_id):
     return None
 
 def react_dict(messagedict, react_id):
-    data = get_data()
-    for react_dict in messagedict['reacts']:
-        if react_dict['react_id'] == react_id:
-            return react_dict
+    for react in messagedict['reacts']:
+        if react['react_id'] == react_id:
+            return react
     return None
 
 # Inserts a message into the global message list and channel specific message list
-def message_insert(channel_id, message_dict):
+def message_insert(channel_id, message_dictionary):
     data = get_data()
     channel = channel_dict(channel_id)
-    channel['messages'].insert(0, message_dict)
-    data['messages'].append(message_dict)
+    channel['messages'].insert(0, message_dictionary)
+    data['messages'].append(message_dictionary)
     return
 
 #Removing message from the channel specific message dict

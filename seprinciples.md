@@ -45,9 +45,19 @@ and easier to read.
 
 2. Created remove_channel_message_dict helper function for removing channel specific message dicts. This is used in message_remove
 
-3. Abstracted some code by using helper functions
+3. Abstracted some code by using helper functions to help remove clutter in main functions
 
-4. Created more tests for conditions not met in coverage
+4. Created more tests for conditions not met in coverage e.g. some access errors in react/unreact test
+
+5. Fixed up reacts from iteration 2 to constantly update and check in channel messages
+
+6. Cleaned up imports to only include necessary imports 
+
+7. Fixed issues with indenting and casing along with various general formatting
+
+8. Removed unnecessary statements e.g. "==" and "!=" replaced with 'not'
+
+9. Removed magic numbers by using nametags to help improve readability for users
 
 ## Changes to `profile_functions`
 

@@ -7,6 +7,9 @@ from functions.data import *
 
 from functions.exceptions import ValueError, AccessError
 
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+
 import pytest
 
 ###SIDE NOTE: Web resources were used in order to create the basic algorithm to determine

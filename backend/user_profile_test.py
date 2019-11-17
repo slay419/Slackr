@@ -1,3 +1,7 @@
+#pylint: disable=missing-docstring
+#pylint: disable=unused-variable
+
+
 from functions.auth_functions import auth_register
 from functions.channel_functions import channels_create, channel_join, channels_list
 from functions.misc_functions import admin_userpermission_change

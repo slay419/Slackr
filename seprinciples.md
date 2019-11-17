@@ -35,7 +35,8 @@ and easier to read.
 e.g. the wildcard imports were all removed in favour for direct import statements.
 
 4. Abstracted joining process of user to eliminate redundancy of joining in
-`channel_invite` and `channel_join`
+`channel_invite` and `channel_join`. This made the function easier to follow
+whilst also removing unncessary code.
 
 5. Added helper functions to `channel_details` to remove redundant code that
 was previously in `channel_create`. `channel_details` now grabs all necessary

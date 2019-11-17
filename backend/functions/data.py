@@ -1,4 +1,5 @@
 #pylint: disable=missing-docstring
+#pylint: disable=anomalous-backslash-in-string
 import hashlib
 import re
 import time

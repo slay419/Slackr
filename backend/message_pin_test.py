@@ -1,5 +1,6 @@
 #pylint: disable=missing-docstring
 #pylint: disable=unused-variable
+#pylint: disable=too-many-locals
 import pytest
 
 from functions.auth_functions import auth_register

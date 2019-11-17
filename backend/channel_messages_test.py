@@ -1,5 +1,6 @@
 #pylint: disable=missing-docstring
 #pylint: disable=unused-variable
+#pylint: disable=too-many-locals
 import datetime
 import pytest
 
@@ -138,7 +139,7 @@ def test_channel_messages_6():
         list1.append(messagelist[i])
     with pytest.raises(AccessError):
         channel_messages(u_token, 2, 0)
-        
+
 #Testing react updates in channelmessages is TRUE
 def test_channel_messages_7():
     owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
@@ -157,12 +158,12 @@ def test_channel_messages_7():
         'end': -1
     })
     assert messagelist[0]['reacts'][0]['is_this_user_reacted']
-    
+
 #Testing react updates in channelmessages is FALSE
 def test_channel_messages_8():
     owner_token, owner_id, u_token, u_id, channel_id, channel_id2 = user_setup()
     messagelist = message_setup()
-    
+
     list1 = []
     start = 25
     end = 52
@@ -175,7 +176,7 @@ def test_channel_messages_8():
         'end': -1
     })
     assert not messagelist[0]['reacts'][0]['is_this_user_reacted']
-        
+
 #Testing sendlater messages
 def test_channel_messages_9():
     data = get_data()

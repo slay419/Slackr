@@ -1,7 +1,9 @@
+#pylint: disable=missing-docstring
+#pylint: disable=too-many-arguments
 import urllib.request
 from PIL import Image
 from .data import decode_token, valid_email, is_email_free, user_dict, get_data
-from .exceptions import ValueError, AccessError
+from .exceptions import ValueError
 
 
 def user_profile_setemail(token, email):
@@ -60,7 +62,7 @@ def user_profile(token, u_id):
     # Using helper functions, return data
     user_data = user_dict(u_id)
     # Raise errors if the user and names are not valid
-    if user_data == None:
+    if user_data is None:
         raise ValueError(f"User ID: {u_id} does not exist")
     # Return the user dictionary of information
     new_dict = {
@@ -104,16 +106,16 @@ def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end):
 def user_listall(token):
     data = get_data()
     user_list = []
-    for user_dict in data['users']:
+    for user in data['users']:
         # Extract the relevant info into a dictionary and append to a list to return
-        dict = {
-            'u_id': user_dict['u_id'],
-            'email': user_dict['email'],
-            'name_first': user_dict['name_first'],
-            'name_last': user_dict['name_last'],
-            'handle_str': user_dict['handle'],
-            'profile_img_url': user_dict['profile_img_url']
+        info_dict = {
+            'u_id': user['u_id'],
+            'email': user['email'],
+            'name_first': user['name_first'],
+            'name_last': user['name_last'],
+            'handle_str': user['handle'],
+            'profile_img_url': user['profile_img_url']
         }
-        user_list.append(dict)
+        user_list.append(info_dict)
 
     return {'users': user_list}

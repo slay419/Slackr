@@ -87,7 +87,7 @@ def auth_passwordreset_reset(reset_code, new_password):
     for user in data['users']:
         if user['reset_code'] == reset_code and reset_code != None:
             user['reset_code'] = None
-            user['password'] = new_password
+            user['password'] = hash_password(new_password)
             return {}
     raise ValueError(f"User does not exist")
 

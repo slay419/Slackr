@@ -69,7 +69,7 @@ def test_admin_userpermission_change_5():
     admin_token = admin_dict1['token']
     admin_id = admin_dict1['u_id']
     admin_userpermission_change(admin_token, admin_id, 1)
-    assert(get_permission_id(admin_id) == 1)
+    assert get_permission_id(admin_id) == 1
 
 # Test if the user has permission
 def test_admin_userpermission_change_6():
@@ -78,7 +78,7 @@ def test_admin_userpermission_change_6():
     admin_token = admin_dict1['token']
     admin_id = admin_dict1['u_id']
     admin_userpermission_change(admin_token, admin_id, 2)
-    assert(get_permission_id(admin_id) == 2)
+    assert get_permission_id(admin_id) == 2
 
 
 # owner cant change admin user permsssion

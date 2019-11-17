@@ -47,7 +47,7 @@ def test_message_sendlater_1():
 def test_message_sendlater_2():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     invalid_id = channel_id + 1
@@ -58,7 +58,7 @@ def test_message_sendlater_2():
 def test_message_sendlater_3():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     with pytest.raises(AccessError):
         message_sendlater(u_token, channel_id, "message", future_time)
@@ -67,7 +67,7 @@ def test_message_sendlater_3():
 def test_message_sendlater_4():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -77,7 +77,7 @@ def test_message_sendlater_4():
 def test_message_sendlater_5():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, 1000 * "a", future_time) == {
@@ -97,7 +97,7 @@ def test_message_sendlater_5():
 def test_message_sendlater_6():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, 999 * "a", future_time) == {
@@ -117,7 +117,7 @@ def test_message_sendlater_6():
 def test_message_sendlater_7():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "1234567890", future_time) == {
@@ -137,7 +137,7 @@ def test_message_sendlater_7():
 def test_message_sendlater_8():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert (message_sendlater(u_token, channel_id, r"~!@#$%^&*()_+[]{}\|;:'',.<>/?", future_time)
@@ -156,7 +156,7 @@ def test_message_sendlater_8():
 def test_message_sendlater_9():
     owner_token, owner_id, u_token, u_id = setup()
     future_time = datetime.datetime(3000, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -166,7 +166,7 @@ def test_message_sendlater_9():
 def test_message_sendlater_10():
     owner_token, owner_id, u_token, u_id = setup()
     now_time = datetime.datetime.now().timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -176,7 +176,7 @@ def test_message_sendlater_10():
 def test_message_sendlater_11():
     owner_token, owner_id, u_token, u_id = setup()
     past_time = datetime.datetime(2018, 1, 1).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -187,7 +187,7 @@ def test_message_sendlater_12():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_second_ago = (now - datetime.timedelta(seconds=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -198,7 +198,7 @@ def test_message_sendlater_13():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_ago = (now - datetime.timedelta(hours=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -209,7 +209,7 @@ def test_message_sendlater_14():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "Message", one_hour_later) == {
@@ -230,7 +230,7 @@ def test_message_sendlater_15():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_second_later = (now + datetime.timedelta(seconds=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "Message", one_second_later) == {
@@ -252,7 +252,7 @@ def test_message_sendlater_16():
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
     two_hours_later = (now + datetime.timedelta(hours=2)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "Message One", one_hour_later) == {
@@ -287,7 +287,7 @@ def test_message_sendlater_17():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     immediate_message = message_send(u_token, channel_id, "Immediate Message")
@@ -312,7 +312,7 @@ def test_message_sendlater_18():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "Future Message", one_hour_later) == {
@@ -338,7 +338,7 @@ def test_message_sendlater_19():
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
     two_hours_later = (now + datetime.timedelta(hours=2)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "Future Message One", one_hour_later) == {
@@ -377,7 +377,7 @@ def test_message_sendlater_20():
     owner_token, owner_id, u_token, u_id = setup()
     now = datetime.datetime.now()
     one_hour_later = (now + datetime.timedelta(hours=1)).timestamp()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     assert message_sendlater(u_token, channel_id, "Future Message One", one_hour_later) == {

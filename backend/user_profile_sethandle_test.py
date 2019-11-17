@@ -1,5 +1,6 @@
 #pylint: disable=missing-docstring
 #pylint: disable=unused-variable
+#pylint: disable=anomalous-backslash-in-string
 
 
 from functions.auth_functions import auth_register
@@ -25,25 +26,25 @@ Assume the function returns a value error when 0 characters are entered
 #Test a handle larger than 20 characters
 def test_user_profile_sethandle_1():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
 	with pytest.raises(ValueError):
 		user_profile_sethandle(u_token, 20*'JohnnySmith')
 
 #Test a handle with 21 characters
 def test_user_profile_sethandle_2():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
 	with pytest.raises(ValueError):
 		user_profile_sethandle(u_token, 21*'A')
 
 #Test a handle with 20 characters
 def test_user_profile_sethandle_3():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
-	u_id = userDict['u_id']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
+	u_id = user_dict1['u_id']
 	user_profile_sethandle(u_token, 20*'A')
 	assert (user_profile(u_token, u_id) == {
         'email' : 'person1@gmail.com',
@@ -55,9 +56,9 @@ def test_user_profile_sethandle_3():
 #Test a handle with 19 characters
 def test_user_profile_sethandle_4():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
-	u_id = userDict['u_id']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
+	u_id = user_dict1['u_id']
 	user_profile_sethandle(u_token, 19*'A')
 	assert (user_profile(u_token, u_id) == {
         'email' : 'person1@gmail.com',
@@ -69,17 +70,17 @@ def test_user_profile_sethandle_4():
 #Test a handle with too many special characters
 def test_user_profile_sethandle_5():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
 	with pytest.raises(ValueError):
 		user_profile_sethandle(u_token, '!@#$%^&*()+_-=|/\{}[];:?><~""')
 
 #Test a handle with 20 special characters
 def test_user_profile_sethandle_6():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
-	u_id = userDict['u_id']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
+	u_id = user_dict1['u_id']
 	user_profile_sethandle(u_token, '!@#$%^&*()+_-=|/\{}?')
 	assert (user_profile(u_token, u_id) == {
         'email' : 'person1@gmail.com',
@@ -91,7 +92,7 @@ def test_user_profile_sethandle_6():
 #Test a handle with 0 characters
 def test_user_profile_sethandle_7():
 	reset_users()
-	userDict = auth_register("person1@gmail.com", "password", "firstname", "lastname")
-	u_token = userDict['token']
+	user_dict1 = auth_register("person1@gmail.com", "password", "firstname", "lastname")
+	u_token = user_dict1['token']
 	with pytest.raises(ValueError):
 		user_profile_sethandle(u_token, '')

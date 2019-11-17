@@ -17,6 +17,7 @@ def channels_create(token, name, is_public):
     # Give the channel an ID which corresponds to the number created e.g. 1st channel is ID1 ...
     new_channel_id = len(data['channels']) + 1
     # Create a dictionary with all the relevant info and append to data
+    print(is_public)
     info_dict = {
         'channel_id': new_channel_id,
         'name': name,
@@ -26,12 +27,13 @@ def channels_create(token, name, is_public):
         'all_members': [{
             'u_id': owner_id,
         }],
-        'is_public': is_public,
+        'is_public': change_to_bool(is_public),
         'messages': [],
         'standup_queue': [],
         'standup_active': False,
         'standup_end' : 0
     }
+    print(info_dict)
     data['channels'].append(info_dict)
     return {'channel_id': new_channel_id}
 
@@ -232,3 +234,10 @@ def update_react_status(u_id):
                 react['is_this_user_reacted'] = False
             else:
                 react['is_this_user_reacted'] = True
+
+# Converts string to bool to get around the json conersions
+def change_to_bool(string):
+    if string == 'true':
+        return True
+    elif string == 'false':
+        return False

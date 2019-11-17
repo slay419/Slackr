@@ -43,7 +43,7 @@ def test_channel_leave_1():
 # Leaving a channel that has been created but not joined
 def test_channel_leave_2():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", 'true')
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
         channel_leave(u_token, channel_id)
@@ -51,7 +51,7 @@ def test_channel_leave_2():
 # Leaving a non-matching channel that been created and joined
 def test_channel_leave_3():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Channel Name", True)
+    channel1 = channels_create(owner_token, "Channel Name", 'true')
     channel_id1 = channel1['channel_id']
     channel_join(u_token, channel_id1)
     invalid_channel_id = channel_id1 + 1
@@ -61,9 +61,9 @@ def test_channel_leave_3():
 # Leaving a channel that hasn't been joined
 def test_channel_leave_4():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Channel Name", True)
-    channel2 = channels_create(owner_token, "Second Channel", True)
-    channel3 = channels_create(owner_token, "Third Channel", True)
+    channel1 = channels_create(owner_token, "Channel Name", 'true')
+    channel2 = channels_create(owner_token, "Second Channel", 'true')
+    channel3 = channels_create(owner_token, "Third Channel", 'true')
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -76,9 +76,9 @@ def test_channel_leave_4():
 # Leaving an invalid channel not matching any from a list of joined channels
 def test_channel_list_5():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Channel Name", True)
-    channel2 = channels_create(owner_token, "Second Channel", True)
-    channel3 = channels_create(owner_token, "Third Channel", True)
+    channel1 = channels_create(owner_token, "Channel Name", 'true')
+    channel2 = channels_create(owner_token, "Second Channel", 'true')
+    channel3 = channels_create(owner_token, "Third Channel", 'true')
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -92,7 +92,7 @@ def test_channel_list_5():
 # Leaving the only channel they have joined would return empty list
 def test_channel_leave_6():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Channel Name", True)
+    channel1 = channels_create(owner_token, "Channel Name", 'true')
     channel_id1 = channel1['channel_id']
     channel_join(u_token, channel_id1)
     channel_leave(u_token, channel_id1)
@@ -103,8 +103,8 @@ def test_channel_leave_6():
 # Leaving a channel out of 2 already joined
 def test_channel_leave_7():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Channel Name", True)
-    channel2 = channels_create(owner_token, "Second Channel", True)
+    channel1 = channels_create(owner_token, "Channel Name", 'true')
+    channel2 = channels_create(owner_token, "Second Channel", 'true')
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_join(u_token, channel_id1)
@@ -119,10 +119,10 @@ def test_channel_leave_7():
 # Leaving a channel out of 4 already joined
 def test_channel_leave_8():
     owner_token, owner_id, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Channel Name", True)
-    channel2 = channels_create(owner_token, "Second Channel", True)
-    channel3 = channels_create(owner_token, "Third Channel", True)
-    channel4 = channels_create(owner_token, "Fourth Channel", True)
+    channel1 = channels_create(owner_token, "Channel Name", 'true')
+    channel2 = channels_create(owner_token, "Second Channel", 'true')
+    channel3 = channels_create(owner_token, "Third Channel", 'true')
+    channel4 = channels_create(owner_token, "Fourth Channel", 'true')
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']

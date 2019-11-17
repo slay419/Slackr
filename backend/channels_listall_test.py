@@ -41,7 +41,7 @@ def test_channels_listall_1():
 # List with one dictionary only if only one channel has been created
 def test_channels_listall_2():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name", True)
+    channel1 = channels_create(owner_token, "Name", "true")
     channel_id1 = channel1['channel_id']
     assert(channels_listall(u_token) == {
         'channels': [
@@ -52,8 +52,8 @@ def test_channels_listall_2():
 # List of dictionaries with 2 channels created assuming order of channel id
 def test_channels_listall_3():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     assert(channels_listall(u_token) == {
@@ -66,9 +66,9 @@ def test_channels_listall_3():
 # List of dictionaries with 3 channels created assuming order of channel id
 def test_channels_listall_4():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -84,9 +84,9 @@ def test_channels_listall_4():
 # a member
 def test_channels_listall_5():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -101,9 +101,9 @@ def test_channels_listall_5():
 # Testing list should still be the same after joining a few
 def test_channels_listall_6():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -122,10 +122,10 @@ def test_channels_listall_6():
 # the same for different users
 def test_channels_listall_7():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token2, "Name3", True)
-    channel4 = channels_create(owner_token2, "Name4", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token2, "Name3", "true")
+    channel4 = channels_create(owner_token2, "Name4", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']

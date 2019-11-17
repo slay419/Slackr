@@ -40,7 +40,7 @@ def setup():
 # Testing demoting an owner from a wrong channel id
 def test_channel_removeowner_1():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -51,7 +51,7 @@ def test_channel_removeowner_1():
 # Testing demoting a member that has not joined the channel yet
 def test_channel_removeowner_2():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channels Name", True)
+    channel = channels_create(owner_token, "Channels Name", "true")
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
         channel_removeowner(owner_token, channel_id, u_id)
@@ -59,7 +59,7 @@ def test_channel_removeowner_2():
 # Testing demoting a member in a channel they have joined
 def test_channel_removeowner_3():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channels Name", True)
+    channel = channels_create(owner_token, "Channels Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -68,7 +68,7 @@ def test_channel_removeowner_3():
 # Testing demoting a member in a channel they have been demoted before
 def test_channel_removeowner_4():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -79,7 +79,7 @@ def test_channel_removeowner_4():
 # Testing a member attempting to demote himself - has no authority
 def test_channel_removeowner_5():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channels Name", True)
+    channel = channels_create(owner_token, "Channels Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(ValueError):
@@ -88,7 +88,7 @@ def test_channel_removeowner_5():
 # Testing a member attempting to demote an owner
 def test_channel_removeowner_7():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channels Name", True)
+    channel = channels_create(owner_token, "Channels Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     with pytest.raises(AccessError):
@@ -97,7 +97,7 @@ def test_channel_removeowner_7():
 # Testing a member attempting to demote another member - has no authority
 def test_channel_removeowner_8():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channels Name", True)
+    channel = channels_create(owner_token, "Channels Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     # Creating a new member
@@ -112,7 +112,7 @@ def test_channel_removeowner_8():
 # Testing an owner demoting another owner under the right conditions
 def test_channel_removeowner_9():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -123,7 +123,7 @@ def test_channel_removeowner_9():
 # Testing an owner can be demoted multiple times after being promoted again
 def test_channel_removeowner_10():
     owner_token, owner_id, u_token, u_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)

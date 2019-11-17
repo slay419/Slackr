@@ -33,30 +33,30 @@ def setup():
 def test_channels_create_1():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "nameOfChannelIs21Long", True)
+        new_channel = channels_create(owner_token, "nameOfChannelIs21Long", "true")
 
 # Testing channel name that is exactly 21 characters long and isprivate
 def test_channels_create_2():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "nameOfChannelIs21Long", False)
+        new_channel = channels_create(owner_token, "nameOfChannelIs21Long", "false")
 
 # Testing channel name that is significantly longer than 20 and public
 def test_channels_create_3():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "nameOfChannelThatIsDefinitelyTooLong", True)
+        new_channel = channels_create(owner_token, "nameOfChannelThatIsDefinitelyTooLong", "true")
 
 # Testing channel name that is significantly longer than 20 and private
 def test_channels_create_4():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "nameOfChannelThatIsDefinitelyTooLong", False)
+        new_channel = channels_create(owner_token, "nameOfChannelThatIsDefinitelyTooLong", "false")
 
 # Testing channel name that is exactly 20 characters long and Public
 def test_channels_create_5():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "nameOfChannelIs20xxx", True)
+    new_channel = channels_create(owner_token, "nameOfChannelIs20xxx", "true")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -79,7 +79,7 @@ def test_channels_create_5():
 # Testing channel name that is exactly 20 characters long and Private
 def test_channels_create_6():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "nameOfChannelIs20xxx", False)
+    new_channel = channels_create(owner_token, "nameOfChannelIs20xxx", "false")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -102,7 +102,7 @@ def test_channels_create_6():
 # Testing channel name that is exactly 19 characters long and Public
 def test_channels_create_7():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "nameOfChannelIs19xx", True)
+    new_channel = channels_create(owner_token, "nameOfChannelIs19xx", "true")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -125,7 +125,7 @@ def test_channels_create_7():
 # Testing channel name that is exactly 19 characters long and Private
 def test_channels_create_8():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "nameOfChannelIs19xx", False)
+    new_channel = channels_create(owner_token, "nameOfChannelIs19xx", "false")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -148,7 +148,7 @@ def test_channels_create_8():
 # Testing numbers count as a character
 def test_channels_create_9():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "123456789", True)
+    new_channel = channels_create(owner_token, "123456789", "true")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -172,12 +172,12 @@ def test_channels_create_9():
 def test_channels_create_10():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "1234567890123456789012345", True)
+        new_channel = channels_create(owner_token, "1234567890123456789012345", "true")
 
 #T Testing symbols will count as a character
 def test_channels_create_11():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "~!@#$%^&*()_-+=", False)
+    new_channel = channels_create(owner_token, "~!@#$%^&*()_-+=", "false")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -199,7 +199,7 @@ def test_channels_create_11():
 
 def test_channels_create_12():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, r"[]{}\|;:',./<>?", False)
+    new_channel = channels_create(owner_token, r"[]{}\|;:',./<>?", "false")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -222,7 +222,7 @@ def test_channels_create_12():
 # Testing space bar counts as a character
 def test_channels_create_13():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "        ", True)
+    new_channel = channels_create(owner_token, "        ", "true")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -246,12 +246,12 @@ def test_channels_create_13():
 def test_channels_create_14():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", False)
+        new_channel = channels_create(owner_token, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "false")
 
 # Testing a mix of letters and symbols
 def test_channels_create_15():
     owner_token, owner_id = setup()
-    new_channel = channels_create(owner_token, "name123!@#", True)
+    new_channel = channels_create(owner_token, "name123!@#", "true")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -275,14 +275,14 @@ def test_channels_create_15():
 def test_channels_create_16():
     owner_token, owner_id = setup()
     with pytest.raises(ValueError):
-        new_channel = channels_create(owner_token, "VeryLongName123456!@#$%^@!#", True)
+        new_channel = channels_create(owner_token, "VeryLongName123456!@#$%^@!#", "true")
 
 # Testing expected previous behaviour with a different token
 def test_channels_create_17():
     owner_token, owner_id = setup()
     user_dict = auth_register("person_one@gmail.com", "password", "person", "one")
     different_token = user_dict['token']
-    new_channel = channels_create(different_token, "Name123!@#", False)
+    new_channel = channels_create(different_token, "Name123!@#", "false")
     channel_id = new_channel['channel_id']
     channel = channel_dict(channel_id)
     assert new_channel == {'channel_id': channel_id}
@@ -308,14 +308,14 @@ def test_channels_create_18():
     user_dict = auth_register("person_two@gmail.com", "password", "person", "one")
     different_token = user_dict['token']
     with pytest.raises(ValueError):
-        new_channel = channels_create(different_token, "VeryLongName123456!@#$^$", False)
+        new_channel = channels_create(different_token, "VeryLongName123456!@#$^$", "false")
 
 # Testing creating multiple public channels - channel_id should be increasing order
 def test_channels_create_19():
     owner_token, owner_id = setup()
-    new_channel1 = channels_create(owner_token, "Channel 1", True)
-    new_channel2 = channels_create(owner_token, "Channel 2", True)
-    new_channel3 = channels_create(owner_token, "Channel 3", True)
+    new_channel1 = channels_create(owner_token, "Channel 1", "true")
+    new_channel2 = channels_create(owner_token, "Channel 2", "true")
+    new_channel3 = channels_create(owner_token, "Channel 3", "true")
     assert new_channel1 == {'channel_id': 1}
     assert new_channel2 == {'channel_id': 2}
     assert new_channel3 == {'channel_id': 3}
@@ -323,9 +323,9 @@ def test_channels_create_19():
 # Testing creating multiple private channels - channel_id should be increasing order
 def test_channels_create_20():
     owner_token, owner_id = setup()
-    new_channel1 = channels_create(owner_token, "Channel 1", False)
-    new_channel2 = channels_create(owner_token, "Channel 2", False)
-    new_channel3 = channels_create(owner_token, "Channel 3", False)
+    new_channel1 = channels_create(owner_token, "Channel 1", "false")
+    new_channel2 = channels_create(owner_token, "Channel 2", "false")
+    new_channel3 = channels_create(owner_token, "Channel 3", "false")
     assert new_channel1 == {'channel_id': 1}
     assert new_channel2 == {'channel_id': 2}
     assert new_channel3 == {'channel_id': 3}
@@ -333,10 +333,10 @@ def test_channels_create_20():
 # Testing creating multiple public & private channels - channel_id should be increasing order
 def test_channels_create_21():
     owner_token, owner_id = setup()
-    new_channel1 = channels_create(owner_token, "Channel 1", True)
-    new_channel2 = channels_create(owner_token, "Channel 2", False)
-    new_channel3 = channels_create(owner_token, "Channel 3", True)
-    new_channel4 = channels_create(owner_token, "Channel 4", False)
+    new_channel1 = channels_create(owner_token, "Channel 1", "true")
+    new_channel2 = channels_create(owner_token, "Channel 2", "false")
+    new_channel3 = channels_create(owner_token, "Channel 3", "true")
+    new_channel4 = channels_create(owner_token, "Channel 4", "false")
     assert new_channel1 == {'channel_id': 1}
     assert new_channel2 == {'channel_id': 2}
     assert new_channel3 == {'channel_id': 3}

@@ -43,7 +43,7 @@ def test_channels_list_1():
 # Empty list of channels if some have been created but not joined yet
 def test_channels_list_2():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name", True)
+    channel1 = channels_create(owner_token, "Name", "true")
     assert(channels_list(u_token) == {
         'channels': []
     })
@@ -52,8 +52,8 @@ def test_channels_list_2():
 # but not joined
 def test_channels_list_3():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
     assert(channels_list(u_token) == {
         'channels': []
     })
@@ -62,7 +62,7 @@ def test_channels_list_3():
 # Testing single list of channels if one has been created and joined
 def test_channel_list_4():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name", True)
+    channel1 = channels_create(owner_token, "Name", "true")
     channel_id1 = channel1['channel_id']
     channel_join(u_token, channel_id1)
     assert(channels_list(u_token) == {
@@ -74,9 +74,9 @@ def test_channel_list_4():
 # Expecting single list of channels if multiple have been created, but joined only one
 def test_channel_list_5():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_join(u_token, channel_id1)
     assert(channels_list(u_token) == {
@@ -88,9 +88,9 @@ def test_channel_list_5():
 # Expecting only a few list of channels to be returned if not all have been joined
 def test_channel_list_6():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_join(u_token, channel_id1)
@@ -105,9 +105,9 @@ def test_channel_list_6():
 # Expecting all channels to be returned if all have been created and joined
 def test_channel_list_7():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -127,9 +127,9 @@ def test_channel_list_7():
 # it was joined in
 def test_channel_list_8():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token, "Name2", True)
-    channel3 = channels_create(owner_token, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token, "Name2", "true")
+    channel3 = channels_create(owner_token, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']
@@ -147,9 +147,9 @@ def test_channel_list_8():
 # Testing joining channels created by multiple owners
 def test_channel_list_9():
     owner_token, owner_id, owner_token2, owner_id2, u_token, u_id = setup()
-    channel1 = channels_create(owner_token, "Name1", True)
-    channel2 = channels_create(owner_token2, "Name2", True)
-    channel3 = channels_create(owner_token2, "Name3", True)
+    channel1 = channels_create(owner_token, "Name1", "true")
+    channel2 = channels_create(owner_token2, "Name2", "true")
+    channel3 = channels_create(owner_token2, "Name3", "true")
     channel_id1 = channel1['channel_id']
     channel_id2 = channel2['channel_id']
     channel_id3 = channel3['channel_id']

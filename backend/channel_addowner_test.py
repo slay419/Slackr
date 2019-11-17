@@ -54,7 +54,7 @@ def test_channel_addowner_1():
 # Testing promoting a user to the wrong channel id
 def test_channel_addowner_2():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     invalid_id = channel_id + 1
@@ -64,7 +64,7 @@ def test_channel_addowner_2():
 # Testing promoting a user in a channel id they have not joined yet
 def test_channel_addowner_3():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
         channel_addowner(owner_token, channel_id, u_id)
@@ -73,7 +73,7 @@ def test_channel_addowner_3():
 # Testing promoting the original owner of the channel
 def test_channel_addowner_4():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     with pytest.raises(ValueError):
         channel_addowner(owner_token, channel_id, owner_id)
@@ -81,7 +81,7 @@ def test_channel_addowner_4():
 # Testing promoting a member of the channel who has already been promoted before
 def test_channel_addowner_5():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -92,7 +92,7 @@ def test_channel_addowner_5():
 # e.g. promoting themself
 def test_channel_addowner_6():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     with pytest.raises(AccessError):
         channel_addowner(u_token, channel_id, u_id)
@@ -101,7 +101,7 @@ def test_channel_addowner_6():
 # e.g. member promoting another member
 def test_channel_addowner_7():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
 
@@ -112,7 +112,7 @@ def test_channel_addowner_7():
 # Testing promoting a member to owner under correct conditions
 def test_channel_addowner_8():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -124,7 +124,7 @@ def test_channel_addowner_8():
 # Testing a user promoted by another owner can promote others too
 def test_channel_addowner_9():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)
@@ -137,7 +137,7 @@ def test_channel_addowner_9():
 # Testing a user can be promoted to owner again after being demoted
 def test_channel_addowner_10():
     owner_token, owner_id, u_token, u_id, member_token, member_id = setup()
-    channel = channels_create(owner_token, "Channel Name", True)
+    channel = channels_create(owner_token, "Channel Name", "true")
     channel_id = channel['channel_id']
     channel_join(u_token, channel_id)
     channel_addowner(owner_token, channel_id, u_id)

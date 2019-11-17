@@ -1,7 +1,10 @@
+#pylint: disable=missing-docstring
+#pylint: disable=relative-beyond-top-level
 from datetime import datetime, timedelta
 from .message_functions import message_send
 from .exceptions import ValueError, AccessError
-from .data import get_data, decode_token, user_dict, channel_dict, is_member, format_message, standup_string_messages
+from .data import get_data, decode_token, user_dict, channel_dict, is_member, \
+    format_message, standup_string_messages
 
 # Returns messages featuring the 'query_str' keyword from
 # channels that the user is part of
@@ -17,12 +20,12 @@ def search(token, query_str):
 
 def admin_userpermission_change(token, u_id, permission_id):
 
-    owner_perm_id = 1
-    admin_perm_id = 2
-    member_perm_id = 3
+    owner_perm = 1
+    admin_perm = 2
+    member_perm = 3
 
     # Check if the permissons are valid
-    if permission_id != owner_perm_id and permission_id != admin_perm_id and permission_id != member_perm_id:
+    if permission_id != owner_perm and permission_id != admin_perm and permission_id != member_perm:
         raise ValueError(f"Invalid permission id change: {permission_id} requested")
 
     # Retrieve data
@@ -36,11 +39,11 @@ def admin_userpermission_change(token, u_id, permission_id):
     caller_permission = caller_user['permission_id']
 
     # Members not allowed to change anyones permission
-    if caller_permission == member_perm_id:
+    if caller_permission == member_perm:
         raise AccessError(f"Authorised user: {caller_id} is not an admin or owner")
     # Only owner's can moidify other owners permission.
     # If caller is admin instead, then the secondary user cannot be an owner
-    if caller_permission == owner_perm_id or secondary_user['permission_id'] != owner_perm_id:
+    if caller_permission == owner_perm or secondary_user['permission_id'] != owner_perm:
         secondary_user['permission_id'] = permission_id
     else:
         raise AccessError("Admin cannot change owner permissions")

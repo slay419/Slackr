@@ -1,17 +1,15 @@
 #pylint: disable=missing-docstring
 #pylint: disable=unused-variable
 
-
+import pytest
 from functions.auth_functions import auth_register
-from functions.channel_functions import channels_create, channel_join, channels_list
-from functions.misc_functions import admin_userpermission_change
 from functions.profile_functions import user_profile, user_profile_sethandle
 
-from functions.data import *
+from functions.data import reset_users
 
-from functions.exceptions import ValueError, AccessError
+from functions.exceptions import ValueError
 
-import pytest
+
 '''
 ####################### ASSUMPTIONS #####################
 All test assume that nothing (users/channels/reacts/messages) exist prior to testing
@@ -27,11 +25,11 @@ Assume NONE is returned in handle_str field if no handle has been set
 #Testing user1's profile with no handle
 def test_user_profile_1():
     reset_users()
-    userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
-    user1 = userDict1['token']
-    user1_id = userDict1['u_id']
-    profileDict1 = user_profile(user1, user1_id)
-    assert(profileDict1 == {
+    user_dict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
+    user1 = user_dict1['token']
+    user1_id = user_dict1['u_id']
+    profile_dict1 = user_profile(user1, user1_id)
+    assert(profile_dict1 == {
         'email' : 'steven@gmail.com',
         'name_first' : 'Steven',
         'name_last' : 'Lay',
@@ -41,12 +39,12 @@ def test_user_profile_1():
 #Testing user2's profile with handle
 def test_user_profile_2():
     reset_users()
-    userDict2 = auth_register('steven2@gmail.com','hello123','Steven2','Lay')
-    user2 = userDict2['token']
-    user2_id = userDict2['u_id']
+    user_dict2 = auth_register('steven2@gmail.com', 'hello123', 'Steven2', 'Lay')
+    user2 = user_dict2['token']
+    user2_id = user_dict2['u_id']
     user_profile_sethandle(user2, 'l33thack3r')
-    profileDict2 = user_profile(user2, user2_id)
-    assert(profileDict2 == {
+    profile_dict2 = user_profile(user2, user2_id)
+    assert(profile_dict2 == {
         'email' : 'steven2@gmail.com',
         'name_first' : 'Steven2',
         'name_last' : 'Lay',
@@ -56,9 +54,9 @@ def test_user_profile_2():
 #Testing invalid users profile
 def test_user_profile_3():
     reset_users()
-    userDict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
-    user1 = userDict1['token']
-    user1_id = userDict1['u_id']
+    user_dict1 = auth_register('steven@gmail.com', 'hello123', 'Steven', 'Lay')
+    user1 = user_dict1['token']
+    user1_id = user_dict1['u_id']
     invalid_id = user1_id + 1
     with pytest.raises(ValueError):
-        profileDict3 = user_profile(user1, invalid_id)
+        profile_dict3 = user_profile(user1, invalid_id)

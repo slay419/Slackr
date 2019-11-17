@@ -187,16 +187,13 @@ def user_join(u_id, channel_id):
     #validate users pemission before joining as member/owner
     member = 3
     if user['permission_id'] != member:
-        channel['owner_members'].append({
-            'u_id' : u_id
-        })
-        channel['all_members'].append({
-            'u_id' : u_id
-        })
+
+        channel['owner_members'].append({'u_id' : u_id})
+        channel['all_members'].append({'u_id' : u_id})
+
     elif user['permission_id'] == member and channel['is_public']:
-        channel['all_members'].append({
-            'u_id' : u_id
-        })
+        
+        channel['all_members'].append({'u_id' : u_id})
     else:
         raise AccessError(f"User: {u_id} is not authorised to join private channel: {channel_id}")
 

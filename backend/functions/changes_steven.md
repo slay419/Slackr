@@ -5,3 +5,7 @@
 3. Abstracted some code by using helper functions
 
 4. Created more tests for conditions not met in coverage
+
+5. Cleaned up all code in accordance to pylint
+
+6. Fixed up reacts from iteration 2 to constantly update and check in channel messages

@@ -3,15 +3,8 @@ import hashlib
 import re
 import time
 from json import dumps
-#from flask import Flask, request, jsonify
-#from flask_mail import Mail, Message
 import jwt
-#import copy
-#import urllib.request
-#from random import randint
-#from werkzeug.exceptions import HTTPException
-#from PIL import Image
-from .exceptions import ValueError, AccessError
+
 
 #GLOBAL VARIABLES
 REGEX = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
@@ -100,14 +93,14 @@ def message_dict(message_id):
         if message_id == messages['message_id']:
             return messages
     return None
-    
+
 def react_dict(messagedict, react_id):
     data = get_data()
     for react_dict in messagedict['reacts']:
         if react_dict['react_id'] == react_id:
             return react_dict
     return None
-    
+
 # Inserts a message into the global message list and channel specific message list
 def message_insert(channel_id, message_dict):
     data = get_data()

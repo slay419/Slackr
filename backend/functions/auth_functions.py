@@ -18,7 +18,7 @@ def auth_register(email, password, name_first, name_last):
 
     #rules for length of pasword
     min_length = 6
-    if len(password) < min_length: 
+    if len(password) < min_length:
         raise ValueError(f"Password Length is too short")
 
     #check first and last name is valid in accordance to specs

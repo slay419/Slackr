@@ -7,7 +7,7 @@ from flask_mail import Mail, Message
 from flask import Flask, request
 
 from backend.functions.data import send, get_u_id, user_dict
-from backend.functions.exceptions import defaultHandler, ValueError
+from backend.functions.exceptions import default_handler, ValueError
 
 from backend.functions.auth_functions import auth_register, auth_login, auth_logout, \
     auth_passwordreset_reset
@@ -25,7 +25,7 @@ from backend.functions.misc_functions import search, admin_userpermission_change
 
 APP = Flask(__name__)
 APP.config['TRAP_HTTP_EXCEPTIONS'] = True
-APP.register_error_handler(Exception, defaultHandler)
+APP.register_error_handler(Exception, default_handler)
 CORS(APP)
 
 APP.config.update(

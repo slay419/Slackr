@@ -1,3 +1,4 @@
+#pylint: disable=missing-docstring
 from datetime import datetime
 from .exceptions import ValueError, AccessError
 from .data import (get_data, get_channel_id, is_valid_channel,

@@ -26,7 +26,7 @@ def setup():
 #user views details of channel he created
 def test_channel_details_1():
     token1, u_id1, token2, u_id2 = setup()
-    dict2 = channels_create(token1, 'someChannel', 1)
+    dict2 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = dict2['channel_id']
     assert(channel_details(token1, channel_id1) == {
         'name' : 'someChannel',
@@ -47,7 +47,7 @@ def test_channel_details_1():
 #user invites someone then views details of channel he created
 def test_channel_details_2():
     token1, u_id1, token2, u_id2 = setup()
-    dict3 = channels_create(token1, 'someChannel', 1)
+    dict3 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = dict3['channel_id']
     channel_invite(token1, channel_id1, u_id2)
     assert(channel_details(token1, channel_id1) == {
@@ -79,7 +79,7 @@ def test_channel_details_2():
 #user invites someone then invitee views channel just joined
 def test_channel_details_3():
     token1, u_id1, token2, u_id2 = setup()
-    dict3 = channels_create(token1, 'someChannel', 1)
+    dict3 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = dict3['channel_id']
     channel_invite(token1, channel_id1, u_id2)
     assert(channel_details(token2, channel_id1) == {
@@ -111,7 +111,7 @@ def test_channel_details_3():
 #user invites someone to his channel. Owner then levaes. Invitee views.
 def test_channel_details_4():
     token1, u_id1, token2, u_id2 = setup()
-    dict3 = channels_create(token1, 'someChannel', 1)
+    dict3 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = dict3['channel_id']
     channel_invite(token1, channel_id1, u_id2)
     channel_leave(token1, channel_id1)
@@ -130,7 +130,7 @@ def test_channel_details_4():
 #user tries to view details of channel with id that does not exist
 def test_channel_details_5():
     token1, u_id1, token2, u_id2 = setup()
-    dict2 = channels_create(token1, 'someChannel', 1)
+    dict2 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = dict2['channel_id']
     with pytest.raises(ValueError):
         channel_details(token1, channel_id1 + 1)
@@ -139,7 +139,7 @@ def test_channel_details_5():
 #user tries to view details of channel he is not part of
 def test_channel_details_6():
     token1, u_id1, token2, u_id2 = setup()
-    dict3 = channels_create(token1, 'someChannel', 1)
+    dict3 = channels_create(token1, 'someChannel', 'true')
     channel_id1 = dict3['channel_id']
     with pytest.raises(AccessError):
         channel_details(token2, channel_id1)

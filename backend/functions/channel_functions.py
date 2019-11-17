@@ -17,7 +17,6 @@ def channels_create(token, name, is_public):
     # Give the channel an ID which corresponds to the number created e.g. 1st channel is ID1 ...
     new_channel_id = len(data['channels']) + 1
     # Create a dictionary with all the relevant info and append to data
-    print(is_public)
     info_dict = {
         'channel_id': new_channel_id,
         'name': name,
@@ -33,7 +32,6 @@ def channels_create(token, name, is_public):
         'standup_active': False,
         'standup_end' : 0
     }
-    print(info_dict)
     data['channels'].append(info_dict)
     return {'channel_id': new_channel_id}
 

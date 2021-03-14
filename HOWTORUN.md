@@ -31,7 +31,7 @@ Our script above automatically looks for un-used ports no your server and will r
 
 The way we've setup the frontend is to run on its own flask server.
 
-You can run it directly by running
+You can run it directly by running.
 
 ```sh
 python3 frontend/static.py
